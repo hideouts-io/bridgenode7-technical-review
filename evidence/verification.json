@@ -535,6 +535,17 @@
       "evidence": "evidence/quantum-example-traceability.json",
       "readiness": "TRACEABILITY_VERIFIED_OWNER_DECISIONS_AND_UPSTREAM_OPEN",
       "integrated_upstream": false
+    },
+    {
+      "file": "proposals/m2m-default-profile-doc.patch",
+      "repository": "materials-to-mission",
+      "base_sha": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+      "sha256": "87cac925cf1889275b17c8207ce36cf67d6a26759ec1a4a2c725b1cb46179997",
+      "scope": "One default-profile sentence and its single SHA-256 manifest entry; no runtime, test, schema, factual data or historical compatibility changes.",
+      "evidence": "evidence/verification.json",
+      "readiness": "DOCUMENTATION_COMPANION_LOCALLY_VERIFIED_UPSTREAM_OPEN",
+      "integrated_upstream": false,
+      "evidence_key": "navigation_link_audit.supporting_T01_documentation_correction"
     }
   ],
   "raw_log_policy": "Original logs and isolated environments are retained locally under ignored .audit-cache; recorded digests identify those bytes. Published JSON contains portable outcomes and recipes, not raw execution logs. Withheld logs cannot be independently inspected from this repository; hashes alone are provenance commitments, not public availability or proof of their contents.",
@@ -1033,6 +1044,662 @@
       "pax_workflow_helper_run_attribution": "PASS",
       "all_proposal_bytes_unchanged": true,
       "current_inventory_sha256": "47f0b44f06304fb2d080f9dea07d3338c45de164f67f52b9340b29242ceb8e29"
+    }
+  },
+  "navigation_link_audit": {
+    "review_checkpoint": "7143fad23d9c675a52437d1b3b2e6a16e3d758be",
+    "inventory_observed_at_utc": "2026-10-05T11:44:21.762868+00:00",
+    "completed_at_utc": "2026-10-05T12:03:10.407844+00:00",
+    "scope": "All tracked .md/.markdown files in the eight inventoried repositories; local paths/fragments, mapped GitHub targets, direct first-party navigation and bounded profile-to-evaluation journeys. No recursive third-party crawl.",
+    "public_repository_count": 8,
+    "new_public_repositories": [],
+    "source_revisions_changed": [],
+    "repositories": [
+      {
+        "repository": "ai-cyber-assurance",
+        "source_sha": "9033bf73bbd3923c5de0a9c6fb9959b4c140de64",
+        "matches_original_snapshot": true,
+        "tracked_markdown_files": 53,
+        "link_and_image_occurrences": 233,
+        "destination_categories": {
+          "local": 213,
+          "first_party_http": 1,
+          "third_party": 19
+        }
+      },
+      {
+        "repository": "Bridge-Node-7",
+        "source_sha": "3f959138f3252b16bc69dabf178bdde83a606a3b",
+        "matches_original_snapshot": true,
+        "tracked_markdown_files": 5,
+        "link_and_image_occurrences": 28,
+        "destination_categories": {
+          "local": 8,
+          "github_navigation": 9,
+          "mapped_github_main": 6,
+          "first_party_http": 4,
+          "email": 1
+        }
+      },
+      {
+        "repository": "frontier-decision-engine",
+        "source_sha": "4a913756d00cdd321da04bf7350507e571f2f2dd",
+        "matches_original_snapshot": true,
+        "tracked_markdown_files": 15,
+        "link_and_image_occurrences": 11,
+        "destination_categories": {
+          "local": 10,
+          "first_party_http": 1
+        }
+      },
+      {
+        "repository": "frontier-intelligence-workflows",
+        "source_sha": "36366e96c12765e14d09965c1f82330194dfa8d3",
+        "matches_original_snapshot": true,
+        "tracked_markdown_files": 44,
+        "link_and_image_occurrences": 36,
+        "destination_categories": {
+          "mapped_github_main": 1,
+          "local": 34,
+          "first_party_http": 1
+        }
+      },
+      {
+        "repository": "frontier-mission-assurance",
+        "source_sha": "f99dd2174c74f26b648321e02f8d30e2cff10230",
+        "matches_original_snapshot": true,
+        "tracked_markdown_files": 79,
+        "link_and_image_occurrences": 120,
+        "destination_categories": {
+          "local": 117,
+          "first_party_http": 3
+        }
+      },
+      {
+        "repository": "materials-to-mission",
+        "source_sha": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+        "matches_original_snapshot": true,
+        "tracked_markdown_files": 38,
+        "link_and_image_occurrences": 33,
+        "destination_categories": {
+          "first_party_http": 3,
+          "local": 26,
+          "mapped_github_main": 1,
+          "third_party": 3
+        }
+      },
+      {
+        "repository": "pax-silica",
+        "source_sha": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
+        "matches_original_snapshot": true,
+        "tracked_markdown_files": 5,
+        "link_and_image_occurrences": 2,
+        "destination_categories": {
+          "mapped_github_main": 1,
+          "first_party_http": 1
+        }
+      },
+      {
+        "repository": "quantum-readiness-space-communications",
+        "source_sha": "0f926377de268b20c2b1223eaf830405b8eb3648",
+        "matches_original_snapshot": true,
+        "tracked_markdown_files": 61,
+        "link_and_image_occurrences": 136,
+        "destination_categories": {
+          "local": 119,
+          "mapped_github_main": 1,
+          "third_party": 16
+        }
+      }
+    ],
+    "parser": {
+      "name": "marked",
+      "version": "17.0.5",
+      "configuration": "GFM lexer/walkTokens; tracked files from git ls-files; links and images outside code/comments retained, including labels containing inline code; source-line attribution checked against exact token bytes."
+    },
+    "coverage": {
+      "tracked_markdown_files": 300,
+      "clickable_link_occurrences": 598,
+      "image_occurrences": 1,
+      "inline_links": 556,
+      "inline_images": 1,
+      "angle_autolinks": 2,
+      "bare_url_autolinks": 40,
+      "reference_style_links_observed": 0,
+      "raw_html_link_or_anchor_attributes_observed": 0,
+      "local_path_occurrences": 526,
+      "same_page_fragment_occurrences": 1,
+      "mapped_github_main_path_occurrences": 10,
+      "tracked_file_destinations": 506,
+      "tracked_directory_destinations": 31,
+      "unique_tracked_targets": 220,
+      "missing_path_targets": 0,
+      "confirmed_broken_fragments": 0,
+      "markdown_github_url_occurrences": 19,
+      "markdown_github_unique_urls": 14,
+      "markdown_company_url_occurrences": 14,
+      "markdown_company_unique_urls": 6,
+      "first_party_get_urls": 29,
+      "first_party_get_successes": 29,
+      "readme_render_comparisons": 8,
+      "readme_render_destination_occurrences": 182,
+      "excluded_third_party_url_occurrences": 38,
+      "excluded_third_party_unique_urls": 37,
+      "email_occurrences_not_delivery_tested": 1
+    },
+    "path_method": "Resolve local paths relative to the source file, percent-decode once and compare exact case-sensitive names against tracked Git files and directories. Map known GitHub main paths only after live HEAD equality is established. All destinations exist; filesystem case-insensitive exists() is not the verdict.",
+    "fragment_result": {
+      "repository": "quantum-readiness-space-communications",
+      "source_sha": "0f926377de268b20c2b1223eaf830405b8eb3648",
+      "path": "README.md",
+      "line": 21,
+      "href": "#validate-the-repository",
+      "url": "https://github.com/Bridge-Node-7/quantum-readiness-space-communications/blob/0f926377de268b20c2b1223eaf830405b8eb3648/README.md",
+      "method": "GET pinned GitHub file page; parse actual HTML id and check GitHub outline anchor",
+      "http_status": 200,
+      "matched_dom_id": "user-content-validate-the-repository",
+      "matched_outline_anchor": "validate-the-repository",
+      "rendered_html_sha256": "ef71a9a64c57ad1680d8c0e40e2a6594d87e533188e037d6af9f274de85aa1f6",
+      "captured_at_utc": "2026-10-05T11:46:33.005479+00:00",
+      "status": "PASS"
+    },
+    "readme_render_comparison": {
+      "method": "Compare parsed destinations against GitHub POST /markdown mode=gfm for the eight real READMEs. GitHub wraps the existing FDE image in a link; compare that same image destination once. Rendering API responses do not supply heading IDs and are not used for fragment verdicts.",
+      "all_equal": true,
+      "results": [
+        {
+          "repository": "ai-cyber-assurance",
+          "destination_occurrences": 41,
+          "observed_at_utc": "2026-10-05T11:49:57.598589+00:00",
+          "rendered_sha256": "b9535bc737ae137dbdab8f0df5767c96527e662e6432139750d2cf4126107a59"
+        },
+        {
+          "repository": "Bridge-Node-7",
+          "destination_occurrences": 21,
+          "observed_at_utc": "2026-10-05T11:50:51.081881+00:00",
+          "rendered_sha256": "6e5f36b79aaf760dfe7cc1150bfccc9baa95b6386a63db75d4e8f23a05382131"
+        },
+        {
+          "repository": "frontier-decision-engine",
+          "destination_occurrences": 10,
+          "observed_at_utc": "2026-10-05T11:53:21.422049+00:00",
+          "rendered_sha256": "c264088b57dfb0ae6be8064e293ba609084d805caef8261999f41d2f19887a8b"
+        },
+        {
+          "repository": "frontier-intelligence-workflows",
+          "destination_occurrences": 16,
+          "observed_at_utc": "2026-10-05T11:53:31.426749+00:00",
+          "rendered_sha256": "c45ced497aac6fe748bd8462767a969fe157fdc1006e32140edc5aca4e7760c3"
+        },
+        {
+          "repository": "frontier-mission-assurance",
+          "destination_occurrences": 41,
+          "observed_at_utc": "2026-10-05T11:53:41.530057+00:00",
+          "rendered_sha256": "3947c1626a0dc1e02ee6dd2cdc17c5e06eb6c6193dc47211dd629fdbab9bc82e"
+        },
+        {
+          "repository": "materials-to-mission",
+          "destination_occurrences": 23,
+          "observed_at_utc": "2026-10-05T11:53:51.939789+00:00",
+          "rendered_sha256": "94e627fbfc82bced57d61bfeaf85e31aafd5445485377ffbc22fb8ba076b8fbf"
+        },
+        {
+          "repository": "pax-silica",
+          "destination_occurrences": 2,
+          "observed_at_utc": "2026-10-05T11:54:07.447153+00:00",
+          "rendered_sha256": "775fcb2929510f2bf2d9372153f1182db0dc94b7d6fa585ca625ebda14c2ba47"
+        },
+        {
+          "repository": "quantum-readiness-space-communications",
+          "destination_occurrences": 28,
+          "observed_at_utc": "2026-10-05T11:54:08.038976+00:00",
+          "rendered_sha256": "bbb013cdbfac46c903fe10343d0b93ed8e3ea540db784da46217bb19a7d62be9"
+        }
+      ]
+    },
+    "http_method": "Bounded GETs, maximum 2 MiB response bodies and at most two transient retries; record status, final URL and response hash. No HEAD-only verdicts. All requested URLs returned 200 without redirects; no authentication/rate-limit/transport block was observed in this selected set. HTTP success alone does not establish functional behavior.",
+    "http_results": [
+      {
+        "url": "https://bridgenode7.com/",
+        "final_url": "https://bridgenode7.com/",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:57.029471+00:00",
+        "body_sha256": "a45e59d3af559b4f592eef317f33b0da4e78746fedb8caa85d7110483e4e3fbd"
+      },
+      {
+        "url": "https://bridgenode7.com/frontier-decision-engine/",
+        "final_url": "https://bridgenode7.com/frontier-decision-engine/",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:57.031945+00:00",
+        "body_sha256": "83383c6441782d7dff8d3aba2fa3bd9fbdb98255014203ac8cc4d29f065aaaf3"
+      },
+      {
+        "url": "https://bridgenode7.com/materials-to-mission/",
+        "final_url": "https://bridgenode7.com/materials-to-mission/",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:57.131489+00:00",
+        "body_sha256": "c05a49d6b30b12ec5012370163060eaa278da155e9703bc39c38b76cf11bdec4"
+      },
+      {
+        "url": "https://bridgenode7.com/neutral-atom-ftqc/",
+        "final_url": "https://bridgenode7.com/neutral-atom-ftqc/",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:57.108712+00:00",
+        "body_sha256": "784f4c1c22a6d0023cc2d4314ff5a230b4a07eeb898712f121d2da63a19814e5"
+      },
+      {
+        "url": "https://bridgenode7.com/partner/",
+        "final_url": "https://bridgenode7.com/partner/",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:57.259453+00:00",
+        "body_sha256": "b4a7285890a628ae685348b7fb93c3f1113e87249cce987426c6809008ae857a"
+      },
+      {
+        "url": "https://bridgenode7.com/pax-silica/",
+        "final_url": "https://bridgenode7.com/pax-silica/",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:57.505668+00:00",
+        "body_sha256": "60a2d4dd1c5834b3bb6ce006be5ecfd17c269443ed47dd0702c28b2249e7cee8"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7",
+        "final_url": "https://github.com/Bridge-Node-7",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:57.826166+00:00",
+        "body_sha256": "5e5f16deb3f1b223585d751e30f66b4070b78c2436733ba26723a4bf9b73dd05"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/Bridge-Node-7",
+        "final_url": "https://github.com/Bridge-Node-7/Bridge-Node-7",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:57.940987+00:00",
+        "body_sha256": "4d6606bcc9e14313648675e132381f399109434e6e79cc9780ca5b9302ba1981"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/ai-cyber-assurance",
+        "final_url": "https://github.com/Bridge-Node-7/ai-cyber-assurance",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:58.319898+00:00",
+        "body_sha256": "f1cabca93d7848d7b1b45905d101ee87768b552e3eacc2a321ec04b93d3f4e57"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/frontier-decision-engine",
+        "final_url": "https://github.com/Bridge-Node-7/frontier-decision-engine",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:58.472667+00:00",
+        "body_sha256": "c839ac989cede7f424729c8f3212998acd246633f2a2e590fd71fc08fb601adb"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/frontier-intelligence-workflows",
+        "final_url": "https://github.com/Bridge-Node-7/frontier-intelligence-workflows",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:58.734133+00:00",
+        "body_sha256": "2787cc6e7431f3b7ad40dd3dc5d5767c6eae16a9a3e7dcf26c7b9c8ee1344da5"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/frontier-mission-assurance",
+        "final_url": "https://github.com/Bridge-Node-7/frontier-mission-assurance",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:58.954168+00:00",
+        "body_sha256": "6651b4aa401c573d20facfa1cedb2c13830e662682b5727c91ca6df278328bb6"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/materials-to-mission",
+        "final_url": "https://github.com/Bridge-Node-7/materials-to-mission",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:59.396590+00:00",
+        "body_sha256": "ccc62221447aa90943fe2063a57ce06956f75bd65560517628295525656cc26a"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/pax-silica",
+        "final_url": "https://github.com/Bridge-Node-7/pax-silica",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:59.341765+00:00",
+        "body_sha256": "60bb0a192466d8d2ea5b8dca1d527a9b758040e3cf9711e93c5f4021ccbabb0f"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/quantum-readiness-space-communications",
+        "final_url": "https://github.com/Bridge-Node-7/quantum-readiness-space-communications",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:59.816113+00:00",
+        "body_sha256": "728bcdc7c88a4f721c0722d2a92aed65997f7a6127028aed6a7a597f9bab3949"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/frontier-mission-assurance/blob/main/docs/FIVE_MINUTE_EVALUATION.md",
+        "final_url": "https://github.com/Bridge-Node-7/frontier-mission-assurance/blob/main/docs/FIVE_MINUTE_EVALUATION.md",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:46:59.765259+00:00",
+        "body_sha256": "81becf798987bd627f2df37cd7e3a4e2bde91c9d0a25c7905db924f8ffc26a31"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/frontier-mission-assurance/blob/main/docs/FTQC_GOLDEN_PATH.md",
+        "final_url": "https://github.com/Bridge-Node-7/frontier-mission-assurance/blob/main/docs/FTQC_GOLDEN_PATH.md",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:47:00.160782+00:00",
+        "body_sha256": "1435b9a1a415e2e972af73db74268ea11d10ce3ba94711a5411ed2566ca3dc06"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/frontier-intelligence-workflows/blob/main/profiles/frontier-signal-integrity/EXTREME_UNCERTAINTY_PATTERN.md",
+        "final_url": "https://github.com/Bridge-Node-7/frontier-intelligence-workflows/blob/main/profiles/frontier-signal-integrity/EXTREME_UNCERTAINTY_PATTERN.md",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:47:00.216344+00:00",
+        "body_sha256": "75249250fbe307a3017a8d7742f019ce5a708d44a7a266958943bc4cedd6649f"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/Bridge-Node-7/blob/main/docs/FRONTIER_ASSURANCE_ARCHITECTURE.md",
+        "final_url": "https://github.com/Bridge-Node-7/Bridge-Node-7/blob/main/docs/FRONTIER_ASSURANCE_ARCHITECTURE.md",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:47:00.486580+00:00",
+        "body_sha256": "04bb29f4889e9afd47645770a8f1f538fe47f588dcf94842cec81bcf6b983c00"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/frontier-intelligence-workflows/tree/main/profiles/frontier-signal-integrity",
+        "final_url": "https://github.com/Bridge-Node-7/frontier-intelligence-workflows/tree/main/profiles/frontier-signal-integrity",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:55:31.201803+00:00",
+        "body_sha256": "99d11ff47e0761325f002c9b0013ca41f0a644a11bcdd393516250f31eecd6cf"
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/frontier-mission-assurance/blob/main/docs/EPISTEMIC_ASSURANCE.md",
+        "final_url": "https://github.com/Bridge-Node-7/frontier-mission-assurance/blob/main/docs/EPISTEMIC_ASSURANCE.md",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:55:31.122482+00:00",
+        "body_sha256": "bd8e53c0986e7c7f2dc0808214e69b05fa58308878a609cfb74a6328e329e2aa"
+      },
+      {
+        "url": "https://bridgenode7.com/frontier-mission-assurance/index.html",
+        "final_url": "https://bridgenode7.com/frontier-mission-assurance/index.html",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:55:30.783284+00:00",
+        "body_sha256": "fa706d8f97c3c7db7978cbec8c3c15c93fb89cc03be4869bc967fa743076e178"
+      },
+      {
+        "url": "https://bridgenode7.com/neutral-atom-ftqc/index.html",
+        "final_url": "https://bridgenode7.com/neutral-atom-ftqc/index.html",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:55:30.817768+00:00",
+        "body_sha256": "784f4c1c22a6d0023cc2d4314ff5a230b4a07eeb898712f121d2da63a19814e5"
+      },
+      {
+        "url": "https://bridgenode7.com/genesis/",
+        "final_url": "https://bridgenode7.com/genesis/",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:55:30.988386+00:00",
+        "body_sha256": "f283811cbaae9d1fc1338a4c8f90ae3fb039e88961412550de90f90f99579010"
+      },
+      {
+        "url": "https://bridgenode7.com/golden-age/",
+        "final_url": "https://bridgenode7.com/golden-age/",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:55:30.991684+00:00",
+        "body_sha256": "5f04e8c9f5cd9a6c3338340e08c290108a70fdebdd6f24dd9f2c3ad0efbb955c"
+      },
+      {
+        "url": "https://bridgenode7.com/privacy/",
+        "final_url": "https://bridgenode7.com/privacy/",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:55:31.206287+00:00",
+        "body_sha256": "90cdc8ab63bcd302ecf735d97e7c1fd68ec1c1038d915e55efb3c4b90bb6029f"
+      },
+      {
+        "url": "https://bridgenode7.com/privacy/index.html",
+        "final_url": "https://bridgenode7.com/privacy/index.html",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:55:31.225673+00:00",
+        "body_sha256": "90cdc8ab63bcd302ecf735d97e7c1fd68ec1c1038d915e55efb3c4b90bb6029f"
+      },
+      {
+        "url": "https://bridgenode7.com/index.html",
+        "final_url": "https://bridgenode7.com/index.html",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:55:31.344497+00:00",
+        "body_sha256": "a45e59d3af559b4f592eef317f33b0da4e78746fedb8caa85d7110483e4e3fbd"
+      },
+      {
+        "url": "https://bridgenode7.com/golden-age/index.html",
+        "final_url": "https://bridgenode7.com/golden-age/index.html",
+        "status": 200,
+        "observed_at_utc": "2026-10-05T11:55:31.387124+00:00",
+        "body_sha256": "5f04e8c9f5cd9a6c3338340e08c290108a70fdebdd6f24dd9f2c3ad0efbb955c"
+      }
+    ],
+    "confirmed_broken_destinations": [],
+    "supporting_T01_documentation_correction": {
+      "task": "T01",
+      "classification": "CONFIRMED_STALE_ONBOARDING_GUIDANCE",
+      "broken_link": false,
+      "source_base": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+      "entrypoint": "https://github.com/Bridge-Node-7/materials-to-mission/blob/2a8d26af86e8adb8b1e34550045782d1a20418a4/README.md#L97",
+      "affected_location": "https://github.com/Bridge-Node-7/materials-to-mission/blob/2a8d26af86e8adb8b1e34550045782d1a20418a4/docs/VALIDATION.md#L52",
+      "observed_statement": "The default profile is m0-strict-0.2.0.",
+      "verified_default": "m0-strict-0.4.0",
+      "corroboration": [
+        "https://github.com/Bridge-Node-7/materials-to-mission/blob/2a8d26af86e8adb8b1e34550045782d1a20418a4/src/materials_to_mission/validation_profiles.py#L5-L8",
+        "https://github.com/Bridge-Node-7/materials-to-mission/blob/2a8d26af86e8adb8b1e34550045782d1a20418a4/src/materials_to_mission/cli.py#L74-L80",
+        "https://github.com/Bridge-Node-7/materials-to-mission/blob/2a8d26af86e8adb8b1e34550045782d1a20418a4/docs/VALIDATION_PROFILES.md#L31-L42",
+        "https://github.com/Bridge-Node-7/materials-to-mission/blob/2a8d26af86e8adb8b1e34550045782d1a20418a4/PROJECT_FACTS.json#L84"
+      ],
+      "reproduction": "Follow README.md:97 to docs/VALIDATION.md:52; compare with python -m materials_to_mission validate --help, the imported default constant and the dedicated profile guide at the same base.",
+      "impact": "An evaluator can infer the wrong validation policy when --profile is omitted. The destination resolves; no new runtime defect is asserted.",
+      "observed_at_utc": "2026-10-05T11:57:03.344593+00:00",
+      "patch": "proposals/m2m-default-profile-doc.patch",
+      "patch_sha256": "87cac925cf1889275b17c8207ce36cf67d6a26759ec1a4a2c725b1cb46179997",
+      "changed_files": [
+        "REPO_FILE_MANIFEST.sha256",
+        "docs/VALIDATION.md"
+      ],
+      "diff_scope": "One default-profile sentence and its single SHA-256 manifest entry; no runtime, test, schema, factual data or historical compatibility changes.",
+      "responsible_role": "M2M maintainer",
+      "readiness": "DOCUMENTATION_COMPANION_LOCALLY_VERIFIED_UPSTREAM_OPEN",
+      "validation": {
+        "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+        "python_version": "3.11.16",
+        "environment": "Existing isolated project validation environment; PYTHONPATH points to the disposable documentation candidate src directory. Imported module path was checked before the gate.",
+        "commands": [
+          "python -m materials_to_mission validate --help",
+          "python scripts/build_manifest.py",
+          "python scripts/check_repo.py",
+          "git --no-pager diff --check"
+        ],
+        "completed_at_utc": "2026-10-05T11:57:23.245311+00:00",
+        "full_gate_exit_code": 0,
+        "tests": 300,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "coverage_percent": 95.512082853855,
+        "manifest_entries": 183,
+        "deterministic_packaging": "PASS",
+        "tracked_diff_unchanged_after_gate": true,
+        "standalone_patch_applicability": "PASS",
+        "combined_T01_patch_applicability": "PASS",
+        "combined_runtime_gate": "NOT_RUN",
+        "hosted_gate": "NOT_RUN",
+        "gate_log_sha256": "433baf7c25d7ed239d8d80333bd59ceef7dbc6b884048b70ad6e4cf138358fa4",
+        "cli_help_sha256": "964d4945b09c3c2c3f887aff9bfa98ba58c8e5bda9e915b53b62e22baea5e096",
+        "runtime_attribution_sha256": "41432eb637c265d384c8c6ad8e53bf28f5fd2551b537d79b23942637353473df"
+      },
+      "acceptance": "The linked guide, CLI help, toolkit constant and dedicated guide agree on the default; explicit 0.2.0 compatibility remains supported. Maintainer reviews/applies the companion, refreshes manifests after combining or adapting patches, and runs applicable upstream acceptance checks.",
+      "limits": "Standalone documentation verification is separate from the original 302-test T01 runtime candidate and its hosted runs. Combined applicability is not combined runtime verification or upstream adoption.",
+      "patch_serialization": {
+        "original_serialization_sha256": "3bba63004ef2eb49408d163fb59b56ab93fa0102863ce5801d9d16e457338f23",
+        "published_serialization_sha256": "87cac925cf1889275b17c8207ce36cf67d6a26759ec1a4a2c725b1cb46179997",
+        "normalization": "git -c diff.suppressBlankEmpty=true diff --binary removes spaces on two blank context lines; patched source bytes unchanged",
+        "fresh_application_matches_tested_candidate": true,
+        "source_sha256": {
+          "REPO_FILE_MANIFEST.sha256": "769e46ddee56706a64e819b2164cd35b7fd9cfba52a47985a25ea7b4cc73db4c",
+          "docs/VALIDATION.md": "265d7461c34bf0d3627349e574e960db895ad7c83f699c36209b10d3b61e1509"
+        }
+      }
+    },
+    "independent_review": "Exact 300-file enumeration, all 599 source-token/line records and tracked destination spelling independently verified; actual rendered Quantum DOM/outline anchor confirmed; default-profile contradiction and minimal companion scope independently corroborated.",
+    "limitations": [
+      "37 unique third-party research/source URLs were inventoried but not requested; the earlier NSA access limitation remains historical, not a new dead-link finding.",
+      "Email syntax was observed; no delivery or contact test was performed.",
+      "GitHub mode=gfm extraction supports reference-style syntax; none was present in this corpus. Duplicate headings exist, but the only linked fragment does not target one.",
+      "No explicit release-download or workflow URLs occur as rendered Markdown destinations. Release publishing/download execution and hosted workflows were not exercised in this phase.",
+      "Selected first-party GET success and static journey inspection do not establish exhaustive client routing, accessibility, application behavior, source/deployment parity or every company-site link.",
+      "No upstream repository changed; every implementation task remains open for maintainer acceptance. Original T01\u2013T03 and T06 hosted evidence remains attached to its executed commits and patch hashes."
+    ],
+    "method_references": [
+      "https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#section-links",
+      "https://docs.github.com/en/rest/markdown/markdown"
+    ],
+    "local_evidence": [
+      {
+        "path": "navigation-audit/starting-state.json",
+        "sha256": "fd6171d081a65dfe5a9e1d4538ddffa863fbbf4d121da46d091f57fbd8f7a04b"
+      },
+      {
+        "path": "navigation-audit/extract_links.mjs",
+        "sha256": "37fdda195162a2c4a0880a6b471b5022f197bc91dad7b7fe81d871b9069ce4cf"
+      },
+      {
+        "path": "navigation-audit/extracted-links.json",
+        "sha256": "05bb3585de408698a2e6e8e1891283d82e618670dd3369fa0893990ea7bf2486"
+      },
+      {
+        "path": "navigation-audit/destination-results.json",
+        "sha256": "e36e0bbd1045bf51d0f21f10972bb57ce77220548bd88aea019966eaf5fb9b62"
+      },
+      {
+        "path": "navigation-audit/fragment-result.json",
+        "sha256": "fd2f67c2823096eaf1d5547453398356d5e8ec59b34e026da11e4753da3cd582"
+      },
+      {
+        "path": "navigation-audit/readme-render-parity/results.json",
+        "sha256": "9b9b896e8cd6a84887341012180b9520d30de354a29651fd0424112c8af02d9f"
+      },
+      {
+        "path": "navigation-audit/journeys/http-results.json",
+        "sha256": "e021c0e8f7f79c5422331ca4939a894fee908d2e39310e94d6eb8457bdf40157"
+      },
+      {
+        "path": "navigation-audit/reviewer/method-review.json",
+        "sha256": "12ad87be516d96c8321d5f5f675d072cd045d2b54ca317f81e631679426c1247"
+      },
+      {
+        "path": "navigation-audit/journeys/summary.json",
+        "sha256": "ae31919e0c9f9541051ec05379a8cf434c049f3cc80a0baf5d5c5776d24c74b1"
+      },
+      {
+        "path": "navigation-audit/journeys/onboarding-journeys.json",
+        "sha256": "092c8c5e2821899eca0ff73e32317182f81b6e3968047c6f3a8dc21d9e9d0e33"
+      },
+      {
+        "path": "navigation-audit/journeys/onboarding-finding.json",
+        "sha256": "00f602fca8d96f2fb29d14742dd7346e09687a8ff289144a6347c2a650a26d3b"
+      },
+      {
+        "path": "navigation-audit/journeys/canonical-navigation-graph.json",
+        "sha256": "7d564d86c9cf4c30983ccf891416ae85625c6cd02d9156038a4fd8d88be7e32e"
+      },
+      {
+        "path": "navigation-audit/journeys/github-plugin-canonical-source.json",
+        "sha256": "20d4d59d33df3984a82cd0a54b76b5075b2d2821cc29456941038ec5fb27fe69"
+      },
+      {
+        "path": "navigation-audit/review-document-fragments.json",
+        "sha256": "e2337bd372b01e0566423d3f0ada54b13e8897e10a52659f9223f6a85a26e427"
+      },
+      {
+        "path": "navigation-audit/m2m-documentation/serialization-verification.json",
+        "sha256": "a075d29d21d5a283e26856a7febaf410c5af1217f20b958c84a6c025f78e65ba"
+      }
+    ],
+    "raw_evidence_policy": "Original HTTP/rendered bodies, full extracted occurrences, request metadata and candidate logs remain in ignored local audit cache. Published summaries contain bounded outcomes and byte digests; digests do not make withheld artifacts publicly inspectable or authenticate historical content.",
+    "onboarding_journeys": {
+      "scope": "Eight public README role-based journeys; selected linked guides/examples, command target presence and existing verification directions. Read-only sources; no gates, installations, submissions or upstream writes. Not a new runtime pass or assistive-device/mobile usability assessment.",
+      "recorded_at_utc": "2026-10-05T12:00:55.103606+00:00",
+      "results": [
+        {
+          "repository": "Bridge-Node-7",
+          "path": "Profile README -> flagship FMA / other six reference repos -> their evaluation and verification instructions",
+          "setup": "Choose a reference repository by role; rights and authority boundaries remain per repository. No application setup applies to the profile.",
+          "example": "Direct FMA Five-Minute Evaluation and FTQC golden path; FIW extreme-uncertainty pattern.",
+          "verification": "Continue to each selected repository verification path; profile is a documentation navigator.",
+          "finding": null
+        },
+        {
+          "repository": "ai-cyber-assurance",
+          "path": "README -> Start Here -> applicable templates / optional Assurance Intelligence -> synthetic AI-agent case -> validation/render commands",
+          "setup": "README -> START_HERE.md -> create an authorized working package -> Quick Review or Full Assurance Lifecycle; optional structured case.",
+          "example": "10-examples/synthetic-ai-agent-assurance/README.md gives case validation and deterministic view commands.",
+          "verification": "README repository validation gives standard-library unittest, metadata --check, validate_repo and manifest commands; START_HERE separates repository and private-case validation.",
+          "finding": null
+        },
+        {
+          "repository": "frontier-decision-engine",
+          "path": "README -> live application / one input -> optional formal comparison -> Verify -> npm run check",
+          "setup": "README links public browser-local application and describes first decision input; Verify states Node22+,Python3.11+, browser and platform-specific environment/install commands.",
+          "example": "README Synthetic reference -> examples/synthetic-source-qualification/README.md; formal Decision Lab teaching inputs remain synthetic.",
+          "verification": "README -> Verify -> npm run check; project-facts and architecture document scope.",
+          "finding": null,
+          "example_route_basis": "README mentions the synthetic reference in prose; the supporting example directory was resolved independently, not followed through a direct README hyperlink."
+        },
+        {
+          "repository": "frontier-intelligence-workflows",
+          "path": "README -> synthetic experience or starter assessment -> bounded findings and human decision -> complete Verification instructions",
+          "setup": "README Use FIW provides POSIX and PowerShell commands with separate work/results directories; first teaching run deliberately exits1 with findings.",
+          "example": "README -> Frontier Claim Experience README -> open local index.html without server or install; synthetic artifact remains inspectable.",
+          "verification": "README Verification -> isolated validation environment -> test/compile/validate/package/manifest commands; source and result paths explicit.",
+          "finding": null
+        },
+        {
+          "repository": "frontier-mission-assurance",
+          "path": "README -> choose evaluation/adoption/stable route -> isolated setup -> source-neutral reference -> existing work / profiles -> declared source gate",
+          "setup": "README Choose your path -> Five-Minute Evaluation -> isolated pinned build-tool install; Windows and POSIX instructions. Stable release path separately explains wheel/source artifacts and checksums.",
+          "example": "Reference evaluator uses source-neutral fixtures and deliberate evidence gap; follows existing-work sidecar or FTQC golden path when relevant.",
+          "verification": "README Verification semantics/VALIDATION_REPORT -> Development make check; hosted and release proof remain distinct.",
+          "finding": null
+        },
+        {
+          "repository": "materials-to-mission",
+          "path": "README -> install -> five-minute synthetic evaluation -> expected failure -> Validation / Validation Profiles",
+          "setup": "README Try It in Five Minutes states Python3.11+ and environment/package setup; linked evaluation begins after installation.",
+          "example": "docs/FIVE_MINUTE_EVALUATION.md -> synthetic-critical-material-pathway -> validate/render -> deliberate invalid owner example and explicit exit2.",
+          "verification": "README Technical Reference -> docs/VALIDATION.md -> full gate and evidence refresh guidance; Validation Profiles is adjacent authoritative profile guide.",
+          "finding": "M2M_VALIDATION_DEFAULT_PROFILE_MISMATCH"
+        },
+        {
+          "repository": "pax-silica",
+          "path": "README -> public snapshot -> source/evidence inspection; maintainer -> canonical JSON -> declared repository gate / optional local preview",
+          "setup": "README Public experience links reviewed site; reader requires no local setup. Maintainer validation command uses standard-library Python.",
+          "example": "Canonical data/pax-silica.json and data/sources.json underpin the public source/claim experience; a fictional application example is not required for this repository role.",
+          "verification": "README Validation -> python scripts/check_repo.py; Makefile exposes check/build/preview through existing scripts.",
+          "finding": null
+        },
+        {
+          "repository": "quantum-readiness-space-communications",
+          "path": "README -> fictional Decision Pack -> documentation/assessor route -> authorized assessment templates -> complete repository verification",
+          "setup": "README Start Here table -> fictional Decision Pack first; authorized scope, owners and evidence prerequisites before an assessment.",
+          "example": "examples/sample-small-satellite-decision-pack/README.md indexes ten named pack sections; documentation index and role-based reading paths provide alternative routes.",
+          "verification": "README Validate the Repository gives Bash and PowerShell environment/gate commands and separate network-check opt-in.",
+          "finding": null
+        }
+      ]
+    },
+    "publication_integrity": {
+      "patch_hashes_and_individual_applicability": 8,
+      "fde_combined_applicability": "PASS",
+      "clean_original_source_snapshots": 8,
+      "evidence_json_records_parsed": 8,
+      "local_markdown_targets": 80,
+      "unique_pinned_source_citations": 32,
+      "workflow_and_task_run_provenance": "PASS",
+      "audit_cache_and_bytecode_excluded": true,
+      "bounded_public_secret_pattern_scan": "No configured secret patterns found",
+      "scope": "File/hash/applicability/source-line integrity and bounded secret-pattern review; not exhaustive semantic, external-link or credential scanning.",
+      "m2m_standalone_and_combined_patch_applicability": "PASS",
+      "original_seven_patch_bytes_unchanged": true,
+      "original_aggregate_records_unchanged": true,
+      "T01_T03_hosted_jobs_preserved": 10,
+      "T06_hosted_jobs_preserved": 7,
+      "all_original_task_evidence_files_unchanged": true,
+      "inventory_unchanged": true,
+      "new_companion_changed_source_files": 2,
+      "new_companion_full_gate_tests": 300,
+      "review_document_simple_heading_fragments": 28
     }
   }
 }
