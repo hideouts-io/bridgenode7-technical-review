@@ -421,8 +421,8 @@
       "baseline": "PASS",
       "tests": 59,
       "browser_checks": 21,
-      "candidate_gate": "62 tests PASS on unchanged actual data with revised full proposal; 6 focused tests and 44 CLI probes pass (36 invalid rejected, 8 valid/optional accepted).",
-      "candidate_limits": "Local macOS/Python 3.12 only; existing maintainer CI matrix and upstream acceptance remain. Validation is not historical source authentication.",
+      "candidate_gate": "62 tests PASS locally and in all four hosted Ubuntu/Windows Python 3.11/3.12 cells on unchanged data. Original local six focused tests and 44 CLI probes remain recorded separately.",
+      "candidate_limits": "Configured Python and JavaScript CodeQL analyses report zero results with candidate source attribution; upstream acceptance and historical source authentication remain outside this verification.",
       "environment_correction": "First gate invocation lacked documented python PATH; activated virtual environment corrected audit setup without source change",
       "logs": [
         {
@@ -511,10 +511,10 @@
       "repository": "pax-silica",
       "base_sha": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
       "sha256": "93045a70721ebce5162e9cdd873ee1b30d94abbfd10dca243957e5bac462f03a",
-      "scope": "Typed canonical eligibility dates and resolved source IDs; unsupported eligibility cutoff removed. Actual data, generic verified_at cutoffs and optional-field semantics preserved; 62-test actual-data gate passes.",
+      "scope": "Canonical eligibility dates and resolved source IDs, preserving actual data/generic cutoffs/optional semantics. Local and four-cell hosted 62-test gates pass; both configured CodeQL languages complete with zero reported results.",
       "integrated_upstream": false,
       "evidence": "evidence/pax-eligibility-validation.json",
-      "readiness": "LOCALLY_VERIFIED_AWAITING_MAINTAINER_ACCEPTANCE"
+      "readiness": "LOCALLY_AND_HOSTED_VERIFIED_AWAITING_MAINTAINER_ACCEPTANCE"
     },
     {
       "file": "proposals/aca-closure-links.patch",
@@ -935,6 +935,104 @@
       "bounded_public_secret_pattern_scan": "No configured secret patterns found",
       "scope": "File/hash/applicability/source-line integrity and bounded secret-pattern review; not exhaustive semantic, external-link or credential scanning."
     },
-    "current_inventory_sha256": "d10b0ed38d744b81355395ba3ceeb07e4f95eaf2f2b38bd9c18e7b51a60944c7"
+    "current_inventory_sha256": "d10b0ed38d744b81355395ba3ceeb07e4f95eaf2f2b38bd9c18e7b51a60944c7",
+    "evidence_scope": "Historical local T06 revision verification at its recorded timestamp; subsequent independent hosted verification is recorded in pax_hosted_candidate_verification."
+  },
+  "pax_hosted_candidate_verification": {
+    "scope": "Independent hosted T06 candidate verification in the public review repository; upstream acceptance remains open",
+    "run_id": 37299070181,
+    "run_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37299070181",
+    "review_commit": "15c1222f83d94c109cdc59df5a4d82366ad5c5f6",
+    "workflow_file": ".github/workflows/pax-candidate-verification.yml",
+    "workflow_sha256": "9efaa19b56b66e6d05df0985773e4910bc8504748d6b130b77886ccb3099c352",
+    "evidence": "evidence/pax-eligibility-validation.json",
+    "conclusion": "success",
+    "completed_at_utc": "2026-10-05T10:51:02Z",
+    "configured_jobs": 7,
+    "successful_jobs": 7,
+    "platform_cells": [
+      {
+        "job": "Pax / ubuntu-latest / Python 3.11",
+        "python": "3.11.16",
+        "tests": 62
+      },
+      {
+        "job": "Pax / ubuntu-latest / Python 3.12",
+        "python": "3.12.14",
+        "tests": 62
+      },
+      {
+        "job": "Pax / windows-latest / Python 3.11",
+        "python": "3.11.9",
+        "tests": 62
+      },
+      {
+        "job": "Pax / windows-latest / Python 3.12",
+        "python": "3.12.10",
+        "tests": 62
+      }
+    ],
+    "codeql": [
+      {
+        "job": "Pax CodeQL / javascript-typescript",
+        "language": "javascript",
+        "tool_version": "2.27.1",
+        "reported_results": 0,
+        "coverage": "6 out of 6 GitHub Actions files and 1 out of 1 JavaScript files"
+      },
+      {
+        "job": "Pax CodeQL / python",
+        "language": "python",
+        "tool_version": "2.27.1",
+        "reported_results": 0,
+        "coverage": "24 out of 24 Python files and 6 out of 6 GitHub Actions files"
+      }
+    ],
+    "canonical_data_files_unchanged": 5,
+    "generated_public_files_byte_identical": 6,
+    "cross_platform_output_identical": true,
+    "patch_sha256": "93045a70721ebce5162e9cdd873ee1b30d94abbfd10dca243957e5bac462f03a",
+    "source_base": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
+    "source_patch_changes": 0,
+    "upstream_mutations": 0,
+    "preserved_prior_work": "All seven proposal patch bytes, T01-T03 workflow/helpers and completed hosted evidence are unchanged. No prior hosted gates were rerun.",
+    "cache_and_upload_controls": {
+      "sarif_upload": "never",
+      "database_upload": false,
+      "overlay_mode": "explicit overlay-base without caching",
+      "trap_caching": false,
+      "dependency_caching": false,
+      "actions_caches_before": 0,
+      "actions_caches_after": 0,
+      "post_run_cache_response_sha256": "6b0b42052a75987810c770389c23c5886bc955c8e023c9b577b04d5c66370a12",
+      "observed": "Both CodeQL logs confirm overlay-base without caching; no overlay database upload appears. No Actions caches were present after the run.",
+      "local_analysis_storage": "CodeQL creates runner-temporary databases and local overlay cache data during analysis. These were not uploaded as artifacts or retained in repository Actions caches."
+    },
+    "raw_logs_zip_sha256": "bc1df62efe51af9f090911dd14071c6cbbbf64ed5d7a4a60aa7d3de66ac14eff",
+    "next_gate": "Review/apply the exact candidate or re-review/rebase if upstream changes, then run the applicable upstream repository acceptance checks against the proposed merge. Independent four-cell CI and configured CodeQL verification is complete in the review repository; it does not replace maintainer review, repository protections or release authorization. Preserve actual dates, generic cutoffs and current optional semantics.",
+    "limits": [
+      "The four CI cells and two configured CodeQL languages pass independently; GitHub branch protections and upstream maintainer acceptance are not inferred.",
+      "CodeQL 2.27.1 reports zero results for its configured queries; selected archive bytes and logged extraction counts do not establish exhaustive security coverage.",
+      "Browser UAT was not repeated because all six generated public files match the original-source and repeated candidate builds on every platform.",
+      "No source/date/locator/policy changes, upstream writes, upstream workflow dispatch, issues, PRs, contact, release or deployment.",
+      "Validation of the owner-intended record is not authentication of historical source review or applicant qualification."
+    ],
+    "publication_integrity": {
+      "patch_hashes_and_individual_applicability": 7,
+      "fde_combined_applicability": "PASS",
+      "clean_original_source_snapshots": 8,
+      "evidence_json_records_parsed": 8,
+      "local_markdown_targets": 75,
+      "unique_pinned_source_citations": 29,
+      "workflow_and_task_run_provenance": "PASS",
+      "audit_cache_and_bytecode_excluded": true,
+      "bounded_public_secret_pattern_scan": "No configured secret patterns found",
+      "scope": "File/hash/applicability/source-line integrity and bounded secret-pattern review; not exhaustive semantic, external-link or credential scanning.",
+      "preserved_T01_T03_hosted_jobs": 10,
+      "pax_hosted_jobs_verified": 7,
+      "pax_workflow_helper_run_attribution": "PASS",
+      "all_proposal_bytes_unchanged": true,
+      "current_inventory_sha256": "47f0b44f06304fb2d080f9dea07d3338c45de164f67f52b9340b29242ceb8e29"
+    }
   }
 }

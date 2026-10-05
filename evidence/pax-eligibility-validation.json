@@ -1,6 +1,6 @@
 {
   "task": "T06",
-  "candidate_status": "LOCALLY_VERIFIED_AWAITING_MAINTAINER_ACCEPTANCE",
+  "candidate_status": "LOCALLY_AND_HOSTED_VERIFIED_AWAITING_MAINTAINER_ACCEPTANCE",
   "checked_at_utc": "2026-10-05T09:31:55.654264+00:00",
   "source": {
     "repository": "Bridge-Node-7/pax-silica",
@@ -14,7 +14,7 @@
     "machine": "arm64",
     "environment": "Project-local virtual environment; standard library only",
     "matches_configured_python_minor": "3.12",
-    "other_matrix_targets": "Current candidate checked on macOS/Python 3.12 only. Hosted Ubuntu/Windows and Python 3.11 remain maintainer gates."
+    "other_matrix_targets": "The separate hosted_candidate_verification block records Ubuntu/Windows Python 3.11/3.12 and configured CodeQL language results; this environment block describes the original local checks."
   },
   "scope": [
     "Validate only the program-specific eligibility fields when present; preserve existing primary source/date handling.",
@@ -757,13 +757,13 @@
     "notice": "MIT License\n\nCopyright (c) 2026 Bridge Node 7\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
   },
   "limitations": [
-    "Local candidate verification on macOS/Python 3.12; no new hosted Pax run or upstream adoption. T06 remains open upstream.",
+    "Local macOS/Python 3.12 checks and independent hosted Ubuntu/Windows Python 3.11/3.12 plus configured CodeQL analyses pass. T06 remains open for upstream maintainer acceptance.",
     "Acceptance of owner-intended data establishes validator compatibility, not independent authentication of historical source review or applicant qualification.",
     "Optional pairing/minimum-source and additional chronology restrictions require an explicit owner contract; the candidate adds none.",
     "No upstream issue, pull request, release, deployment, contact or visibility change.",
     "Pax CLI retains its existing AssertionError/traceback presentation with program and field diagnostics."
   ],
-  "raw_log_policy": "Current logs, probe runner, fixtures, source copies and generated artifacts remain in ignored .audit-cache/t06-actual-data. Portable commands, probe mutations/results and raw-log hashes are published here. Original synthetic artifacts remain in their prior cache and immutable review history.",
+  "raw_log_policy": "Original local logs/fixtures remain in .audit-cache/t06-actual-data. Hosted GitHub job logs and downloaded bounded artifacts remain in .audit-cache/hosted-runs/37299070181; hosted runner-temporary build/unprefixed gate logs are represented by hashes only. Portable commands, hashes, measured results and public run/job links are published here. Historical synthetic evidence remains at immutable Git references.",
   "public_owner_record_review": {
     "checked_at_utc": "2026-10-05T09:31:55.654264+00:00",
     "source_commit": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
@@ -875,7 +875,7 @@
     "interpretation": "The old cutoff-bearing proposal rejected both the post-cutoff probe and unchanged-published control for the same unsupported rule. Its synthetic 62-test gate and all original commands/probes remain at the immutable references above. They are not current acceptance evidence.",
     "local_cache_preserved": ".audit-cache/continuation/pax"
   },
-  "maintainer_acceptance_gate": "Apply the revised patch to its exact source base, or re-review/rebase if main changes. Run the existing CI matrix on Ubuntu/Windows with Python 3.11/3.12, including check_repo.py and committed-candidate drift/whitespace checks. Preserve actual dates, generic cutoff rules and optional semantics. Upstream acceptance/release is a maintainer decision.",
+  "maintainer_acceptance_gate": "Review/apply the exact candidate or re-review/rebase if upstream changes, then run the applicable upstream repository acceptance checks against the proposed merge. Independent four-cell CI and configured CodeQL verification is complete in the review repository; it does not replace maintainer review, repository protections or release authorization. Preserve actual dates, generic cutoffs and current optional semantics.",
   "patch_serialization_checks": {
     "checked_at_utc": "2026-10-05T09:37:53.327441+00:00",
     "patch_sha256": "93045a70721ebce5162e9cdd873ee1b30d94abbfd10dca243957e5bac462f03a",
@@ -908,5 +908,513 @@
       "generated_files_per_tree": 6,
       "manifest_entries_per_tree": 5
     }
+  },
+  "hosted_candidate_verification": {
+    "scope": "Independent hosted T06 candidate verification in the public review repository; upstream acceptance remains open",
+    "run_id": 37299070181,
+    "run_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37299070181",
+    "review_commit": "15c1222f83d94c109cdc59df5a4d82366ad5c5f6",
+    "workflow_file": ".github/workflows/pax-candidate-verification.yml",
+    "workflow_sha256": "9efaa19b56b66e6d05df0985773e4910bc8504748d6b130b77886ccb3099c352",
+    "command_source": "https://github.com/hideouts-io/bridgenode7-technical-review/blob/15c1222f83d94c109cdc59df5a4d82366ad5c5f6/.github/workflows/pax-candidate-verification.yml",
+    "command_scope": "Exact commands are pinned at command_source. Successful executed steps are listed per job; job conclusions and downloaded GitHub logs establish exit success.",
+    "conclusion": "success",
+    "completed_at_utc": "2026-10-05T10:51:02Z",
+    "configured_jobs": 7,
+    "successful_jobs": 7,
+    "platform_cells": 4,
+    "codeql_language_jobs": 2,
+    "aggregate_jobs": 1,
+    "upstream_base": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
+    "patch_sha256": "93045a70721ebce5162e9cdd873ee1b30d94abbfd10dca243957e5bac462f03a",
+    "source_workflows_sha256": {
+      "browser-uat.yml": "f6f58e4248d37098750e7b322ca0cbdcbd37e32f79da1271ab4c58723b4241d2",
+      "ci.yml": "63b9851925c030f8afc50cea33c4c14b6071e6e4622670637a43f40962ff3243",
+      "codeql.yml": "a440b34a399f61de31cd8baca98e1b050cdbf9209090c6d98685908e50124d6e",
+      "freshness.yml": "2748807a05fd08986371da80a7fd01bea4ae807023628716064ccbd3d1a601f7",
+      "pages.yml": "bb5d7ee4b727e189624cb0d0027af5bdfe0b8ef288ea7d388f5f43482204bfd9",
+      "release.yml": "aae40ef5ab305c038a3300eddf46a6b61fb181a5a256b8b68dcd44b9cf798018"
+    },
+    "review_helper_sha256": {
+      "scripts/prepare_pax_candidate.py": "e0fae4c80786dc178a4f059807fad259c7158a484aa61ccafb167673aa64fa94",
+      "scripts/collect_pax_results.py": "8e8c35db32d313ef28f4c1c46871d168839db96469c7c50dd38c230878a75fbe",
+      "scripts/collect_pax_codeql.py": "9cc33abe277dc91aeb1a9977a8f28263326f02a4ed66977c98dc719837a886ff",
+      "scripts/prepare_candidate.py": "64c2da9c2e198a6157a103a4eff009500fa751be00bc3bec02596ef17702bef3",
+      "scripts/collect_codeql.py": "8f3ce72195eac2e965b952b7455fa3b62103c70593b7c3cb8f4331b7c536341e"
+    },
+    "changed_candidate_files_sha256": {
+      "scripts/validate_data.py": "9a6798d28eea30d2123e6948fe40bfdfb06087982c2b6a4c472ae69b8cca5148",
+      "tests/test_snapshot_boundary.py": "6ef0b1d0bb938db94ab9a03ee73e2a5c2d4d08413f000455f9b3e6e391d8ef52"
+    },
+    "canonical_data_sha256": {
+      "data/evidence-baseline.json": "79276d96cfa852967fb8630510d66f4f835f6614a6fef94002f7d9c562b5eebe",
+      "data/pax-silica.json": "0f33d43ae52d30639ffad2fea1bd6a71d9774bd667cfbe0efd63fd115ec6280d",
+      "data/schemas/pax-silica.schema.json": "c1251e2099ff434ae678ba99f59cd89a5da1ccb4fa726f8f70e68149ab20624a",
+      "data/schemas/sources.schema.json": "9a32260c8391720884c0257678421ca8635381589bd307d2545e9dd5912b04ba",
+      "data/sources.json": "c4109ddda578f74bdb8ea9bc6c79d4ef9acc141272a43047184b409b92c01d27"
+    },
+    "public_build_sha256": {
+      "WEB_MANIFEST.sha256": "2f92f6b2141fc4e7d56e613f9a44d206ae5d69475405d9bf54ba1c587ebb0ee9",
+      "app.js": "dcaa215db2d023bab70b435deb77d20ee0d64b619ed9b182552fab746df26f1d",
+      "data/pax-silica.json": "0f33d43ae52d30639ffad2fea1bd6a71d9774bd667cfbe0efd63fd115ec6280d",
+      "data/sources.json": "c4109ddda578f74bdb8ea9bc6c79d4ef9acc141272a43047184b409b92c01d27",
+      "index.html": "60a2d4dd1c5834b3bb6ce006be5ecfd17c269443ed47dd0702c28b2249e7cee8",
+      "styles.css": "2f2861e744c00c158ddde9f0b6b8a95bb2ea4997caea19d2f2b6ecd6bb269f47"
+    },
+    "cross_platform_public_bytes_identical": true,
+    "jobs": [
+      {
+        "name": "Pax / ubuntu-latest / Python 3.11",
+        "job_id": 111727209057,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37299070181/job/111727209057",
+        "conclusion": "success",
+        "started_at_utc": "2026-10-05T10:50:02Z",
+        "completed_at_utc": "2026-10-05T10:50:18Z",
+        "raw_job_log_sha256": "8372449c2f80983b4578ed7657befb1a4d1d58ca769be254e409100134046145",
+        "workflow_job": "gate",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "runtime": {
+          "python": "3.11.16",
+          "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+          "machine": "x86_64"
+        },
+        "temporary_candidate_commit": "0cf2caf71d041b25905b2fbc946840e86ddac002",
+        "candidate_commit_pushed": false,
+        "artifact_name": "pax-ubuntu-latest-py3.11",
+        "artifact_id": 11340549060,
+        "artifact_expires_at_utc": "2026-10-19T10:50:15Z",
+        "artifact_api_digest": "sha256:37cf5c6d8544afe345f9308bd342b22338358e0c9a021b2d9bdf50725c08ed84",
+        "preparation_sha256": "07efacbe652bd44a0da6b6651c86f75acd27ac8dee924f4db9e44f7e5de05fa4",
+        "tracked_drift": "NONE",
+        "command_results": [
+          {
+            "step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify environment and prepare exact candidate",
+            "conclusion": "success"
+          },
+          {
+            "step": "Run complete existing repository gate",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify actual data and unchanged deterministic public output",
+            "conclusion": "success"
+          }
+        ],
+        "tests": 62,
+        "unittest_outcome": "OK",
+        "gate_duration_seconds": "2.275",
+        "gate_log_sha256": "f7f7d8f2786cd6af8b37093ea80a5da82cb70c7d28b233089975635d982e4066",
+        "full_gate_flags": [
+          "PASS - release identity v0.3.3",
+          "PASS - data integrity",
+          "PASS - source credibility",
+          "PASS - public boundary",
+          "PASS - spoken-language audit",
+          "PASS - rendered evidence taxonomy",
+          "PASS - deterministic build",
+          "PASS - evidence integrity",
+          "PASS - generated public boundary",
+          "PASS - tests",
+          "PASS - repository gate"
+        ],
+        "canonical_data_files_unchanged": 5,
+        "generated_files_verified_per_build": 6,
+        "manifest_entries_verified_per_build": 5,
+        "baseline_candidate_repeat_byte_identical": true,
+        "ignored_source_outputs": "NONE",
+        "result_artifact_sha256": "b722bdce589a370016c6ea3abec5d2fca6533313b26a5c3be37478977c96c093"
+      },
+      {
+        "name": "Pax / ubuntu-latest / Python 3.12",
+        "job_id": 111727209037,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37299070181/job/111727209037",
+        "conclusion": "success",
+        "started_at_utc": "2026-10-05T10:50:03Z",
+        "completed_at_utc": "2026-10-05T10:50:16Z",
+        "raw_job_log_sha256": "9cb3b1d85767d54f7b4e473ef9c399b9daf2bb1ed7279fc027cf7add33827684",
+        "workflow_job": "gate",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "runtime": {
+          "python": "3.12.14",
+          "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+          "machine": "x86_64"
+        },
+        "temporary_candidate_commit": "8f9b91efb1923e62488f8630e57fb0f3fbd9ccb2",
+        "candidate_commit_pushed": false,
+        "artifact_name": "pax-ubuntu-latest-py3.12",
+        "artifact_id": 11340554077,
+        "artifact_expires_at_utc": "2026-10-19T10:50:13Z",
+        "artifact_api_digest": "sha256:d8d1998e5f4295c6f3335fe712e9549f83107c858ea4626880203c606c1dbfcc",
+        "preparation_sha256": "3b9fb6b99dfe1ce98d429da11601093175b7318f5eb5ac44170ea1448aa087f5",
+        "tracked_drift": "NONE",
+        "command_results": [
+          {
+            "step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify environment and prepare exact candidate",
+            "conclusion": "success"
+          },
+          {
+            "step": "Run complete existing repository gate",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify actual data and unchanged deterministic public output",
+            "conclusion": "success"
+          }
+        ],
+        "tests": 62,
+        "unittest_outcome": "OK",
+        "gate_duration_seconds": "2.229",
+        "gate_log_sha256": "4548f4f13e861e5d1baf6d23b180623e9c7884cf5721af5a1902b07932bf8fe9",
+        "full_gate_flags": [
+          "PASS - release identity v0.3.3",
+          "PASS - data integrity",
+          "PASS - source credibility",
+          "PASS - public boundary",
+          "PASS - spoken-language audit",
+          "PASS - rendered evidence taxonomy",
+          "PASS - deterministic build",
+          "PASS - evidence integrity",
+          "PASS - generated public boundary",
+          "PASS - tests",
+          "PASS - repository gate"
+        ],
+        "canonical_data_files_unchanged": 5,
+        "generated_files_verified_per_build": 6,
+        "manifest_entries_verified_per_build": 5,
+        "baseline_candidate_repeat_byte_identical": true,
+        "ignored_source_outputs": "NONE",
+        "result_artifact_sha256": "f9097e13efdbbd4d82ec23b99576f0f995d2596dc38540629078a4dc1620c24d"
+      },
+      {
+        "name": "Pax / windows-latest / Python 3.11",
+        "job_id": 111727209146,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37299070181/job/111727209146",
+        "conclusion": "success",
+        "started_at_utc": "2026-10-05T10:50:03Z",
+        "completed_at_utc": "2026-10-05T10:50:40Z",
+        "raw_job_log_sha256": "176747fdf39124dda8dc39ca0f9671eda35d0c77541bfe66c2e33239687ca635",
+        "workflow_job": "gate",
+        "runner_image": "win25-vs2026",
+        "runner_image_version": "20260925.250.1",
+        "runtime": {
+          "python": "3.11.9",
+          "platform": "Windows-10-10.0.26100-SP0",
+          "machine": "AMD64"
+        },
+        "temporary_candidate_commit": "3567252f48fad0998dec4abdac2fb28bf8e4ebef",
+        "candidate_commit_pushed": false,
+        "artifact_name": "pax-windows-latest-py3.11",
+        "artifact_id": 11339369746,
+        "artifact_expires_at_utc": "2026-10-19T10:50:33Z",
+        "artifact_api_digest": "sha256:dfdf78b4838579b2ab2971c4450be718e02708df74bf3a7c9e0d1b0097c957a0",
+        "preparation_sha256": "4f9f6d27d4c901818d69371ed9498c7b14c31232e9eb01b4b05508c3053dcd51",
+        "tracked_drift": "NONE",
+        "command_results": [
+          {
+            "step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify environment and prepare exact candidate",
+            "conclusion": "success"
+          },
+          {
+            "step": "Run complete existing repository gate",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify actual data and unchanged deterministic public output",
+            "conclusion": "success"
+          }
+        ],
+        "tests": 62,
+        "unittest_outcome": "OK",
+        "gate_duration_seconds": "4.929",
+        "gate_log_sha256": "080fcee19325efef786600ba007b010adc4519f2df134cc04abf32bb21cb21e7",
+        "full_gate_flags": [
+          "PASS - release identity v0.3.3",
+          "PASS - data integrity",
+          "PASS - source credibility",
+          "PASS - public boundary",
+          "PASS - spoken-language audit",
+          "PASS - rendered evidence taxonomy",
+          "PASS - deterministic build",
+          "PASS - evidence integrity",
+          "PASS - generated public boundary",
+          "PASS - tests",
+          "PASS - repository gate"
+        ],
+        "canonical_data_files_unchanged": 5,
+        "generated_files_verified_per_build": 6,
+        "manifest_entries_verified_per_build": 5,
+        "baseline_candidate_repeat_byte_identical": true,
+        "ignored_source_outputs": "NONE",
+        "result_artifact_sha256": "79effa162a9ff79d35005d6864d704fa9ff2fd8f11c8a7213cdc74bd4542cbc9"
+      },
+      {
+        "name": "Pax / windows-latest / Python 3.12",
+        "job_id": 111727209229,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37299070181/job/111727209229",
+        "conclusion": "success",
+        "started_at_utc": "2026-10-05T10:50:02Z",
+        "completed_at_utc": "2026-10-05T10:50:38Z",
+        "raw_job_log_sha256": "05c2314503a85cb6b638847f4474da6df301ec4fc1e7e7e348abbce3afacc735",
+        "workflow_job": "gate",
+        "runner_image": "win25-vs2026",
+        "runner_image_version": "20260925.250.1",
+        "runtime": {
+          "python": "3.12.10",
+          "platform": "Windows-2025Server-10.0.26100-SP0",
+          "machine": "AMD64"
+        },
+        "temporary_candidate_commit": "91d5eb9ed2c5c80b97064ffdcdd6c84f1aea185f",
+        "candidate_commit_pushed": false,
+        "artifact_name": "pax-windows-latest-py3.12",
+        "artifact_id": 11340244475,
+        "artifact_expires_at_utc": "2026-10-19T10:50:31Z",
+        "artifact_api_digest": "sha256:96982ae278445ca163fef3b70bb42d65dae302916b24a6d960f2757bd505d5e1",
+        "preparation_sha256": "af12ef13d2f67835b7d1338d3a7a728ae699a1406df04ef72b2d580d17dbd99d",
+        "tracked_drift": "NONE",
+        "command_results": [
+          {
+            "step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify environment and prepare exact candidate",
+            "conclusion": "success"
+          },
+          {
+            "step": "Run complete existing repository gate",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify actual data and unchanged deterministic public output",
+            "conclusion": "success"
+          }
+        ],
+        "tests": 62,
+        "unittest_outcome": "OK",
+        "gate_duration_seconds": "5.156",
+        "gate_log_sha256": "4432336072e06ff610271fd03035765ede631d5c47301a031ffc07f19fe83eca",
+        "full_gate_flags": [
+          "PASS - release identity v0.3.3",
+          "PASS - data integrity",
+          "PASS - source credibility",
+          "PASS - public boundary",
+          "PASS - spoken-language audit",
+          "PASS - rendered evidence taxonomy",
+          "PASS - deterministic build",
+          "PASS - evidence integrity",
+          "PASS - generated public boundary",
+          "PASS - tests",
+          "PASS - repository gate"
+        ],
+        "canonical_data_files_unchanged": 5,
+        "generated_files_verified_per_build": 6,
+        "manifest_entries_verified_per_build": 5,
+        "baseline_candidate_repeat_byte_identical": true,
+        "ignored_source_outputs": "NONE",
+        "result_artifact_sha256": "5dbda8465aa1b1a9e697ba60c63c6b5527c144a2284fa92bd776c071b5dc2220"
+      },
+      {
+        "name": "Pax CodeQL / javascript-typescript",
+        "job_id": 111727209128,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37299070181/job/111727209128",
+        "conclusion": "success",
+        "started_at_utc": "2026-10-05T10:50:02Z",
+        "completed_at_utc": "2026-10-05T10:50:45Z",
+        "raw_job_log_sha256": "f7b517155d169191f34095ce99a4f0d9e79a2b7a0aeb3509e97288fc0ef54056",
+        "workflow_job": "codeql",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "runtime": {
+          "python": "3.12.14",
+          "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+          "machine": "x86_64"
+        },
+        "temporary_candidate_commit": "57060bbc4d698b48e6428477aee3407975a0f75b",
+        "candidate_commit_pushed": false,
+        "artifact_name": "pax-codeql-javascript",
+        "artifact_id": 11340074426,
+        "artifact_expires_at_utc": "2026-10-19T10:50:40Z",
+        "artifact_api_digest": "sha256:d94fa4556c7c6124f4f7319c1f2c26c956539b812923c24fa6d67b278fb4659e",
+        "preparation_sha256": "281fd3bed599c6a45e50c3f7163081b7b768fe0f2afa4179ed62b56ceacb6872",
+        "tracked_drift": "NONE",
+        "command_results": [
+          {
+            "step": "Prepare exact candidate and record source provenance",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify analysis attribution and collect bounded results",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify analysis left candidate unchanged",
+            "conclusion": "success"
+          }
+        ],
+        "codeql": {
+          "scope": "Pax candidate analysis only; execution success does not imply zero findings",
+          "analyses": [
+            {
+              "language": "javascript",
+              "source_change_scope": "Unchanged published Pax JavaScript application; no JavaScript patch is claimed",
+              "source_byte_coverage": "Selected candidate files verified in the database archive; this does not establish exhaustive file or query coverage",
+              "sarif_sha256": "74f03eee31bb5711efa11c056bd9ead61f79dcdff01bfd824e5bd39d4ed4c96d",
+              "database": {
+                "source_root_verified": true,
+                "source_language_verified": "javascript",
+                "archived_source_bytes_verified": {
+                  "web/app.js": "dcaa215db2d023bab70b435deb77d20ee0d64b619ed9b182552fab746df26f1d"
+                }
+              },
+              "runs": [
+                {
+                  "tool": "CodeQL",
+                  "tool_version": "2.27.1",
+                  "result_count": 0,
+                  "findings": []
+                }
+              ]
+            }
+          ]
+        },
+        "analysis_file_coverage": "6 out of 6 GitHub Actions files and 1 out of 1 JavaScript files",
+        "codeql_artifact_sha256": "a0a05b64d9d1a0d98ff1de52f3b0ede12e95a8655a1e5759f1c6b8678075ef35",
+        "codeql_overlay_mode": "overlay-base without caching"
+      },
+      {
+        "name": "Pax CodeQL / python",
+        "job_id": 111727208680,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37299070181/job/111727208680",
+        "conclusion": "success",
+        "started_at_utc": "2026-10-05T10:50:03Z",
+        "completed_at_utc": "2026-10-05T10:50:56Z",
+        "raw_job_log_sha256": "96109b991d262c0d1c4aed6fa67cf53634047d8929536347ad389fe6ef8dd131",
+        "workflow_job": "codeql",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "runtime": {
+          "python": "3.12.14",
+          "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+          "machine": "x86_64"
+        },
+        "temporary_candidate_commit": "837f1ac9d664a665bf04e9074803180d13cc7adb",
+        "candidate_commit_pushed": false,
+        "artifact_name": "pax-codeql-python",
+        "artifact_id": 11340329497,
+        "artifact_expires_at_utc": "2026-10-19T10:50:49Z",
+        "artifact_api_digest": "sha256:a0c69adbd6fff2bf5d64a299d6c4d6566fd70e7278b1c3c0f52da70849022393",
+        "preparation_sha256": "d42c63ab8cbb4c8af3c17842cd0be23af3e6db192d363a3c3e90dd6e9f88f79d",
+        "tracked_drift": "NONE",
+        "command_results": [
+          {
+            "step": "Prepare exact candidate and record source provenance",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify analysis attribution and collect bounded results",
+            "conclusion": "success"
+          },
+          {
+            "step": "Verify analysis left candidate unchanged",
+            "conclusion": "success"
+          }
+        ],
+        "codeql": {
+          "scope": "Pax candidate analysis only; execution success does not imply zero findings",
+          "analyses": [
+            {
+              "language": "python",
+              "source_change_scope": "Changed Pax validator and CLI regression tests",
+              "source_byte_coverage": "Selected candidate files verified in the database archive; this does not establish exhaustive file or query coverage",
+              "sarif_sha256": "f80577691b74cdaa6aab5335b443334c092e01f871e380491dd39d25fb16fcb4",
+              "database": {
+                "source_root_verified": true,
+                "source_language_verified": "python",
+                "archived_source_bytes_verified": {
+                  "scripts/validate_data.py": "9a6798d28eea30d2123e6948fe40bfdfb06087982c2b6a4c472ae69b8cca5148",
+                  "tests/test_snapshot_boundary.py": "6ef0b1d0bb938db94ab9a03ee73e2a5c2d4d08413f000455f9b3e6e391d8ef52"
+                }
+              },
+              "runs": [
+                {
+                  "tool": "CodeQL",
+                  "tool_version": "2.27.1",
+                  "result_count": 0,
+                  "findings": []
+                }
+              ]
+            }
+          ]
+        },
+        "analysis_file_coverage": "24 out of 24 Python files and 6 out of 6 GitHub Actions files",
+        "codeql_artifact_sha256": "25f94c3c804947464eeb5278a40b252da087f3ba505d87e48f5dc400ee7cbf70",
+        "codeql_overlay_mode": "overlay-base without caching"
+      },
+      {
+        "name": "Pax verification complete",
+        "job_id": 111727526019,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37299070181/job/111727526019",
+        "conclusion": "success",
+        "started_at_utc": "2026-10-05T10:50:59Z",
+        "completed_at_utc": "2026-10-05T10:51:02Z",
+        "raw_job_log_sha256": "95a39d81fcc9803d278ef6a1fa96e9e195ecf5bfb90bf84efcefb8bc7ddf2c17",
+        "scope": "Aggregate success check of every platform and language job; not an additional test suite"
+      }
+    ],
+    "validation_tooling": {
+      "actionlint": "1.7.12",
+      "workflow_lint": "PASS",
+      "local_real_git_integration": {
+        "tests": 62,
+        "canonical_files": 5,
+        "public_files": 6,
+        "manifest_entries": 5,
+        "corrupt_patch_rejected_before_mutation": true,
+        "scope": "Local real-Git helper integration; explicit local metadata does not represent a hosted run",
+        "summary_sha256": "c1d87a0a5da3de82a59091cfef3260f7ddbe26443589fbaf35708841f884e2e6"
+      },
+      "independent_review": "Workflow/helpers and downloaded job/artifact evidence independently reviewed; all seven jobs, counts, recorded versions and hashes agree. No material defect found."
+    },
+    "cache_and_upload_controls": {
+      "sarif_upload": "never",
+      "database_upload": false,
+      "overlay_mode": "explicit overlay-base without caching",
+      "trap_caching": false,
+      "dependency_caching": false,
+      "actions_caches_before": 0,
+      "actions_caches_after": 0,
+      "post_run_cache_response_sha256": "6b0b42052a75987810c770389c23c5886bc955c8e023c9b577b04d5c66370a12",
+      "observed": "Both CodeQL logs confirm overlay-base without caching; no overlay database upload appears. No Actions caches were present after the run.",
+      "local_analysis_storage": "CodeQL creates runner-temporary databases and local overlay cache data during analysis. These were not uploaded as artifacts or retained in repository Actions caches."
+    },
+    "retained_evidence": {
+      "artifacts": 6,
+      "artifact_contents": "Only preparation.json plus pax-results.json or codeql-summary.json; fourteen-day retention. No source tree, generated public tree, SARIF or CodeQL database included.",
+      "raw_logs_zip_sha256": "bc1df62efe51af9f090911dd14071c6cbbbf64ed5d7a4a60aa7d3de66ac14eff",
+      "raw_local_cache": ".audit-cache/hosted-runs/37299070181",
+      "raw_log_boundary": "Downloaded GitHub job logs and JSON artifacts are retained in the ignored audit cache. Per-build logs and the unprefixed gate log were runner-temporary: their hashes are retained, not those raw files. GitHub job logs include the gate output. Hashes identify bytes, not independently authenticated provenance.",
+      "source_archive_boundary": "Raw CodeQL source archives, SARIF and databases remained runner-temporary. Archive-byte verification is established by the executed collector and its recorded hashes, not post-run raw-archive reinspection."
+    },
+    "limits": [
+      "The four CI cells and two configured CodeQL languages pass independently; GitHub branch protections and upstream maintainer acceptance are not inferred.",
+      "CodeQL 2.27.1 reports zero results for its configured queries; selected archive bytes and logged extraction counts do not establish exhaustive security coverage.",
+      "Browser UAT was not repeated because all six generated public files match the original-source and repeated candidate builds on every platform.",
+      "No source/date/locator/policy changes, upstream writes, upstream workflow dispatch, issues, PRs, contact, release or deployment.",
+      "Validation of the owner-intended record is not authentication of historical source review or applicant qualification."
+    ]
   }
 }
