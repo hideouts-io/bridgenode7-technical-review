@@ -227,5 +227,233 @@
     "url": "https://github.com/Bridge-Node-7/frontier-decision-engine/blob/4a913756d00cdd321da04bf7350507e571f2f2dd/LICENSE",
     "notice": "\n                                 Apache License\n                           Version 2.0, January 2004\n                        http://www.apache.org/licenses/\n\n   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION\n\n   1. Definitions.\n\n      \"License\" shall mean the terms and conditions for use, reproduction,\n      and distribution as defined by Sections 1 through 9 of this document.\n\n      \"Licensor\" shall mean the copyright owner or entity authorized by\n      the copyright owner that is granting the License.\n\n      \"Legal Entity\" shall mean the union of the acting entity and all\n      other entities that control, are controlled by, or are under common\n      control with that entity. For the purposes of this definition,\n      \"control\" means (i) the power, direct or indirect, to cause the\n      direction or management of such entity, whether by contract or\n      otherwise, or (ii) ownership of fifty percent (50%) or more of the\n      outstanding shares, or (iii) beneficial ownership of such entity.\n\n      \"You\" (or \"Your\") shall mean an individual or Legal Entity\n      exercising permissions granted by this License.\n\n      \"Source\" form shall mean the preferred form for making modifications,\n      including but not limited to software source code, documentation\n      source, and configuration files.\n\n      \"Object\" form shall mean any form resulting from mechanical\n      transformation or translation of a Source form, including but\n      not limited to compiled object code, generated documentation,\n      and conversions to other media types.\n\n      \"Work\" shall mean the work of authorship, whether in Source or\n      Object form, made available under the License, as indicated by a\n      copyright notice that is included in or attached to the work\n      (an example is provided in the Appendix below).\n\n      \"Derivative Works\" shall mean any work, whether in Source or Object\n      form, that is based on (or derived from) the Work and for which the\n      editorial revisions, annotations, elaborations, or other modifications\n      represent, as a whole, an original work of authorship. For the purposes\n      of this License, Derivative Works shall not include works that remain\n      separable from, or merely link (or bind by name) to the interfaces of,\n      the Work and Derivative Works thereof.\n\n      \"Contribution\" shall mean any work of authorship, including\n      the original version of the Work and any modifications or additions\n      to that Work or Derivative Works thereof, that is intentionally\n      submitted to Licensor for inclusion in the Work by the copyright owner\n      or by an individual or Legal Entity authorized to submit on behalf of\n      the copyright owner. For the purposes of this definition, \"submitted\"\n      means any form of electronic, verbal, or written communication sent\n      to the Licensor or its representatives, including but not limited to\n      communication on electronic mailing lists, source code control systems,\n      and issue tracking systems that are managed by, or on behalf of, the\n      Licensor for the purpose of discussing and improving the Work, but\n      excluding communication that is conspicuously marked or otherwise\n      designated in writing by the copyright owner as \"Not a Contribution.\"\n\n      \"Contributor\" shall mean Licensor and any individual or Legal Entity\n      on behalf of whom a Contribution has been received by Licensor and\n      subsequently incorporated within the Work.\n\n   2. Grant of Copyright License. Subject to the terms and conditions of\n      this License, each Contributor hereby grants to You a perpetual,\n      worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n      copyright license to reproduce, prepare Derivative Works of,\n      publicly display, publicly perform, sublicense, and distribute the\n      Work and such Derivative Works in Source or Object form.\n\n   3. Grant of Patent License. Subject to the terms and conditions of\n      this License, each Contributor hereby grants to You a perpetual,\n      worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n      (except as stated in this section) patent license to make, have made,\n      use, offer to sell, sell, import, and otherwise transfer the Work,\n      where such license applies only to those patent claims licensable\n      by such Contributor that are necessarily infringed by their\n      Contribution(s) alone or by combination of their Contribution(s)\n      with the Work to which such Contribution(s) was submitted. If You\n      institute patent litigation against any entity (including a\n      cross-claim or counterclaim in a lawsuit) alleging that the Work\n      or a Contribution incorporated within the Work constitutes direct\n      or contributory patent infringement, then any patent licenses\n      granted to You under this License for that Work shall terminate\n      as of the date such litigation is filed.\n\n   4. Redistribution. You may reproduce and distribute copies of the\n      Work or Derivative Works thereof in any medium, with or without\n      modifications, and in Source or Object form, provided that You\n      meet the following conditions:\n\n      (a) You must give any other recipients of the Work or\n          Derivative Works a copy of this License; and\n\n      (b) You must cause any modified files to carry prominent notices\n          stating that You changed the files; and\n\n      (c) You must retain, in the Source form of any Derivative Works\n          that You distribute, all copyright, patent, trademark, and\n          attribution notices from the Source form of the Work,\n          excluding those notices that do not pertain to any part of\n          the Derivative Works; and\n\n      (d) If the Work includes a \"NOTICE\" text file as part of its\n          distribution, then any Derivative Works that You distribute must\n          include a readable copy of the attribution notices contained\n          within such NOTICE file, excluding those notices that do not\n          pertain to any part of the Derivative Works, in at least one\n          of the following places: within a NOTICE text file distributed\n          as part of the Derivative Works; within the Source form or\n          documentation, if provided along with the Derivative Works; or,\n          within a display generated by the Derivative Works, if and\n          wherever such third-party notices normally appear. The contents\n          of the NOTICE file are for informational purposes only and\n          do not modify the License. You may add Your own attribution\n          notices within Derivative Works that You distribute, alongside\n          or as an addendum to the NOTICE text from the Work, provided\n          that such additional attribution notices cannot be construed\n          as modifying the License.\n\n      You may add Your own copyright statement to Your modifications and\n      may provide additional or different license terms and conditions\n      for use, reproduction, or distribution of Your modifications, or\n      for any such Derivative Works as a whole, provided Your use,\n      reproduction, and distribution of the Work otherwise complies with\n      the conditions stated in this License.\n\n   5. Submission of Contributions. Unless You explicitly state otherwise,\n      any Contribution intentionally submitted for inclusion in the Work\n      by You to the Licensor shall be under the terms and conditions of\n      this License, without any additional terms or conditions.\n      Notwithstanding the above, nothing herein shall supersede or modify\n      the terms of any separate license agreement you may have executed\n      with Licensor regarding such Contributions.\n\n   6. Trademarks. This License does not grant permission to use the trade\n      names, trademarks, service marks, or product names of the Licensor,\n      except as required for reasonable and customary use in describing the\n      origin of the Work and reproducing the content of the NOTICE file.\n\n   7. Disclaimer of Warranty. Unless required by applicable law or\n      agreed to in writing, Licensor provides the Work (and each\n      Contributor provides its Contributions) on an \"AS IS\" BASIS,\n      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or\n      implied, including, without limitation, any warranties or conditions\n      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A\n      PARTICULAR PURPOSE. You are solely responsible for determining the\n      appropriateness of using or redistributing the Work and assume any\n      risks associated with Your exercise of permissions under this License.\n\n   8. Limitation of Liability. In no event and under no legal theory,\n      whether in tort (including negligence), contract, or otherwise,\n      unless required by applicable law (such as deliberate and grossly\n      negligent acts) or agreed to in writing, shall any Contributor be\n      liable to You for damages, including any direct, indirect, special,\n      incidental, or consequential damages of any character arising as a\n      result of this License or out of the use or inability to use the\n      Work (including but not limited to damages for loss of goodwill,\n      work stoppage, computer failure or malfunction, or any and all\n      other commercial damages or losses), even if such Contributor\n      has been advised of the possibility of such damages.\n\n   9. Accepting Warranty or Additional Liability. While redistributing\n      the Work or Derivative Works thereof, You may choose to offer,\n      and charge a fee for, acceptance of support, warranty, indemnity,\n      or other liability obligations and/or rights consistent with this\n      License. However, in accepting such obligations, You may act only\n      on Your own behalf and on Your sole responsibility, not on behalf\n      of any other Contributor, and only if You agree to indemnify,\n      defend, and hold each Contributor harmless for any liability\n      incurred by, or claims asserted against, such Contributor by reason\n      of your accepting any such warranty or additional liability.\n\n   END OF TERMS AND CONDITIONS\n\n   APPENDIX: How to apply the Apache License to your work.\n\n      To apply the Apache License to your work, attach the following\n      boilerplate notice, with the fields enclosed by brackets \"[]\"\n      replaced with your own identifying information. (Don't include\n      the brackets!)  The text should be enclosed in the appropriate\n      comment syntax for the file format. We also recommend that a\n      file or class name and description of purpose be included on the\n      same \"printed page\" as the copyright notice for easier\n      identification within third-party archives.\n\n   Copyright [yyyy] [name of copyright owner]\n\n   Licensed under the Apache License, Version 2.0 (the \"License\");\n   you may not use this file except in compliance with the License.\n   You may obtain a copy of the License at\n\n       http://www.apache.org/licenses/LICENSE-2.0\n\n   Unless required by applicable law or agreed to in writing, software\n   distributed under the License is distributed on an \"AS IS\" BASIS,\n   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n   See the License for the specific language governing permissions and\n   limitations under the License.\n"
   },
-  "raw_log_policy": "Original failure, combined success, browser diagnostics and controlled socket-probe logs are retained in ignored .audit-cache/continuation/fde and identified by hashes; only portable outcomes are published."
+  "raw_log_policy": "Original failure, combined success, browser diagnostics and controlled socket-probe logs are retained in ignored .audit-cache/continuation/fde and identified by hashes; only portable outcomes are published.",
+  "workflow_node22_verification": {
+    "captured_at_utc": "2026-10-05T06:18:00.326275+00:00",
+    "task": "T02 Node 22 compatibility supplement; integrate into existing evidence/fde-timestamp-contract.json",
+    "source_repository": "https://github.com/Bridge-Node-7/frontier-decision-engine",
+    "source_commit": "4a913756d00cdd321da04bf7350507e571f2f2dd",
+    "source_application_version": "0.5.16",
+    "candidate_patches": [
+      {
+        "file": "proposals/fde-rfc3339-timestamp-contract.patch",
+        "sha256": "eee5bd19bea70cf34d0224209f39de1f3f4fd90b7ec49de2702ce9373a987bf6"
+      },
+      {
+        "file": "proposals/fde-context-threaded-harness.patch",
+        "sha256": "72da129d8dac44c13a141adb38e2c02079d05dcda002fe71ed9c82d889115fe4"
+      }
+    ],
+    "status": "LOCALLY_VERIFIED_ON_WORKFLOW_NODE_22_MAJOR; UPSTREAM_OPEN; UBUNTU_HOSTED_CI_UNVERIFIED",
+    "environment": {
+      "node": "22.23.3",
+      "npm": "10.9.9",
+      "python": "3.11.16",
+      "playwright": "1.63.0",
+      "chromium": "153.0.8010.12",
+      "platform": "macOS-27.0-arm64-arm-64bit",
+      "architecture": "arm64",
+      "supporting_python_requirement": "Python 3.11+ per scripts/run-python.mjs; CI uses runner python3 without an exact pin."
+    },
+    "node_runtime_download_verification": {
+      "archive": "node-v22.23.3-darwin-arm64.tar.gz",
+      "source_url": "https://nodejs.org/dist/v22.23.3/node-v22.23.3-darwin-arm64.tar.gz",
+      "checksum_source_url": "https://nodejs.org/dist/latest-v22.x/SHASUMS256.txt",
+      "expected_sha256": "23b25245dcfb9af7262f8ff142e9e2e0af025368117329e7a7458a51e5922f53",
+      "actual_sha256": "23b25245dcfb9af7262f8ff142e9e2e0af025368117329e7a7458a51e5922f53",
+      "checksum_file_sha256": "4fe99a2ba9d552a6f51c13ed68fb11104cfa5df601aec616be689253a8139e7a",
+      "method": "Downloaded over HTTPS and matched official published SHA256; no detached release signature independently verified."
+    },
+    "supporting_packages": {
+      "greenlet": "3.5.6",
+      "playwright": "1.63.0",
+      "pyee": "13.0.1",
+      "typing_extensions": "4.16.0"
+    },
+    "workflow_requirements": {
+      "node_major": "22",
+      "runner": "ubuntu-latest",
+      "python": "Runner python3, not exactly pinned; local Python 3.11.16 satisfies scripts/run-python.mjs guidance.",
+      "browser_requirement": "playwright==1.63.0; matching installed Chromium reused from existing browser cache.",
+      "npm_install": "npm ci --ignore-scripts --no-audit --no-fund",
+      "generated_inputs": [
+        "npm run manifest",
+        "npm run facts",
+        "npm run manifest"
+      ],
+      "candidate_gate": "npm run check"
+    },
+    "commands": {
+      "runtime_download": "curl --fail-with-body --location --retry 3 --retry-delay 1 --retry-connrefused --output <DOWNLOAD_DIR>/node-v22.23.3-darwin-arm64.tar.gz https://nodejs.org/dist/v22.23.3/node-v22.23.3-darwin-arm64.tar.gz; compare SHA256 against captured official SHASUMS256.txt before extracting or executing.",
+      "dependency_setup": [
+        "python3.11 -m venv <FDE_TOOLCHAIN>/venv",
+        "<FDE_TOOLCHAIN>/venv/bin/python -m pip install --disable-pip-version-check -r <COMBINED_COPY>/requirements-dev.txt",
+        "npm ci --ignore-scripts --no-audit --no-fund in each new configuration"
+      ],
+      "runtime_selection": "Prepend <VERIFIED_NODE22>/bin and <FDE_TOOLCHAIN>/venv/bin to PATH; node --version v22.23.3, npm --version 10.9.9, python3 --version 3.11.16.",
+      "timestamp_only": [
+        "git apply --check <TIMESTAMP_PATCH>",
+        "git apply <TIMESTAMP_PATCH>",
+        "node --test tests/governed-context.test.js",
+        "npm run check"
+      ],
+      "harness_only": [
+        "git apply --check <HARNESS_PATCH>",
+        "git apply <HARNESS_PATCH>",
+        "npm run test:context"
+      ],
+      "combined": [
+        "git apply --check <TIMESTAMP_PATCH> <HARNESS_PATCH>",
+        "git apply <TIMESTAMP_PATCH> <HARNESS_PATCH>",
+        "npm run manifest",
+        "npm run facts",
+        "npm run manifest",
+        "npm run check"
+      ],
+      "generated_drift": "Compare git diff --binary before/after generated refresh and gates; expected diff is exactly the already applied proposals, not a clean unmodified upstream tree."
+    },
+    "checks": [
+      {
+        "configuration": "timestamp-only",
+        "check": "targeted governed-context tests",
+        "status": "PASS",
+        "exit_code": 0,
+        "counts": {
+          "tests": 19,
+          "pass": 19,
+          "fail": 0
+        },
+        "log": "timestamp-targeted.log"
+      },
+      {
+        "configuration": "timestamp-only",
+        "check": "npm run check",
+        "status": "FAIL",
+        "exit_code": 1,
+        "node_counts": {
+          "tests": 229,
+          "pass": 229,
+          "fail": 0
+        },
+        "passed_stages": [
+          "facts:check",
+          "test",
+          "validate:version",
+          "validate",
+          "manifest",
+          "test:e2e",
+          "test:framing"
+        ],
+        "failed_stage": "test:context \u2014 30-second handoff timeout",
+        "not_reached": [
+          "test:release"
+        ],
+        "log": "timestamp-full-check.log"
+      },
+      {
+        "configuration": "harness-only",
+        "check": "npm run test:context",
+        "status": "PASS",
+        "exit_code": 0,
+        "log": "harness-context.log",
+        "purpose": "Confirms the independent harness correction on the exact base without timestamp changes."
+      },
+      {
+        "configuration": "combined",
+        "check": "CI generated-input refresh",
+        "status": "PASS",
+        "exit_code": 0,
+        "generated_drift": "none beyond the applied proposals",
+        "discovered_tests": 229,
+        "site_manifest_entries": 43,
+        "log": "combined-generated-inputs.log"
+      },
+      {
+        "configuration": "combined",
+        "check": "npm run check",
+        "status": "PASS",
+        "exit_code": 0,
+        "node_counts": {
+          "tests": 229,
+          "pass": 229,
+          "fail": 0
+        },
+        "passed_stages": [
+          "facts:check",
+          "test",
+          "validate:version",
+          "validate",
+          "manifest",
+          "test:e2e",
+          "test:framing",
+          "test:context",
+          "test:release"
+        ],
+        "log": "combined-full-check.log"
+      },
+      {
+        "configuration": "all three",
+        "check": "patch applicability, diff whitespace and byte drift",
+        "status": "PASS",
+        "new_source_patches": 0,
+        "source_requirements_changes": 0,
+        "drift_beyond_applied_proposals": "none"
+      },
+      {
+        "configuration": "preserved evidence",
+        "check": "Original source snapshot and previous recorded raw evidence",
+        "status": "PASS",
+        "original_git_status": "clean",
+        "original_commit_unchanged": true,
+        "previous_raw_log_hashes": "All still match the published Node24 evidence record."
+      }
+    ],
+    "remaining_scope_limits": [
+      "This closes the local Node22-major compatibility gap only. macOS arm64 is not the declared ubuntu-latest runner or a hosted GitHub Actions execution.",
+      "The workflow uses Node major 22; the exact hosted minor, npm and runner Python versions were not queried or reproduced. This run records official Node22.23.3/npm10.9.9/Python3.11.16 explicitly.",
+      "The timestamp-only full gate still fails. Only the independently corrected harness and combined configuration pass their applicable browser gates. Timestamp validation did not fix transport.",
+      "The earlier Node24 results and failure diagnostics remain historical evidence; this supplement adds observations rather than overwriting them.",
+      "The seven release-browser display modes retain the existing reported sandbox-fallback static route. The harness-only and combined context checks use native localhost HTTP. No new fallback, retry or validation weakening was introduced.",
+      "No leap-second policy or sub-millisecond precision change was introduced. Existing owner-dependent contract decisions remain open.",
+      "Hosted CodeQL Actions initialization/analysis, Ubuntu OS dependency installation, release packaging/tag/signature checks and website/release deployment were not executed in this toolchain-only scope.",
+      "Archive bytes match official published SHA256 over HTTPS; a detached release signature was not independently verified. Hashes do not independently establish authenticated origin.",
+      "No upstream changes, report-root edits, commits, pushes, contact or visibility changes were made by this agent."
+    ],
+    "source_and_workflow_sha256": {
+      "package.json": "ace87d05582c21d2c2ce3cc5ff214247e690e92c087867072c411fc9c7a83bd7",
+      "package-lock.json": "b8350592f2c2b0e1db0992fe4a8fb51e5bfc2f12ee3fbad829c3a3556206eecd",
+      "requirements-dev.txt": "852008c6c134845926625892a248563fe02a96a91e769e6735af1bad49ab2cef",
+      ".github/workflows/ci.yml": "1f410102e78f9145685f3d8cd8f2b15a7ced6a192927b21cd2c6964bc2719b93",
+      ".github/workflows/pages.yml": "7684445a1930cffb93d259d5c9c728ecc5e6d4568845eb485f380490b428d879",
+      ".github/workflows/release-preflight.yml": "71eb3ff8aa3d1475a415396e84a7ee2c3e98782431c7cd1f4dc125fbac5b6860",
+      ".github/workflows/release.yml": "b531be2bc2e10311d115c1a606f8c199a50233bd136faeffe4a7df36153f2e9a"
+    },
+    "raw_evidence_sha256": {
+      "timestamp-npm-install.log": "fa4ca447442562a2f1e3beec1148791b3013d3ed2a9865af0ace74cfa3ecac9b",
+      "timestamp-targeted.log": "9f1fe8b5407ded49e46c934f263c07deaac0924bd7fa38c399c331b2208b4663",
+      "timestamp-full-check.log": "839089386218071298ed001bde332b99c11ed01389a11eefb2c2cd4db880afa7",
+      "harness-npm-install.log": "fa4ca447442562a2f1e3beec1148791b3013d3ed2a9865af0ace74cfa3ecac9b",
+      "harness-context.log": "3bfabe0ace2897feb3d14defef735c50ad4f1e6b141155e2ff5a9879f688740b",
+      "combined-npm-install.log": "fa4ca447442562a2f1e3beec1148791b3013d3ed2a9865af0ace74cfa3ecac9b",
+      "combined-generated-inputs.log": "2c46d7e2e382c1423ea9a20ea8a0ba5885aa03905532ba9b80853f27eeecc7ac",
+      "combined-full-check.log": "f10c002cd562626cc5296c26867b7159a6e7dcf578c2a0dbd7dbd0af8a9caf95",
+      "environment-install.log": "689b68c80c52333ee923f8e251992c90d1adf3d745dd6865926e87417c8b2054",
+      "supporting-package-versions.log": "68d40ba88621e6858be892daff60b289a7a5d3a304eb68a4ff6506f2cc04b067",
+      "browser-environment.json": "35f8493686b56e7bbc83643752b072d9f8cfc8a35e93fc763fa78dbe3eda142d",
+      "downloads/checksum-fetch.log": "5d17e0ffce1e788c7c49c610ef1e9e16a826994983ec5ec64bd887a013de4ca0",
+      "downloads/archive-fetch.log": "0345c67d41c7b09ead408e3d8d3ea55ea7e183f9dd71d84f093d357d21f9b21d",
+      "downloads/SHASUMS256.txt": "4fe99a2ba9d552a6f51c13ed68fb11104cfa5df601aec616be689253a8139e7a",
+      "downloads/archive-verification.json": "3cf7ffb5a97f05f4bf8392ab39f8a840081fe83cfc417ee6ec2157830f1242d4"
+    },
+    "candidate_diff_sha256": {
+      "timestamp-before-check.patch": "eee5bd19bea70cf34d0224209f39de1f3f4fd90b7ec49de2702ce9373a987bf6",
+      "timestamp-after-check.patch": "eee5bd19bea70cf34d0224209f39de1f3f4fd90b7ec49de2702ce9373a987bf6",
+      "harness-before-check.patch": "72da129d8dac44c13a141adb38e2c02079d05dcda002fe71ed9c82d889115fe4",
+      "harness-after-check.patch": "72da129d8dac44c13a141adb38e2c02079d05dcda002fe71ed9c82d889115fe4",
+      "combined-before-check.patch": "b745222567fd80aae63be9175ede862ef37688bb278c33dbdbcc63b01a2a4f94",
+      "combined-after-refresh.patch": "b745222567fd80aae63be9175ede862ef37688bb278c33dbdbcc63b01a2a4f94",
+      "combined-after-check.patch": "b745222567fd80aae63be9175ede862ef37688bb278c33dbdbcc63b01a2a4f94"
+    },
+    "raw_log_policy": "Raw logs, source copies, runtime downloads and environments remain only in ignored .audit-cache/continuation/toolchain/fde. Publish portable outcomes and hashes by integrating this supplement into the existing task evidence."
+  }
 }

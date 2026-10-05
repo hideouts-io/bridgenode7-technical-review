@@ -278,7 +278,7 @@
     }
   ],
   "limitations": [
-    "Local macOS arm64 Python 3.11 validation, not the full hosted Linux/Windows and Python matrix.",
+    "Initial local macOS arm64 Python 3.11 evidence is preserved; additional declared Python 3.12/3.13 runtime checks are recorded under declared_runtime_verification. Hosted Linux/Windows parity remains unverified.",
     "No upstream modifications, commits, pushes, issues, or pull requests were made by this task.",
     "Validation does not authenticate source declarations, independently verify evidence credibility, authorize a decision, or qualify a mission.",
     "No frontend change; prior browser evidence remains a separate audit result and was not rerun without a behavioral reason.",
@@ -289,5 +289,311 @@
     "name": "MIT",
     "url": "https://github.com/Bridge-Node-7/materials-to-mission/blob/2a8d26af86e8adb8b1e34550045782d1a20418a4/LICENSE",
     "notice": "MIT License\n\nCopyright (c) 2026 Bridge Node 7\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+  },
+  "declared_runtime_verification": {
+    "format": "bn7.review.toolchain-supplement/1",
+    "task": "T01",
+    "repository": "Bridge-Node-7/materials-to-mission",
+    "source_commit": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+    "verified_at_utc": "2026-10-05T06:18:23.789774+00:00",
+    "patch": {
+      "file": "proposals/m2m-source-validation.patch",
+      "sha256": "ff69375080888612f33d7c308bf0878d1e5ee728fb6b84833ffdbdab5fb5aa0b",
+      "apply_check": "PASS on both fresh exact-base checkouts",
+      "adapted": false
+    },
+    "scope": "Close previously missing declared Python 3.12 and 3.13 local runtime acceptance; retain existing 3.11 evidence without repeating it.",
+    "workflow_requirements": {
+      "ci_consumer": {
+        "runner": "ubuntu-latest",
+        "python": "3.12",
+        "dependencies": "requirements.txt plus --no-deps --no-build-isolation editable install"
+      },
+      "ci_maintainer": {
+        "runners": [
+          "ubuntu-latest",
+          "windows-latest"
+        ],
+        "python": [
+          "3.11",
+          "3.13"
+        ],
+        "dependencies": "requirements-dev.txt plus --no-deps --no-build-isolation editable install",
+        "steps": [
+          "scripts/check_privacy.py",
+          "scripts/check_repo.py",
+          "git diff --exit-code"
+        ]
+      },
+      "other_declared_full_gate_jobs": {
+        "python": "3.12",
+        "runner": "ubuntu-latest",
+        "workflows": [
+          "release.yml",
+          "pages.yml",
+          "browser-uat.yml"
+        ]
+      },
+      "input_hashes": [
+        {
+          "file": ".github/workflows/ci.yml",
+          "sha256": "e4c583c88f0eae027cfc1f2868168bc8b50e17e07859cad2ec21a5ad5eb6ac87"
+        },
+        {
+          "file": ".github/workflows/release.yml",
+          "sha256": "aafda6507b039ab55261ed1fc4ef0c3437ed0c383f959ea82d31d8b440a6b818"
+        },
+        {
+          "file": ".github/workflows/pages.yml",
+          "sha256": "59f22010291e29a09c4d06728d7b6864207da32ebace15e52f59f27a83c91a18"
+        },
+        {
+          "file": ".github/workflows/browser-uat.yml",
+          "sha256": "4e910cb0bf95ca0eef1c6ea2f7325514503030f3133f0fc779ef23fa079b7030"
+        },
+        {
+          "file": "requirements.txt",
+          "sha256": "38ed43c5223ede879c847aac17bab1a077c7c48df7a3e581413eea5a3f096d3a"
+        },
+        {
+          "file": "requirements-dev.txt",
+          "sha256": "e20838669e0d741d7c549a2f1315aa6f0b78795732657055c3a19ff313ddebec"
+        },
+        {
+          "file": "pyproject.toml",
+          "sha256": "d0ad19841a7bc4902f1f7afe8591f4e25c3501119ee793069c6a8c236a467bd2"
+        }
+      ]
+    },
+    "local_host": {
+      "os": "Darwin",
+      "macos_version": "27.0",
+      "architecture": "arm64",
+      "runtime_inventory_tool": "uv 0.12.19",
+      "runtime_distribution": "Existing managed CPython installations; no system runtime installation or global package changes"
+    },
+    "setup_commands": [
+      "git clone --no-hardlinks BASELINE CANDIDATE",
+      "git apply --check REVIEW/proposals/m2m-source-validation.patch",
+      "git apply REVIEW/proposals/m2m-source-validation.patch",
+      "DECLARED_PYTHON -m venv EXTERNAL/venv",
+      "python -m pip install -r requirements.txt (consumer-only 3.12 phase)",
+      "python -m pip install --no-deps --no-build-isolation -e .",
+      "python -m pip install -r requirements-dev.txt (full-gate phases)"
+    ],
+    "runtime_results": [
+      {
+        "name": "consumer_and_full_gate_python312",
+        "environment": {
+          "python": "3.12.14",
+          "dependencies": {
+            "materials-to-mission": "0.7.6",
+            "jsonschema": "4.26.0",
+            "referencing": "0.37.0",
+            "pytest": "9.1.1",
+            "coverage": "7.16.2",
+            "setuptools": "84.0.0"
+          }
+        },
+        "commands": [
+          {
+            "command": "python scripts/check_privacy.py",
+            "exit": 0,
+            "reason": "Distinct declared workflow step, not automatically run by check_repo.py"
+          },
+          {
+            "command": "python scripts/check_repo.py",
+            "exit": 0,
+            "reason": "Previously unexecuted declared runtime acceptance; direct published patch includes required generated hashes"
+          },
+          {
+            "command": "git --no-pager diff --exit-code",
+            "exit": 0,
+            "reason": "Known published patch staged in disposable checkout only; verifies gate caused no unstaged tracked-file mutation"
+          }
+        ],
+        "full_gate": {
+          "tests": 302,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "combined_statement_branch_coverage_percent": 95.3970080552359,
+          "deterministic_packaging": "PASS",
+          "checked_in_evidence_and_manifest": "PASS"
+        },
+        "candidate_equals_published_patch": true,
+        "staged_diff_sha256": "ff69375080888612f33d7c308bf0878d1e5ee728fb6b84833ffdbdab5fb5aa0b",
+        "source_adaptation_required": false
+      },
+      {
+        "name": "full_gate_python313",
+        "environment": {
+          "python": "3.13.15",
+          "dependencies": {
+            "materials-to-mission": "0.7.6",
+            "jsonschema": "4.26.0",
+            "referencing": "0.37.0",
+            "pytest": "9.1.1",
+            "coverage": "7.16.2",
+            "setuptools": "84.0.0"
+          }
+        },
+        "commands": [
+          {
+            "command": "python scripts/check_privacy.py",
+            "exit": 0,
+            "reason": "Distinct declared workflow step, not automatically run by check_repo.py"
+          },
+          {
+            "command": "python scripts/check_repo.py",
+            "exit": 0,
+            "reason": "Previously unexecuted declared runtime acceptance; direct published patch includes required generated hashes"
+          },
+          {
+            "command": "git --no-pager diff --exit-code",
+            "exit": 0,
+            "reason": "Known published patch staged in disposable checkout only; verifies gate caused no unstaged tracked-file mutation"
+          }
+        ],
+        "full_gate": {
+          "tests": 302,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "combined_statement_branch_coverage_percent": 95.3970080552359,
+          "deterministic_packaging": "PASS",
+          "checked_in_evidence_and_manifest": "PASS"
+        },
+        "candidate_equals_published_patch": true,
+        "staged_diff_sha256": "ff69375080888612f33d7c308bf0878d1e5ee728fb6b84833ffdbdab5fb5aa0b",
+        "source_adaptation_required": false
+      }
+    ],
+    "python312_consumer_only_phase": {
+      "dependencies": "requirements.txt only before adding requirements-dev.txt; no pytest/framework required for consumer acceptance",
+      "commands": [
+        {
+          "command": "python scripts/check_privacy.py",
+          "exit": 0
+        },
+        {
+          "command": "python scripts/build_manifest.py --check",
+          "exit": 0
+        },
+        {
+          "command": "python scripts/evaluate_public_method.py",
+          "exit": 0,
+          "profile": "m0-strict-0.2.0 explicitly selected historical compatibility profile by existing guided evaluator"
+        },
+        {
+          "command": "python -m materials_to_mission validate examples/synthetic-critical-material-pathway/case.json --public --profile m0-strict-0.4.0 --json",
+          "exit": 0
+        },
+        {
+          "command": "python scripts/export_fma_projection.py examples/synthetic-critical-material-pathway/case.json --output-dir build/fma-projection",
+          "exit": 0
+        },
+        {
+          "command": "m2m --version",
+          "exit": 0,
+          "result": "m2m 0.7.6"
+        },
+        {
+          "command": "m2m validate examples/synthetic-critical-material-pathway/case.json --public --profile m0-strict-0.4.0 --json",
+          "exit": 0,
+          "valid": true,
+          "profile": "m0-strict-0.4.0",
+          "toolkit_version": "0.7.6"
+        }
+      ],
+      "interface_checks": "Source workflow assertions pass: bn7.interfaces/0.1, system identity, producer authority, unchanged pinned target IDs/hashes and projection target-contract mapping.",
+      "actual_provenance_matches_cli": "Projection profile/toolkit version equal consumer validation result.",
+      "existing_contract_functions_executed": [
+        "test_projection_is_deterministic_and_preserves_rich_evidence_semantics",
+        "test_public_projection_refuses_non_synthetic_case",
+        "test_projection_refuses_invalid_source_cases_before_writing_artifacts",
+        "test_projection_refuses_public_boundary_violation_before_writing_artifacts"
+      ],
+      "contract_outcome": "4 PASS through real CLI subprocesses; valid three-artifact determinism, HOLD/proposed state, rich evidence, five invalid fixtures and additional sentinel rejected before output."
+    },
+    "maintainer_adoption_omissions": [
+      "Provide explicit environment setup and requirements-dev.txt plus editable --no-deps --no-build-isolation install; keep consumer-only requirements.txt path distinct.",
+      "Provide actual git apply command after exact-base/hash/applicability and patch review; existing instructions list only applicability check.",
+      "Include scripts/check_privacy.py, which is a separate required CI step.",
+      "State declared 3.12 consumer/full-gate jobs and 3.11/3.13 Ubuntu/Windows matrix; local macOS pass is not hosted platform parity.",
+      "Run included-manifest direct patch nonmutating gate; refresh generated evidence once only if adapting source/tests, then review diff and rerun. Do not refresh unrelated metadata or version identifiers.",
+      "A blind git diff --exit-code after an uncommitted applied patch fails on the intended proposal itself. Hosted command applies after candidate commit; for local gate mutation checks record/stage the reviewed candidate state in an authorized disposable checkout or compare before/after bytes. No upstream commit authorization is implied."
+    ],
+    "remaining_unexecuted_checks": [
+      {
+        "check": "CI test matrix on ubuntu-latest and windows-latest with Python 3.11 and 3.13",
+        "dependency": "Maintainer-authorized candidate in existing hosted workflow; current evidence is local macOS only"
+      },
+      {
+        "check": "CI consumer job on ubuntu-latest Python 3.12",
+        "dependency": "Hosted runner parity; equivalent declared consumer path passed locally"
+      },
+      {
+        "check": "Hosted browser/pages/release jobs and production readback/tag/publication controls",
+        "dependency": "Existing maintainer workflow and appropriate upstream authority; frontend unchanged, prior browser evidence retained, no deployment/release attempted"
+      }
+    ],
+    "original_source_status": "CLEAN; preserved original exact source and prior continuation/m2m artifacts",
+    "raw_logs": [
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python312-check.log",
+        "sha256": "4523f402a593bbf49ab4c57c551cc1634677fa031fdf837ddd85e89cbe68df37"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python312-console-version.log",
+        "sha256": "637a36f5e60f7cade6d389264cb8e3546476b061fb56ed9990e6606559b69046"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python312-consumer.log",
+        "sha256": "9b117b1e1dd4b3236525eef825329a1ce348597ce12f1932587e2da58c1b10be"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python312-dev-install.log",
+        "sha256": "c41a3d66daa2bf7613bddcd0f6c0abc447dd6c8d6b3034744405b4000420a2ef"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python312-install.log",
+        "sha256": "3adb21cb92b67c117477555a608fc5ecd1e3ec4e8a5e1e916aa23e7699d56a21"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python312-manifest.log",
+        "sha256": "23f9783ddc9a642a0dcc7646ba22504d74c3d6be62483f2a2f592805fb2b55b0"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python312-privacy.log",
+        "sha256": "cc4a500315dad07b7492b1fc35f3005b282dfba8802a0517e5761385c756ef90"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python312-tracked-stability.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python313-check.log",
+        "sha256": "e758199a0c18cee397c71c79471eb502fa82651efdf811c7760fce6ce7eff8e7"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python313-install.log",
+        "sha256": "5cefa310a81de09e24face1baa91e8321fda7bc6cd410d8722768210518dcde8"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python313-privacy.log",
+        "sha256": "cc4a500315dad07b7492b1fc35f3005b282dfba8802a0517e5761385c756ef90"
+      },
+      {
+        "local_cache_path": "continuation/toolchain/m2m/logs/python313-tracked-stability.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "claim_limits": [
+      "Hashes identify captured bytes, not authenticated origin or independently inspectable withheld logs.",
+      "Validation concerns public synthetic source contracts; no source credibility, qualification, approval or mission readiness established.",
+      "No upstream actions, source adaptation, commits, pushes or root report edits performed."
+    ],
+    "command_notation": "BASELINE is preserved exact original source; CANDIDATE is a fresh disposable local checkout; REVIEW is the review repository; EXTERNAL is ignored evidence/environment storage. Commands use the matching isolated runtime. Both candidate indexes contain only the known published patch to enable the nonmutation check; no candidate commits were created."
   }
 }

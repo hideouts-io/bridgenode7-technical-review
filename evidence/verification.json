@@ -4,7 +4,7 @@
   "execution_utc_date": "2026-10-05",
   "tools_used": [
     "Original audit: plugin-management discovered/suggested GitHub, which was not connected or used at that checkpoint",
-    "Final handoff: connected GitHub plugin github_get_repo verified public review repository metadata",
+    "Continuation: connected GitHub plugin github_get_repo verified public review metadata; github_search_issues performed three bounded public owner-decision searches",
     "GitHub CLI 2.101.0 authenticated as hideouts-io; public REST API reads and private repository creation",
     "Native web research of primary documentation and selected original sources",
     "Git public shallow clones; existing repository scripts/test gates; isolated project environments"
@@ -620,6 +620,70 @@
     {
       "url": "https://csrc.nist.gov/pubs/cswp/39/upd1/considerations-for-achieving-crypto-agility/final",
       "use": "Crypto-agility architecture context rechecked; no endorsement of the example readiness rubric."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc3339.html#section-5.6",
+      "use": "Sections 5.6-5.7 clarify permitted fractional seconds and announced leap seconds; they do not select FDE runtime comparison/acceptance policy."
     }
-  ]
+  ],
+  "continuation_toolchain_verification": {
+    "review_base_commit": "447f8f7eb07340243e91fd4092585792d475cad2",
+    "source_adaptations": 0,
+    "patches_changed": 0,
+    "T01": {
+      "evidence": "evidence/m2m-source-validation.json",
+      "additional_python_versions": [
+        "3.12.14",
+        "3.13.15"
+      ],
+      "full_tests_per_version": 302,
+      "consumer_python312": "PASS with consumer-only declared dependencies and actual CLI/interface acceptance",
+      "prior_python311_evidence_preserved": true,
+      "hosted_runner_parity": "UNVERIFIED"
+    },
+    "T02": {
+      "evidence": "evidence/fde-timestamp-contract.json",
+      "node": "22.23.3",
+      "npm": "10.9.9",
+      "timestamp_only_targeted_tests": 19,
+      "timestamp_only_node_tests": 229,
+      "timestamp_only_full_gate": "FAIL at context handoff; later test:release not reached",
+      "harness_only_context": "PASS",
+      "combined_full_gate": "PASS including 229 Node tests and all browser gates",
+      "generated_drift_beyond_existing_patches": false,
+      "hosted_ubuntu_codeql_parity": "UNVERIFIED"
+    },
+    "T03": {
+      "evidence": "evidence/aca-closure-links.json",
+      "declared_python_minor": "3.12",
+      "already_verified_python": "3.12.14",
+      "additional_runtime_gates": 0,
+      "remaining": "Existing Ubuntu/Windows validation jobs and Ubuntu Python CodeQL"
+    },
+    "scope": "Local macOS arm64 acceptance and workflow review; all upstream TODOs remain open. No upstream mutation, workflow dispatch, release, deployment or contact."
+  },
+  "public_freshness_check": {
+    "inventory_reference": "inventory.csv",
+    "inventory_sha256": "08c8973e90caaf228fbc906bbc5e5464b0bd0fd635bcb9c2343a047ae583e6f6",
+    "inventory_api_checked_at_utc": "2026-10-05T06:23:20Z",
+    "canonical_public_repository_count": 8,
+    "public_names_and_default_branches_match_inventory": true,
+    "upstream_main_heads_match_inspected_commits": 8,
+    "source_drift_observed": false,
+    "owner_decision_searches": [
+      {
+        "query": "repo:Bridge-Node-7/frontier-decision-engine (timestamp OR RFC3339 OR \"leap second\")",
+        "returned_issues": 0
+      },
+      {
+        "query": "repo:Bridge-Node-7/pax-silica (eligibility OR \"snapshot\" OR \"S-06\")",
+        "returned_issues": 0
+      },
+      {
+        "query": "repo:Bridge-Node-7/quantum-readiness-space-communications (coverage OR denominator OR rubric)",
+        "returned_issues": 0
+      }
+    ],
+    "search_limit": "Bounded public issue searches only; absence of results does not establish absence of private owner records, public discussions elsewhere or company capability."
+  }
 }

@@ -1074,5 +1074,31 @@
     "Hosted Ubuntu/Windows execution and CodeQL were not run locally.",
     "This proposal closes the documented relationship gaps, not an exhaustive schema/validator conformance audit."
   ],
-  "raw_log_policy": "Portable per-invocation outcomes and original-log hashes only; full diagnostics remain in ignored .audit-cache/continuation/aca. Probe recipes and the integration tests in the patch reproduce the behavior."
+  "raw_log_policy": "Portable per-invocation outcomes and original-log hashes only; full diagnostics remain in ignored .audit-cache/continuation/aca. Probe recipes and the integration tests in the patch reproduce the behavior.",
+  "workflow_coverage_review": {
+    "reviewed_at_utc": "2026-10-05T06:15:39.031873+00:00",
+    "source_commit": "9033bf73bbd3923c5de0a9c6fb9959b4c140de64",
+    "workflow_path": ".github/workflows/validate.yml",
+    "workflow_sha256": "f841f6a91dda5feda47daf0d0789ded1870b8dc92db3733e5f54cc82fa5a65ca",
+    "source_reference": "https://github.com/Bridge-Node-7/ai-cyber-assurance/blob/9033bf73bbd3923c5de0a9c6fb9959b4c140de64/.github/workflows/validate.yml",
+    "declared_python_minor": "3.12",
+    "verified_python": "3.12.14",
+    "assessment": "NO_USEFUL_ADDITIONAL_LOCAL_RUNTIME_EXECUTION",
+    "reason": "Existing candidate Python 3.12.14 matches the only declared Python minor and covers the workflow runtime/test/metadata/hash commands. Repeating those checks would add no material compatibility evidence.",
+    "additional_runtime_tests_executed": 0,
+    "remaining_checks": [
+      {
+        "check": "Complete validation job on ubuntu-latest and windows-latest, Python 3.12",
+        "dependency": "ACA maintainer authorized upstream validation event/runners",
+        "acceptance": "67 tests, deterministic metadata, 17 repository checks, 73 hashes and whitespace pass for the adopted candidate; no local macOS result establishes hosted parity."
+      },
+      {
+        "check": "Required Python CodeQL init/analyze on ubuntu-latest",
+        "dependency": "Existing hosted actions/CodeQL installation and maintainer-owned validation run; CLI unavailable on this host",
+        "acceptance": "Existing configured CodeQL stage succeeds without changing its requirements."
+      }
+    ],
+    "local_availability": "macOS arm64 host; CodeQL CLI and Docker unavailable. No hosted workflow was triggered.",
+    "release_scope": "Release preparation/publication are separate from validator adoption; workflow_dispatch on main has release-stage conditions and is not needed to demonstrate local candidate checks."
+  }
 }

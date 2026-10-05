@@ -4,8 +4,8 @@ These are independent proposals against exact public-source commits, committed o
 
 | Candidate | Repository/base | Included change | Local result and remaining work |
 | --- | --- | --- | --- |
-| [M2M source validation](m2m-source-validation.patch) | `materials-to-mission` · `2a8d26af86e8adb8b1e34550045782d1a20418a4` · MIT | Reuse existing public source validator; record actual profile/toolkit version; two useful CLI tests and required generated manifest hashes. | [Verified](../evidence/m2m-source-validation.json): targeted 4/4 and full 302-test gate pass; five checked-in invalid cases plus sentinel rejected before output; deterministic valid receipt and unchanged FMA compatibility preserved. |
-| [FDE timestamp validation](fde-rfc3339-timestamp-contract.patch) | `frontier-decision-engine` · `4a913756d00cdd321da04bf7350507e571f2f2dd` · Apache-2.0 | Validate all four freshness fields against supported RFC3339 syntax/calendar/null rules; three actual-digest tests, generated facts/manifest. | [Verified](../evidence/fde-timestamp-contract.json): targeted 19/19 and Node 229/229 pass; timestamp-only full gate fails at context transport. **Complete gate passes with the separate harness correction.** Leap-second policy and millisecond precision remain explicit limits. |
+| [M2M source validation](m2m-source-validation.patch) | `materials-to-mission` · `2a8d26af86e8adb8b1e34550045782d1a20418a4` · MIT | Reuse existing public source validator; record actual profile/toolkit version; two useful CLI tests and required generated manifest hashes. | [Verified](../evidence/m2m-source-validation.json): 302-test gate passes locally on Python 3.11–3.13; 3.12 consumer path and original targeted 4/4 pass; five checked-in invalid cases plus sentinel rejected before output; deterministic valid receipt and unchanged FMA compatibility preserved. |
+| [FDE timestamp validation](fde-rfc3339-timestamp-contract.patch) | `frontier-decision-engine` · `4a913756d00cdd321da04bf7350507e571f2f2dd` · Apache-2.0 | Validate all four freshness fields against supported RFC3339 syntax/calendar/null rules; three actual-digest tests, generated facts/manifest. | [Verified](../evidence/fde-timestamp-contract.json): targeted 19/19 and Node 229/229 pass on Node 22.23.3 and 24.19.0; timestamp-only full gate fails at context transport. **Complete gate passes with the separate harness correction.** Leap-second policy, millisecond precision and hosted CI parity remain explicit limits. |
 | [FDE context test server](fde-context-threaded-harness.patch) | `frontier-decision-engine` · same exact base · Apache-2.0 | Use native `ThreadingHTTPServer` for the local context harness; remove unused import. | Controlled socket/browser probes reproduce the single-thread blockage; this patch alone passes the original context suite. No product UI change or new fallback. |
 | [ACA closure links](aca-closure-links.patch) | `ai-cyber-assurance` · `9033bf73bbd3923c5de0a9c6fb9959b4c140de64` · MIT | Require retest links, action/finding consistency and closure membership; three real CLI integration tests and required manifest hashes. | [Verified](../evidence/aca-closure-links.json): 67 tests, 17 repository checks and 73 hashes pass; 20 invalid variants reject before rendering; original cases and correctly linked additional action pass. |
 | [FIW canonical root](fiw-canonical-root.patch) | `frontier-intelligence-workflows` · `36366e96c12765e14d09965c1f82330194dfa8d3` · MIT | One code line canonicalizes the root; two required generated manifests are included. | [Reverified](../evidence/fiw-root-verification.json): 181 tests, compile, ordinary/alias 20/20, 133 hashes and deterministic packaging pass; original source has 32 test errors. |
@@ -16,7 +16,71 @@ These are independent proposals against exact public-source commits, committed o
 
 In an authorized candidate checkout, first verify the recorded base and use `git apply --check /path/to/candidate.patch`. That check validates applicability; it does not modify files. Review the diff before applying a candidate. All seven applicability checks passed against the clean audit snapshots; the executed candidate gates and patch hashes are recorded in [verification evidence](../evidence/verification.json). Both FDE patches also apply together; earlier proposals remain recoverable in review Git history and the local audit cache.
 
-Use each repository's existing onboarding and dependency files. M2M, ACA and FIW include the narrowly refreshed manifest hashes required by their changes. After adapting them, regenerate through the existing commands and review the diff: M2M uses `python scripts/check_repo.py --update-evidence` followed by non-mutating `python scripts/check_repo.py`; ACA uses `python scripts/refresh_release_metadata.py --write` followed by `python scripts/refresh_release_metadata.py --check` and existing repository/tests. FDE includes generated facts/manifest; use its existing `npm run facts`, `npm run manifest` and `npm run check` after adaptation. Apply its timestamp and harness patches independently for review, then together for the verified full-gate configuration.
+### Apply the priority proposals
+
+Run these POSIX-shell commands in separate disposable checkouts at the exact bases in the table, with installed project-supported runtimes. Set `BN7_REVIEW_DIR` to this review checkout and `BN7_VALIDATION_DIR` to an external validation directory. Create the latter before creating environments or writing reports. Verify `git rev-parse HEAD` against the relevant base and inspect `git status --short` before applying anything. Windows maintainers should use their existing workflow's path and environment activation syntax. Preserve the original audit snapshots. Stop on any failed command; each block enables shell failure handling.
+
+M2M uses Python 3.11 or 3.13 in its maintainer matrix; its consumer job uses 3.12. The separate privacy check is part of the workflow, outside the complete repository gate.
+
+```sh
+set -eu
+python3.11 -m venv "$BN7_VALIDATION_DIR/m2m-venv"
+. "$BN7_VALIDATION_DIR/m2m-venv/bin/activate"
+python -m pip install -r requirements-dev.txt
+python -m pip install --no-deps --no-build-isolation -e .
+git apply --check "$BN7_REVIEW_DIR/proposals/m2m-source-validation.patch"
+git apply "$BN7_REVIEW_DIR/proposals/m2m-source-validation.patch"
+git --no-pager diff --binary HEAD > "$BN7_VALIDATION_DIR/m2m-before-validation.patch"
+python scripts/check_privacy.py
+python scripts/check_repo.py
+git --no-pager diff --binary HEAD > "$BN7_VALIDATION_DIR/m2m-after-validation.patch"
+cmp "$BN7_VALIDATION_DIR/m2m-before-validation.patch" "$BN7_VALIDATION_DIR/m2m-after-validation.patch"
+git --no-pager diff --check
+```
+
+FDE's workflow uses Node 22. Put that runtime on `PATH` before the commands below. Its declared browser dependency is in `requirements-dev.txt`; install its matching Chromium in the selected environment. The plain browser installation below assumes OS prerequisites are present; Ubuntu workflow parity requires its existing `python -m playwright install --with-deps chromium` step. Review the timestamp and harness diffs separately before applying both for the complete-gate configuration. In separate fresh copies, timestamp-only acceptance uses `node --test tests/governed-context.test.js` and `npm test`; harness-only acceptance uses `npm run test:context` on unchanged product source. Preserve the timestamp-only full-gate failure separately from the combined pass.
+
+```sh
+set -eu
+python3.11 -m venv "$BN7_VALIDATION_DIR/fde-venv"
+. "$BN7_VALIDATION_DIR/fde-venv/bin/activate"
+python -m pip install --disable-pip-version-check -r requirements-dev.txt
+python -m playwright install chromium
+node --version
+npm --version
+npm ci --ignore-scripts --no-audit --no-fund
+git apply --check "$BN7_REVIEW_DIR/proposals/fde-rfc3339-timestamp-contract.patch" "$BN7_REVIEW_DIR/proposals/fde-context-threaded-harness.patch"
+git apply "$BN7_REVIEW_DIR/proposals/fde-rfc3339-timestamp-contract.patch"
+git apply "$BN7_REVIEW_DIR/proposals/fde-context-threaded-harness.patch"
+git --no-pager diff --binary HEAD > "$BN7_VALIDATION_DIR/fde-before-validation.patch"
+npm run manifest
+npm run facts
+npm run manifest
+npm run check
+git --no-pager diff --binary HEAD > "$BN7_VALIDATION_DIR/fde-after-validation.patch"
+cmp "$BN7_VALIDATION_DIR/fde-before-validation.patch" "$BN7_VALIDATION_DIR/fde-after-validation.patch"
+git --no-pager diff --check
+```
+
+ACA's validation workflow uses Python 3.12 and the standard library; its hash step requires `sha256sum` on `PATH`.
+
+```sh
+set -eu
+python3.12 -m venv "$BN7_VALIDATION_DIR/aca-venv"
+. "$BN7_VALIDATION_DIR/aca-venv/bin/activate"
+git apply --check "$BN7_REVIEW_DIR/proposals/aca-closure-links.patch"
+git apply "$BN7_REVIEW_DIR/proposals/aca-closure-links.patch"
+git --no-pager diff --binary HEAD > "$BN7_VALIDATION_DIR/aca-before-validation.patch"
+python -m unittest discover -s tests -p 'test_*.py'
+python scripts/refresh_release_metadata.py --root . --check
+python scripts/validate_repo.py --root . --json-output "$BN7_VALIDATION_DIR/aca-validation.json"
+sha256sum -c MANIFEST.sha256
+git --no-pager diff --binary HEAD > "$BN7_VALIDATION_DIR/aca-after-validation.patch"
+cmp "$BN7_VALIDATION_DIR/aca-before-validation.patch" "$BN7_VALIDATION_DIR/aca-after-validation.patch"
+git --no-pager diff --check
+```
+
+The exact M2M/ACA/FIW patches include required manifest hashes, and FDE includes facts/manifest. After adaptation, regenerate through established commands and inspect the generated diff before capturing the reviewed candidate state and repeating the corresponding non-mutating gate: M2M `python scripts/check_repo.py --update-evidence`; ACA `python scripts/refresh_release_metadata.py --root . --write`, then `--check`; FDE's refresh sequence is shown above. An uncommitted applied patch is an expected tracked diff. The before/after `cmp` checks gate-induced tracked-byte drift; `git diff --check` checks whitespace. Hosted `git diff --exit-code` assumes the candidate is committed. No commit to an upstream repository is part of this external review.
 
 Pax's validator-only proposal intentionally rejects unchanged published data. A disposable synthetic test date demonstrates behavior but must never replace the real review record. Present null/blank/wrong-type dates and malformed source fields now fail explicitly. Independent omission and empty arrays remain supported because no existing contract specifies pairing or minimum items; those policy decisions and factual correction remain with the owner. After owner resolution, require the existing full gate to pass on actual data before generation/publication.
 
