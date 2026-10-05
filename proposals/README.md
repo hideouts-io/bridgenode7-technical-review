@@ -9,7 +9,7 @@ These are independent proposals against exact public-source commits, committed o
 | [FDE context test server](fde-context-threaded-harness.patch) | `frontier-decision-engine` · same exact base · Apache-2.0 | Use native `ThreadingHTTPServer` for the local context harness; remove unused import. | Controlled socket/browser probes reproduce the single-thread blockage; this patch alone passes the original context suite locally and on hosted Ubuntu Node 22. No product UI change or new fallback. |
 | [ACA closure links](aca-closure-links.patch) | `ai-cyber-assurance` · `9033bf73bbd3923c5de0a9c6fb9959b4c140de64` · MIT | Require retest links, action/finding consistency and closure membership; three real CLI integration tests and required manifest hashes. | [Verified](../evidence/aca-closure-links.json): 67 tests, 17 repository checks and 73 hashes pass locally and on hosted Ubuntu/Windows Python 3.12; required Ubuntu Python CodeQL completes with zero reported results; 20 invalid variants reject before rendering; original cases and correctly linked additional action pass. |
 | [FIW canonical root](fiw-canonical-root.patch) | `frontier-intelligence-workflows` · `36366e96c12765e14d09965c1f82330194dfa8d3` · MIT | One code line canonicalizes the root; two required generated manifests are included. | [Reverified](../evidence/fiw-root-verification.json): 181 tests, compile, ordinary/alias 20/20, 133 hashes and deterministic packaging pass; original source has 32 test errors. |
-| [Pax eligibility validation](pax-eligibility-validation.patch) | `pax-silica` · `2f62f678d06f8444ddc7788ce03e1f1f46cf4cba` · MIT | Typed present eligibility dates/source arrays; three real CLI tests. Actual data, locator and distribution remain unchanged. | [Verified](../evidence/pax-eligibility-validation.json): 38 probes reject, including the disputed cutoff case; seven controls pass. Prior 62-test gate passed only with a synthetic date. **Full patch requires chronology-policy revision before adoption:** its cutoff guard rejects the separate field-review date intentionally recorded in owner PR #50. |
+| [Pax eligibility validation](pax-eligibility-validation.patch) | `pax-silica` · `2f62f678d06f8444ddc7788ce03e1f1f46cf4cba` · MIT | Typed present eligibility dates/source arrays; three added real CLI tests and an unchanged-data positive control. No eligibility cutoff; generic date rules, actual data and locator preserved. | [Verified](../evidence/pax-eligibility-validation.json): 62-test actual-data gate, six focused tests and 44 probes pass (36 invalid rejected, eight valid/optional accepted). Six generated files match baseline/repeated output. Local macOS/Python 3.12; maintainer CI matrix and upstream acceptance remain. |
 | [Quantum example traceability](quantum-example-traceability.patch) | `quantum-readiness-space-communications` · `0f926377de268b20c2b1223eaf830405b8eb3648` · MIT | Three existing fictional example docs plus manifests: canonical domains, explicit overlapping trace registers, consistent `NOT_ESTABLISHED` coverage. | [Verified](../evidence/quantum-example-traceability.json): 50 tests, 93 hashes, links and deterministic packaging pass; original ledger/posture retained. Approved counting units, support floors and evidence review remain owner decisions. |
 
 ## Review and verification
@@ -84,7 +84,23 @@ git --no-pager diff --check
 
 The exact M2M/ACA/FIW patches include required manifest hashes, and FDE includes facts/manifest. After adaptation, regenerate through established commands and inspect the generated diff before capturing the reviewed candidate state and repeating the corresponding non-mutating gate: M2M `python scripts/check_repo.py --update-evidence`; ACA `python scripts/refresh_release_metadata.py --root . --write`, then `--check`; FDE's refresh sequence is shown above. An uncommitted applied patch is an expected tracked diff. The before/after `cmp` checks gate-induced tracked-byte drift; `git diff --check` checks whitespace. Hosted `git diff --exit-code` assumes the candidate is committed. No commit to an upstream repository is part of this external review.
 
-Pax's preserved proposal rejects the owner-intended record from [PR #50](https://github.com/Bridge-Node-7/pax-silica/pull/50); it is not ready to adopt as written. Its type/reference checks remain useful, but the global snapshot-cutoff extension requires revision. Preserve the declared dates and historical synthetic-test results. Any new pairing/minimum-source or chronology requirement needs an explicit field contract. Require the revised candidate's existing full gate on unchanged actual data before adoption; no such revised gate is asserted here.
+Pax's revised proposal accepts the owner-intended record from [PR #50](https://github.com/Bridge-Node-7/pax-silica/pull/50), preserving its dates and all generic `verified_at` limits. Its [current evidence](../evidence/pax-eligibility-validation.json) records actual-data verification and immutable references to the previous patch and synthetic results. New pairing/minimum-source or chronology rules require an explicit owner contract. Run the following in a disposable Pax checkout at the table's exact base, with the same external `BN7_REVIEW_DIR` and `BN7_VALIDATION_DIR` variables described above:
+
+```sh
+set -eu
+python3.12 -m venv "$BN7_VALIDATION_DIR/pax-venv"
+. "$BN7_VALIDATION_DIR/pax-venv/bin/activate"
+git apply --check "$BN7_REVIEW_DIR/proposals/pax-eligibility-validation.patch"
+git apply "$BN7_REVIEW_DIR/proposals/pax-eligibility-validation.patch"
+git --no-pager diff --binary HEAD > "$BN7_VALIDATION_DIR/pax-before-validation.patch"
+python -m unittest discover -s tests -p 'test_snapshot_boundary.py' -v
+python scripts/check_repo.py
+git --no-pager diff --binary HEAD > "$BN7_VALIDATION_DIR/pax-after-validation.patch"
+cmp "$BN7_VALIDATION_DIR/pax-before-validation.patch" "$BN7_VALIDATION_DIR/pax-after-validation.patch"
+git --no-pager diff --check
+```
+
+The Pax full gate includes actual-data validation, deterministic generation, evidence integrity, public-boundary/readability checks and all tests. No generated files need refresh for this patch. After adaptation, maintainers must run the existing Ubuntu/Windows Python 3.11/3.12 CI matrix and its committed-candidate drift checks before acceptance. Browser checks are needed if subsequent changes affect public output; this revision's six generated files are byte-identical to baseline.
 
 Quantum includes only required example/manifest changes. After adaptation, run `python tools/generate_manifest.py`, review the generated diff, and run `bash scripts/validate.sh`; do not replace `NOT_ESTABLISHED` with a percentage until the recorded owner decisions and evidence review are complete.
 

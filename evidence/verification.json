@@ -421,26 +421,8 @@
       "baseline": "PASS",
       "tests": 59,
       "browser_checks": 21,
-      "candidate_result_pairs_original_candidate": {
-        "published_chronology": [
-          0,
-          1
-        ],
-        "synthetic_valid_date": [
-          0,
-          0
-        ],
-        "invalid_nonempty_date": [
-          0,
-          1
-        ],
-        "orphan_source": [
-          0,
-          1
-        ]
-      },
-      "candidate_gate": "59 tests PASS with synthetic date control only; current data intentionally rejected",
-      "candidate_limits": "Historical candidate execution retained. Owner PR50 establishes intentional field/snapshot date separation; rejection of that record is not evidence of incorrect factual data. Full candidate needs chronology-policy revision.",
+      "candidate_gate": "62 tests PASS on unchanged actual data with revised full proposal; 6 focused tests and 44 CLI probes pass (36 invalid rejected, 8 valid/optional accepted).",
+      "candidate_limits": "Local macOS/Python 3.12 only; existing maintainer CI matrix and upstream acceptance remain. Validation is not historical source authentication.",
       "environment_correction": "First gate invocation lacked documented python PATH; activated virtual environment corrected audit setup without source change",
       "logs": [
         {
@@ -450,17 +432,12 @@
         {
           "local_cache_path": "research-repos-audit/logs/pax-browser-uat.log",
           "sha256": "e312df1d10dcc6c3e2bbf649ab6734148e00f998de2c84e6aee68f236e8eb66f"
-        },
-        {
-          "local_cache_path": "research-repos-audit/logs/pax-candidate-full-gate.log",
-          "sha256": "4c48bf93167c4847bc72d8839ab387041269b6135f58396e5bebc1a16d014c26"
-        },
-        {
-          "local_cache_path": "research-repos-audit/eligibility-validation-results.json",
-          "sha256": "af11c5aeb1e8ea6a6290525e4ea5f5cf544ed20a3ab027b1bf57b7a674dbee1a"
         }
       ],
-      "inspected_sha": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba"
+      "inspected_sha": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
+      "historical_candidate_verification": "https://github.com/hideouts-io/bridgenode7-technical-review/blob/1d3fe18d95140930e50d839b07f87131aad07c1a/evidence/verification.json",
+      "current_candidate_verification": "evidence/pax-eligibility-validation.json",
+      "baseline_result_scope": "Original 59-test and 21-check browser results; retained and not rerun by the T06 correction."
     },
     {
       "repository": "quantum-readiness-space-communications",
@@ -533,11 +510,11 @@
       "file": "proposals/pax-eligibility-validation.patch",
       "repository": "pax-silica",
       "base_sha": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
-      "sha256": "8c3b8a0723b670e356b6593d8ecc0410ccb78013986e9da5b385b3b46592c3ab",
-      "scope": "Preserved typed eligibility/source-ID proposal; its snapshot-cutoff extension conflicts with owner PR50. Actual data and patch bytes unchanged; revise chronology before adoption and decide optional pairing/minItems explicitly.",
+      "sha256": "93045a70721ebce5162e9cdd873ee1b30d94abbfd10dca243957e5bac462f03a",
+      "scope": "Typed canonical eligibility dates and resolved source IDs; unsupported eligibility cutoff removed. Actual data, generic verified_at cutoffs and optional-field semantics preserved; 62-test actual-data gate passes.",
       "integrated_upstream": false,
       "evidence": "evidence/pax-eligibility-validation.json",
-      "readiness": "REQUIRES_CHRONOLOGY_POLICY_REVISION_BEFORE_ADOPTION"
+      "readiness": "LOCALLY_VERIFIED_AWAITING_MAINTAINER_ACCEPTANCE"
     },
     {
       "file": "proposals/aca-closure-links.patch",
@@ -923,6 +900,41 @@
       "audit_cache_and_bytecode_excluded": true,
       "bounded_public_secret_pattern_scan": "No configured secret patterns found",
       "scope": "File/hash/applicability/source-line integrity and bounded secret-pattern review; not exhaustive semantic, external-link or credential scanning."
-    }
+    },
+    "evidence_scope": "Historical owner-record and adoption-readiness review at the recorded time; its Pax revision dependency is resolved by pax_actual_data_verification below. Original hosted and other proposal evidence is preserved."
+  },
+  "pax_actual_data_verification": {
+    "review_base_commit": "1d3fe18d95140930e50d839b07f87131aad07c1a",
+    "checked_at_utc": "2026-10-05T09:31:55.654264+00:00",
+    "source_commit": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
+    "source_head_reconfirmed": true,
+    "patch_sha256": "93045a70721ebce5162e9cdd873ee1b30d94abbfd10dca243957e5bac462f03a",
+    "evidence": "evidence/pax-eligibility-validation.json",
+    "candidate_status": "LOCALLY_VERIFIED_AWAITING_MAINTAINER_ACCEPTANCE",
+    "full_tests": 62,
+    "focused_tests": 6,
+    "validator_probes": 44,
+    "invalid_rejected": 36,
+    "valid_accepted": 8,
+    "canonical_data_files_unchanged": 5,
+    "generated_files_byte_identical_to_baseline_and_repeat": 6,
+    "manifest_entries_verified_per_build": 5,
+    "historical_patch_and_evidence": "https://github.com/hideouts-io/bridgenode7-technical-review/blob/1d3fe18d95140930e50d839b07f87131aad07c1a/evidence/pax-eligibility-validation.json",
+    "publication_boundary": "Public review-only patch and evidence; no upstream writes or new workflow dispatch. T01-T03 proposals, workflow, helper scripts and completed hosted evidence unchanged.",
+    "next_gate": "Apply the revised patch to its exact source base, or re-review/rebase if main changes. Run the existing CI matrix on Ubuntu/Windows with Python 3.11/3.12, including check_repo.py and committed-candidate drift/whitespace checks. Preserve actual dates, generic cutoff rules and optional semantics. Upstream acceptance/release is a maintainer decision.",
+    "artifact_checks": {
+      "patch_hashes_and_individual_applicability": 7,
+      "fde_combined_applicability": "PASS",
+      "clean_original_source_snapshots": 8,
+      "evidence_json_records_parsed": 8,
+      "local_markdown_targets": 72,
+      "unique_pinned_source_citations": 29,
+      "required_hosted_jobs": 10,
+      "workflow_and_task_run_provenance": "PASS",
+      "audit_cache_and_bytecode_excluded": true,
+      "bounded_public_secret_pattern_scan": "No configured secret patterns found",
+      "scope": "File/hash/applicability/source-line integrity and bounded secret-pattern review; not exhaustive semantic, external-link or credential scanning."
+    },
+    "current_inventory_sha256": "d10b0ed38d744b81355395ba3ceeb07e4f95eaf2f2b38bd9c18e7b51a60944c7"
   }
 }

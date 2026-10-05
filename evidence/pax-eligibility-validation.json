@@ -1,7 +1,7 @@
 {
   "task": "T06",
-  "candidate_status": "REQUIRES_CHRONOLOGY_POLICY_REVISION_BEFORE_ADOPTION",
-  "checked_at_utc": "2026-10-05T05:27:32.523232+00:00",
+  "candidate_status": "LOCALLY_VERIFIED_AWAITING_MAINTAINER_ACCEPTANCE",
+  "checked_at_utc": "2026-10-05T09:31:55.654264+00:00",
   "source": {
     "repository": "Bridge-Node-7/pax-silica",
     "base_commit": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
@@ -14,14 +14,14 @@
     "machine": "arm64",
     "environment": "Project-local virtual environment; standard library only",
     "matches_configured_python_minor": "3.12",
-    "other_matrix_targets": "Python 3.11 and hosted Ubuntu/Windows not rerun locally"
+    "other_matrix_targets": "Current candidate checked on macOS/Python 3.12 only. Hosted Ubuntu/Windows and Python 3.11 remain maintainer gates."
   },
   "scope": [
     "Validate only the program-specific eligibility fields when present; preserve existing primary source/date handling.",
     "Require eligibility_source_ids to be an array, with each present item a nonempty, unpadded, resolved source ID.",
-    "Preserved candidate requires a canonical real YYYY-MM-DD eligibility date at or before the snapshot. This cutoff extension conflicts with owner PR #50 and is not an accepted field contract.",
+    "Require a canonical real YYYY-MM-DD eligibility date, with no eligibility-specific snapshot-cutoff restriction; retain generic source/record verified_at cutoff checks.",
     "Preserve independent field omission and empty-array acceptance until maintainers define a stricter contract.",
-    "Add three actual-validator CLI tests; no dependencies, data/date/snapshot/category/source-locator changes."
+    "Retain three added actual-validator CLI tests and extend the existing unchanged-data positive control; no dependencies, data/date/snapshot/category/source-locator changes."
   ],
   "contract_review": {
     "program_schema_required_fields": [
@@ -44,663 +44,259 @@
   "owner_questions": [
     {
       "question": "Does the owner require any additional eligibility-specific chronology rule beyond canonical real-date parsing, consistent with PR #50?",
-      "why": "PR #50 resolves the specific September 30 field review/September 29 snapshot intent. The preserved candidate incorrectly extends the generic cutoff; its guard needs revision before adoption.",
-      "blocks": "Any new eligibility chronology restriction and acceptance of the full preserved patch; no factual date repair is inferred."
+      "why": "PR #50 resolves the specific September 30 field review/September 29 snapshot intent. The revised candidate removes the unsupported eligibility cutoff and passes with those unchanged dates.",
+      "blocks": "Only an additional chronology restriction; no unresolved date decision blocks the verified current candidate."
     },
     {
       "question": "Should eligibility_source_ids require at least one item when present, and should either eligibility field require the other?",
       "why": "Current schema and documentation declare neither rule. The candidate preserves omission/empty-array semantics instead of inventing a requirement.",
-      "blocks": "Final optional-field contract acceptance; stricter policy would require explicit maintainer decision."
+      "blocks": "Any stricter pairing/minimum-array policy; current omission and empty-array behavior is preserved for maintainer acceptance."
     },
     {
       "question": "May S-06 be updated to the verified opportunity detail locator, with its note adjusted while preserving accurate review provenance?",
       "why": "Its current URL/note identify a search record reviewed on 2026-08-21. A new locator must not imply a different page was reviewed at that historical date.",
       "proposed_verified_locator": "https://simpler.grants.gov/opportunity/2f434e81-c476-49bb-a7e6-9a320c907cd9",
-      "fresh_verification_source": "Parent agent verified the official detail page during this continuation; this candidate makes no locator or freshness change."
+      "fresh_verification_source": "The official detail page was checked during the earlier review. This revision does not recheck that page or change the locator/freshness record."
     }
   ],
   "commands": [
     {
-      "command": "python scripts/check_repo.py",
-      "exit_code": 1,
-      "context": "Direct interpreter invocation initially failed one test because the PATH lacked the python command required by the existing release-builder test.",
-      "raw_local_log": "logs/baseline-gate.log",
-      "raw_local_log_sha256": "476126124f610900930226ea80e0e394d2f97757df35c6ae43efbb6132d914c5"
-    },
-    {
-      "command": "python scripts/check_repo.py",
+      "label": "actual-data-validator",
+      "started_at_utc": "2026-10-05T09:31:40.142565+00:00",
+      "finished_at_utc": "2026-10-05T09:31:40.246494+00:00",
       "exit_code": 0,
-      "context": "Project-local Python 3.12 virtual environment exposed python in PATH; unchanged source passes all 59 tests.",
-      "raw_local_log": "logs/baseline-gate-venv.log",
-      "raw_local_log_sha256": "e2508ef4aa00cbf9c904b4487fa6595571f697c263e9b1902ee87b6ef4466d83"
+      "raw_local_log": "logs/actual-data-validator.log",
+      "raw_local_log_sha256": "9fd9d7f0c4ef1399e8745be32b2976cd7d01fc05403af4f1dabf77004be4639f",
+      "command": "python scripts/validate_data.py --as-of 2026-10-05",
+      "context": "Revised candidate on unchanged canonical data; isolated field copies only for negative/optional probes"
     },
     {
-      "command": "python scripts/validate_data.py --as-of 2026-10-04",
-      "exit_code": 1,
-      "context": "Unchanged factual canonical data is rejected by the new chronology check.",
-      "raw_local_log": "logs/candidate-published-data.log",
-      "raw_local_log_sha256": "a2e0e2cc35d3134639f63a84b6dd55f73550fd6018890d043d6f7b467aac5aef"
-    },
-    {
-      "command": "python scripts/check_repo.py",
-      "exit_code": 1,
-      "context": "Unchanged factual data stops the repository gate at data validation before generation.",
-      "raw_local_log": "logs/candidate-published-gate.log",
-      "raw_local_log_sha256": "5782e1f116f24f86b003de517ace6dad5319fdabfbd45aac55e274f7d677a7fa"
-    },
-    {
-      "command": "python scripts/check_repo.py",
+      "label": "focused-snapshot-tests",
+      "started_at_utc": "2026-10-05T09:31:40.247946+00:00",
+      "finished_at_utc": "2026-10-05T09:31:44.191606+00:00",
       "exit_code": 0,
-      "context": "Disposable synthetic in-boundary eligibility date only; actual bytes restored after the run.",
-      "raw_local_log": "logs/candidate-synthetic-gate.log",
-      "raw_local_log_sha256": "a56745c65430fd4fcae0223a905f289fb231521f4b92d5ee0d8a3660fb3a75e7"
+      "raw_local_log": "logs/focused-snapshot-tests.log",
+      "raw_local_log_sha256": "5c7945f08624ffc47005061ec7ccc6882682f805bce3a0f0b7dba623081f7197",
+      "command": "python -m unittest discover -s tests -p 'test_snapshot_boundary.py' -v",
+      "context": "Revised candidate on unchanged canonical data; isolated field copies only for negative/optional probes"
     },
     {
+      "label": "candidate-probes",
+      "started_at_utc": "2026-10-05T09:31:44.192761+00:00",
+      "finished_at_utc": "2026-10-05T09:31:49.104642+00:00",
+      "exit_code": 0,
+      "raw_local_log": "logs/candidate-probes.log",
+      "raw_local_log_sha256": "89db44af1485c38d865bdff9f5703c3648ce3106d78fc67527a5b5719c578b58",
+      "command": "44 invocations: python scripts/validate_data.py --root <PROBE_DIR>/<fixture> --as-of 2026-10-05; see probe_recipe and probes",
+      "context": "Revised candidate on unchanged canonical data; isolated field copies only for negative/optional probes"
+    },
+    {
+      "label": "actual-data-full-gate",
+      "started_at_utc": "2026-10-05T09:31:49.107644+00:00",
+      "finished_at_utc": "2026-10-05T09:31:55.277135+00:00",
+      "exit_code": 0,
+      "raw_local_log": "logs/actual-data-full-gate.log",
+      "raw_local_log_sha256": "338cbb53a11e82fb50b79beccf97f27ee578e4de00c832b20d6f0a0c73d82b69",
+      "command": "python scripts/check_repo.py",
+      "context": "Revised candidate on unchanged canonical data; isolated field copies only for negative/optional probes"
+    },
+    {
+      "label": "baseline-build",
+      "started_at_utc": "2026-10-05T09:31:55.278111+00:00",
+      "finished_at_utc": "2026-10-05T09:31:55.352811+00:00",
+      "exit_code": 0,
+      "raw_local_log": "logs/baseline-build.log",
+      "raw_local_log_sha256": "f2fb66d99201761e7ca8a448f725015e42430ff0b6e58dcc4e965b99937b4277",
+      "command": "python scripts/build_web.py --output <VALIDATION_DIR>/baseline-web",
+      "context": "Original source checkout"
+    },
+    {
+      "label": "candidate-build-a",
+      "started_at_utc": "2026-10-05T09:31:55.353767+00:00",
+      "finished_at_utc": "2026-10-05T09:31:55.426715+00:00",
+      "exit_code": 0,
+      "raw_local_log": "logs/candidate-build-a.log",
+      "raw_local_log_sha256": "b4d606b60e41e917672eaf51d896b03ceb9b5b26b090b99398c79ee2c89c4bc8",
+      "command": "python scripts/build_web.py --output <VALIDATION_DIR>/candidate-web-a",
+      "context": "Revised candidate on unchanged canonical data; isolated field copies only for negative/optional probes"
+    },
+    {
+      "label": "candidate-build-b",
+      "started_at_utc": "2026-10-05T09:31:55.427903+00:00",
+      "finished_at_utc": "2026-10-05T09:31:55.511694+00:00",
+      "exit_code": 0,
+      "raw_local_log": "logs/candidate-build-b.log",
+      "raw_local_log_sha256": "3471a951469d79db42574369bdb7c1dd9cde18cdf6544d19a359c949e9e368d9",
+      "command": "python scripts/build_web.py --output <VALIDATION_DIR>/candidate-web-b",
+      "context": "Revised candidate on unchanged canonical data; isolated field copies only for negative/optional probes"
+    },
+    {
+      "label": "candidate-whitespace",
+      "started_at_utc": "2026-10-05T09:31:55.512859+00:00",
+      "finished_at_utc": "2026-10-05T09:31:55.545713+00:00",
+      "exit_code": 0,
+      "raw_local_log": "logs/candidate-whitespace.log",
+      "raw_local_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "command": "git --no-pager diff --check",
+      "context": "Revised candidate on unchanged canonical data; isolated field copies only for negative/optional probes"
+    },
+    {
+      "label": "patch-apply",
+      "started_at_utc": "2026-10-05T09:31:55.612226+00:00",
+      "finished_at_utc": "2026-10-05T09:31:55.632756+00:00",
       "exit_code": 0,
-      "context": "Candidate source/test whitespace check.",
-      "raw_local_log": "logs/candidate-diff-check.log",
-      "raw_local_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "raw_local_log": "logs/patch-apply.log",
+      "raw_local_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "command": "git apply --check --whitespace=error-all <REVIEW_DIR>/proposals/pax-eligibility-validation.patch",
+      "context": "Original source checkout"
+    },
+    {
+      "label": "patch-reverse-apply",
+      "started_at_utc": "2026-10-05T09:31:55.633754+00:00",
+      "finished_at_utc": "2026-10-05T09:31:55.652378+00:00",
+      "exit_code": 0,
+      "raw_local_log": "logs/patch-reverse-apply.log",
+      "raw_local_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "command": "git apply --check --reverse <REVIEW_DIR>/proposals/pax-eligibility-validation.patch",
+      "context": "Revised candidate on unchanged canonical data; isolated field copies only for negative/optional probes"
     }
   ],
   "results": {
-    "baseline_full_tests": 59,
-    "candidate_synthetic_full_tests": 62,
-    "actual_validator_probes_per_phase": 45,
-    "invalid_variants_rejected": 38,
-    "valid_and_optional_controls_accepted": 7,
-    "published_candidate_gate_exit": 1,
-    "synthetic_candidate_gate_exit": 0,
-    "deterministic_generation": "PASS, two generated trees byte-equal under the disposable synthetic control",
-    "evidence_integrity": "PASS, source ratchet 15, public referenced source IDs 11, active signatory identity 25",
+    "candidate_actual_data_full_tests": 62,
+    "focused_snapshot_tests": 6,
+    "actual_validator_probes": 44,
+    "invalid_variants_rejected": 36,
+    "valid_and_optional_controls_accepted": 8,
+    "published_candidate_validator_exit": 0,
+    "published_candidate_gate_exit": 0,
+    "deterministic_generation": "PASS; existing full gate builds twice, and separate original-source/candidate/repeated-candidate actual-data trees are byte-identical.",
+    "evidence_integrity": "PASS; source ratchet 15, public referenced source IDs 11, active signatory identity 25.",
     "public_boundary_and_readability": "PASS",
-    "browser_uat": "Not repeated; no frontend/source asset changes",
-    "probe_classification_limit": "The historical invalid_variants_rejected count includes the disputed post-cutoff case. Rejection proves candidate behavior, not correctness of that chronology policy."
-  },
-  "synthetic_control": {
-    "actual_date": "2026-09-30",
-    "snapshot": "2026-09-29",
-    "disposable_synthetic_control_date": "2026-09-29",
-    "published_data_restored_exactly": true,
-    "canonical_data_sha256": "0f33d43ae52d30639ffad2fea1bd6a71d9774bd667cfbe0efd63fd115ec6280d",
-    "gate_exit_code": 0
+    "browser_uat": "Not repeated; no publication-facing behavior change. All six generated files match unchanged source, and no frontend asset or generator changed.",
+    "canonical_data_files_unchanged": 5,
+    "tracked_bytes_unchanged_by_gate": true
   },
   "probes": {
-    "baseline": [
-      {
-        "fixture": "sources-null",
-        "field": "eligibility_source_ids",
-        "value": null,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-null/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-empty-string",
-        "field": "eligibility_source_ids",
-        "value": "",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-empty-string/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-whitespace",
-        "field": "eligibility_source_ids",
-        "value": " ",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-whitespace/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-scalar-string",
-        "field": "eligibility_source_ids",
-        "value": "S-06",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-scalar-string/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-false",
-        "field": "eligibility_source_ids",
-        "value": false,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-false/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-true",
-        "field": "eligibility_source_ids",
-        "value": true,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-true/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-zero",
-        "field": "eligibility_source_ids",
-        "value": 0,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-zero/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-integer",
-        "field": "eligibility_source_ids",
-        "value": 42,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-integer/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-fraction",
-        "field": "eligibility_source_ids",
-        "value": 42.5,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-fraction/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-object",
-        "field": "eligibility_source_ids",
-        "value": {},
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-object/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-null-item",
-        "field": "eligibility_source_ids",
-        "value": [
-          null
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-null-item/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-false-item",
-        "field": "eligibility_source_ids",
-        "value": [
-          false
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-false-item/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-number-item",
-        "field": "eligibility_source_ids",
-        "value": [
-          42
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-number-item/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-array-item",
-        "field": "eligibility_source_ids",
-        "value": [
-          []
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-array-item/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-object-item",
-        "field": "eligibility_source_ids",
-        "value": [
-          {}
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-object-item/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-empty-item",
-        "field": "eligibility_source_ids",
-        "value": [
-          ""
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-empty-item/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-blank-item",
-        "field": "eligibility_source_ids",
-        "value": [
-          " "
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-blank-item/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-orphan",
-        "field": "eligibility_source_ids",
-        "value": [
-          "S-MISSING"
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-orphan/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-padded-item",
-        "field": "eligibility_source_ids",
-        "value": [
-          " S-06 "
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-padded-item/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "sources-mixed-orphan",
-        "field": "eligibility_source_ids",
-        "value": [
-          "S-06",
-          "S-MISSING"
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/sources-mixed-orphan/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-null",
-        "field": "eligibility_verified_at",
-        "value": null,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-null/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-empty",
-        "field": "eligibility_verified_at",
-        "value": "",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-empty/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-whitespace",
-        "field": "eligibility_verified_at",
-        "value": " ",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-whitespace/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-false",
-        "field": "eligibility_verified_at",
-        "value": false,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-false/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-true",
-        "field": "eligibility_verified_at",
-        "value": true,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-true/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-zero",
-        "field": "eligibility_verified_at",
-        "value": 0,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-zero/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-integer",
-        "field": "eligibility_verified_at",
-        "value": 42,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-integer/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-fraction",
-        "field": "eligibility_verified_at",
-        "value": 42.5,
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-fraction/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-array",
-        "field": "eligibility_verified_at",
-        "value": [],
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-array/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-object",
-        "field": "eligibility_verified_at",
-        "value": {},
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-object/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-invalid",
-        "field": "eligibility_verified_at",
-        "value": "not-a-date",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-invalid/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-impossible",
-        "field": "eligibility_verified_at",
-        "value": "2026-02-30",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-impossible/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-compact",
-        "field": "eligibility_verified_at",
-        "value": "20260929",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-compact/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-week",
-        "field": "eligibility_verified_at",
-        "value": "2026-W39-2",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-week/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-datetime",
-        "field": "eligibility_verified_at",
-        "value": "2026-09-29T00:00:00Z",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-datetime/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-padded",
-        "field": "eligibility_verified_at",
-        "value": " 2026-09-29 ",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-padded/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "date-post-cutoff",
-        "field": "eligibility_verified_at",
-        "value": "2026-09-30",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/date-post-cutoff/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "valid-at-cutoff",
-        "field": "eligibility_verified_at",
-        "value": "2026-09-29",
-        "synthetic_date_control": true,
-        "expected_valid": true,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/valid-at-cutoff/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "valid-before-cutoff",
-        "field": "eligibility_verified_at",
-        "value": "2026-08-21",
-        "synthetic_date_control": true,
-        "expected_valid": true,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/valid-before-cutoff/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "valid-sources",
-        "field": "eligibility_source_ids",
-        "value": [
-          "S-06"
-        ],
-        "synthetic_date_control": true,
-        "expected_valid": true,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/valid-sources/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "valid-empty-array-preserved",
-        "field": "eligibility_source_ids",
-        "value": [],
-        "synthetic_date_control": true,
-        "expected_valid": true,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/valid-empty-array-preserved/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "omitted-sources",
-        "field": "omit",
-        "value": "eligibility_source_ids",
-        "synthetic_date_control": true,
-        "expected_valid": true,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/omitted-sources/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "omitted-date",
-        "field": "omit",
-        "value": "eligibility_verified_at",
-        "synthetic_date_control": true,
-        "expected_valid": true,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/omitted-date/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "omitted-both",
-        "field": "omit",
-        "value": "both",
-        "synthetic_date_control": true,
-        "expected_valid": true,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/omitted-both/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      },
-      {
-        "fixture": "unchanged-published",
-        "field": "unchanged",
-        "value": null,
-        "synthetic_date_control": false,
-        "expected_valid": false,
-        "exit_code": 0,
-        "raw_local_log": "probes/baseline/unchanged-published/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
-      }
-    ],
     "candidate": [
       {
         "fixture": "sources-null",
         "field": "eligibility_source_ids",
         "value": null,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-null/validator.log",
-        "raw_local_log_sha256": "e8ace6d7dccdb88885915c4c4e3e7cbaa2278d763b96b4ec6697f417e2211741"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids must be an array, got None",
+        "raw_local_log": "probes/sources-null/validator.log",
+        "raw_local_log_sha256": "74a90ab89ca1fcac143135487ea3f5ea2afcdd628650628c6e56946ca7e1b168",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-null --as-of 2026-10-05"
       },
       {
         "fixture": "sources-empty-string",
         "field": "eligibility_source_ids",
         "value": "",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-empty-string/validator.log",
-        "raw_local_log_sha256": "3d8df81f844ede980da543e1348e062c084daa9a203b6aa840a4ffecc0ae8c80"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids must be an array, got ''",
+        "raw_local_log": "probes/sources-empty-string/validator.log",
+        "raw_local_log_sha256": "d175bf24292752b4d0e8f6e0b83f9cb032c6888e8d027438c29a8a7901f58416",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-empty-string --as-of 2026-10-05"
       },
       {
         "fixture": "sources-whitespace",
         "field": "eligibility_source_ids",
         "value": " ",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-whitespace/validator.log",
-        "raw_local_log_sha256": "916be030a13d07ea2e0261a2866dbe544753ff4d386584a335b87296952a633a"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids must be an array, got ' '",
+        "raw_local_log": "probes/sources-whitespace/validator.log",
+        "raw_local_log_sha256": "f8833d5447e12eb3c3d18400c37d32da4fbdcbddbf5955c972fd87404f5d0488",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-whitespace --as-of 2026-10-05"
       },
       {
         "fixture": "sources-scalar-string",
         "field": "eligibility_source_ids",
         "value": "S-06",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-scalar-string/validator.log",
-        "raw_local_log_sha256": "95a98313046a024507a4382996d0039174f2b1e813db0acd5c1e0f6ef808d02a"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids must be an array, got 'S-06'",
+        "raw_local_log": "probes/sources-scalar-string/validator.log",
+        "raw_local_log_sha256": "571f07652f0e48b6ff1f8a8f549714a6d47f526d181cd729820ae6c759312067",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-scalar-string --as-of 2026-10-05"
       },
       {
         "fixture": "sources-false",
         "field": "eligibility_source_ids",
         "value": false,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-false/validator.log",
-        "raw_local_log_sha256": "de486efe2f6453d080ea93d5210fad96cd748aa8bbae169027dddab6c5bac0f9"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids must be an array, got False",
+        "raw_local_log": "probes/sources-false/validator.log",
+        "raw_local_log_sha256": "4faa1625807480e71247337286392e57c93da8d898367dd6a87f548aef2dbefe",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-false --as-of 2026-10-05"
       },
       {
         "fixture": "sources-true",
         "field": "eligibility_source_ids",
         "value": true,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-true/validator.log",
-        "raw_local_log_sha256": "6822ea83ab7c8f7a68c76956236c970120c9d104b95062bdf3fac38c0879f7cc"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids must be an array, got True",
+        "raw_local_log": "probes/sources-true/validator.log",
+        "raw_local_log_sha256": "2f1292ea6aec0dcae8f8ce7a7aaa337a2e178178408d39eccd587e5069e63f21",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-true --as-of 2026-10-05"
       },
       {
         "fixture": "sources-zero",
         "field": "eligibility_source_ids",
         "value": 0,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-zero/validator.log",
-        "raw_local_log_sha256": "3fe0560532c923c434ced20d9024b08531bc0b6c2e7ee6ccde742d55a1f2d1d4"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids must be an array, got 0",
+        "raw_local_log": "probes/sources-zero/validator.log",
+        "raw_local_log_sha256": "de67b9c886a8e858dcbb241addd581729fc8d37fe5f2024cd9b5c302f814add6",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-zero --as-of 2026-10-05"
       },
       {
         "fixture": "sources-integer",
         "field": "eligibility_source_ids",
         "value": 42,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-integer/validator.log",
-        "raw_local_log_sha256": "9a14a2c5b8e2af2ea1b9de6da2e8faf0cfc36208db76e0c165198811f16eb191"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids must be an array, got 42",
+        "raw_local_log": "probes/sources-integer/validator.log",
+        "raw_local_log_sha256": "15f1cf07cc9c561267de98dfd4a3812c8a6b36edd3f262caf45ac44c2cb5955d",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-integer --as-of 2026-10-05"
       },
       {
         "fixture": "sources-fraction",
         "field": "eligibility_source_ids",
         "value": 42.5,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-fraction/validator.log",
-        "raw_local_log_sha256": "1ddf0f18797b2241a26e44e5aaeabfadc37b94e40dfb17f1abaabe51ef0ecc15"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids must be an array, got 42.5",
+        "raw_local_log": "probes/sources-fraction/validator.log",
+        "raw_local_log_sha256": "3fbe20ec443d23d14ec7c47616a63052ba975637d6e9aa9d54edbb3e54a4a8c9",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-fraction --as-of 2026-10-05"
       },
       {
         "fixture": "sources-object",
         "field": "eligibility_source_ids",
         "value": {},
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-object/validator.log",
-        "raw_local_log_sha256": "37e621a862659484b632dcb8d1441daf251a93a75edbd076228ed77d7dbee05d"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids must be an array, got {}",
+        "raw_local_log": "probes/sources-object/validator.log",
+        "raw_local_log_sha256": "77097ec5b718c6f162fa4532dfa4e91b52c521ace59438b4be0f9c1a8c7cc8f4",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-object --as-of 2026-10-05"
       },
       {
         "fixture": "sources-null-item",
@@ -708,11 +304,13 @@
         "value": [
           null
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-null-item/validator.log",
-        "raw_local_log_sha256": "2b860f24e223e3e4bfd3dd3c4a8989d6dce5d9125764e045ba0c0eb9d3bad26d"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids[0] must be a nonempty source ID, got None",
+        "raw_local_log": "probes/sources-null-item/validator.log",
+        "raw_local_log_sha256": "9513fe92c2cd44e553f9039f4b1f059aa1fc4483f97d921cfa3d3257a1977b67",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-null-item --as-of 2026-10-05"
       },
       {
         "fixture": "sources-false-item",
@@ -720,11 +318,13 @@
         "value": [
           false
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-false-item/validator.log",
-        "raw_local_log_sha256": "c5237230800aa10ec5fbe203ecc03a5ab56f599a959f6a9f72d48b6fc25b9c5b"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids[0] must be a nonempty source ID, got False",
+        "raw_local_log": "probes/sources-false-item/validator.log",
+        "raw_local_log_sha256": "b5928b5614dd1932659151ac67bf57e1c59b50e1ee94c1adb9ef5c84132733cf",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-false-item --as-of 2026-10-05"
       },
       {
         "fixture": "sources-number-item",
@@ -732,11 +332,13 @@
         "value": [
           42
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-number-item/validator.log",
-        "raw_local_log_sha256": "64582f45fddbd84188b3ce4f1dd1cc8bbcaf8298646801ad8c672644a8c18696"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids[0] must be a nonempty source ID, got 42",
+        "raw_local_log": "probes/sources-number-item/validator.log",
+        "raw_local_log_sha256": "edfa0cde0c3f18ed0a96c3824e2895f07597eaf1390897b4458bf8df2670a2d5",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-number-item --as-of 2026-10-05"
       },
       {
         "fixture": "sources-array-item",
@@ -744,11 +346,13 @@
         "value": [
           []
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-array-item/validator.log",
-        "raw_local_log_sha256": "80da87026b028684c321f629b1a27723a215a44f2eca3cbaa6ec37d74742c762"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids[0] must be a nonempty source ID, got []",
+        "raw_local_log": "probes/sources-array-item/validator.log",
+        "raw_local_log_sha256": "bfe9efc7aca134722529380c623d0ae0b0166edb6d006ed0a33cb580a84a23f1",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-array-item --as-of 2026-10-05"
       },
       {
         "fixture": "sources-object-item",
@@ -756,11 +360,13 @@
         "value": [
           {}
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-object-item/validator.log",
-        "raw_local_log_sha256": "ae4d02aecc24232e23194816a1d1a49a3dbf9721733be39f60b712ea07127cd5"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids[0] must be a nonempty source ID, got {}",
+        "raw_local_log": "probes/sources-object-item/validator.log",
+        "raw_local_log_sha256": "51402b1b0e1549ae0546de9368ee816b80362bb41f4e45b342a320a8bb95ddcf",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-object-item --as-of 2026-10-05"
       },
       {
         "fixture": "sources-empty-item",
@@ -768,11 +374,13 @@
         "value": [
           ""
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-empty-item/validator.log",
-        "raw_local_log_sha256": "0c5091fecb61b3791c8f18ea53d41a2d793b875682eaf611b51346274146cf15"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids[0] must be a nonempty source ID, got ''",
+        "raw_local_log": "probes/sources-empty-item/validator.log",
+        "raw_local_log_sha256": "99d9b9e7a759b1c102d4eb80e0faa05f9d7a0627052cc4ce8b5447e4c3fc6461",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-empty-item --as-of 2026-10-05"
       },
       {
         "fixture": "sources-blank-item",
@@ -780,11 +388,13 @@
         "value": [
           " "
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-blank-item/validator.log",
-        "raw_local_log_sha256": "d068f6ea432bd589e4c49569539e6cc028bf5b9dace91040c03efb0aef9cbb50"
+        "diagnostic": "AssertionError: P-001.eligibility_source_ids[0] must be a nonempty source ID, got ' '",
+        "raw_local_log": "probes/sources-blank-item/validator.log",
+        "raw_local_log_sha256": "e8a8ac906e7a2809b5c3c815530ccb9af26e6f6f85b2f6eb5169d1c1781a78cb",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-blank-item --as-of 2026-10-05"
       },
       {
         "fixture": "sources-orphan",
@@ -792,11 +402,13 @@
         "value": [
           "S-MISSING"
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-orphan/validator.log",
-        "raw_local_log_sha256": "91f9510e785cb27425687114e57ba40850837c05e96e9e3e8995dc5d9d724029"
+        "diagnostic": "AssertionError: orphan source 'S-MISSING' in P-001.eligibility_source_ids[0]",
+        "raw_local_log": "probes/sources-orphan/validator.log",
+        "raw_local_log_sha256": "6e22029b2fdd4d2f2000d94b08fe2704ccf82772e3786110a2de09b3c4240bd6",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-orphan --as-of 2026-10-05"
       },
       {
         "fixture": "sources-padded-item",
@@ -804,11 +416,13 @@
         "value": [
           " S-06 "
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-padded-item/validator.log",
-        "raw_local_log_sha256": "077dba30eaead64c6973da847786473fcdf7197f8ec8427b4f92dbc88f18845b"
+        "diagnostic": "AssertionError: orphan source ' S-06 ' in P-001.eligibility_source_ids[0]",
+        "raw_local_log": "probes/sources-padded-item/validator.log",
+        "raw_local_log_sha256": "126832480b2793310501a6218978355db55b230a7d630844003864f18f15c7ca",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-padded-item --as-of 2026-10-05"
       },
       {
         "fixture": "sources-mixed-orphan",
@@ -817,201 +431,229 @@
           "S-06",
           "S-MISSING"
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/sources-mixed-orphan/validator.log",
-        "raw_local_log_sha256": "19c69e62c4c10cb7fc960a87b7ed36e22d730599db4007fb9ba86e0b20f062d5"
+        "diagnostic": "AssertionError: orphan source 'S-MISSING' in P-001.eligibility_source_ids[1]",
+        "raw_local_log": "probes/sources-mixed-orphan/validator.log",
+        "raw_local_log_sha256": "04fffd1bae94dbed12ffbb7ba640c20d2e3d2cbadc9efbe5f433113139632619",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/sources-mixed-orphan --as-of 2026-10-05"
       },
       {
         "fixture": "date-null",
         "field": "eligibility_verified_at",
         "value": null,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-null/validator.log",
-        "raw_local_log_sha256": "21427eacaa49cfdcebe8937fbc5402a01fddd66f4d17a17a6109191d4d79a4a4"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got None",
+        "raw_local_log": "probes/date-null/validator.log",
+        "raw_local_log_sha256": "ccfdae36ba9b4276bb00588124254fb405229305c6d9c59bd0545ddce589a3e1",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-null --as-of 2026-10-05"
       },
       {
         "fixture": "date-empty",
         "field": "eligibility_verified_at",
         "value": "",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-empty/validator.log",
-        "raw_local_log_sha256": "37eb60b9e6939b5cf639ed158ec6e3bd1ae053c07c4fff968ea33620bb286edb"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got ''",
+        "raw_local_log": "probes/date-empty/validator.log",
+        "raw_local_log_sha256": "2e7e90a98cdcb1e9c632ced655eeec9ba8ad0179751992a51bd143842f1889b1",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-empty --as-of 2026-10-05"
       },
       {
         "fixture": "date-whitespace",
         "field": "eligibility_verified_at",
         "value": " ",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-whitespace/validator.log",
-        "raw_local_log_sha256": "d8d36bca87e2378ca92a1c60ca634cb7ec535d483b0cc54ff76499a86a0efdaa"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got ' '",
+        "raw_local_log": "probes/date-whitespace/validator.log",
+        "raw_local_log_sha256": "45d2e608c8078dc100754485eed600c04fe017dfaafae6014523985258c1da27",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-whitespace --as-of 2026-10-05"
       },
       {
         "fixture": "date-false",
         "field": "eligibility_verified_at",
         "value": false,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-false/validator.log",
-        "raw_local_log_sha256": "20a9577c6f21bc70741a31e90a3051418751ddf525ab7533ab3a1cb518c692e2"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got False",
+        "raw_local_log": "probes/date-false/validator.log",
+        "raw_local_log_sha256": "a3fee2a624e63638d3971b039d1b6cf38d517bc7ada203d49e40211bf5e87387",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-false --as-of 2026-10-05"
       },
       {
         "fixture": "date-true",
         "field": "eligibility_verified_at",
         "value": true,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-true/validator.log",
-        "raw_local_log_sha256": "7bc9fabed5d16879fc85e984468eaed8352937a739fa8bb145f9e86aacd6ce14"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got True",
+        "raw_local_log": "probes/date-true/validator.log",
+        "raw_local_log_sha256": "27678e08e88f6c73398fd4be278bf263f6caa0dd8568094ddb2e05cf1a0a528b",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-true --as-of 2026-10-05"
       },
       {
         "fixture": "date-zero",
         "field": "eligibility_verified_at",
         "value": 0,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-zero/validator.log",
-        "raw_local_log_sha256": "e188799a61ed1bd07fb9b2e8e7447de53272193af229593f336b527e14f671ce"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got 0",
+        "raw_local_log": "probes/date-zero/validator.log",
+        "raw_local_log_sha256": "c94c0e60aff1bb397b8c66a1dfe42702cba009a7ce8554e7228dd2d277925483",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-zero --as-of 2026-10-05"
       },
       {
         "fixture": "date-integer",
         "field": "eligibility_verified_at",
         "value": 42,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-integer/validator.log",
-        "raw_local_log_sha256": "9674bb6452afa35153fb502246b1275191dac2299e0774d82e7ebc62b28bb614"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got 42",
+        "raw_local_log": "probes/date-integer/validator.log",
+        "raw_local_log_sha256": "a90f04a7a41fe87efcf83fcad4aa8672f5a2dccd45a2069bfe9811d0b91c02af",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-integer --as-of 2026-10-05"
       },
       {
         "fixture": "date-fraction",
         "field": "eligibility_verified_at",
         "value": 42.5,
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-fraction/validator.log",
-        "raw_local_log_sha256": "67cca2c8eda7debdab347d05dd2b7e1814abcdf3df1b04d2580b32ca6ff35863"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got 42.5",
+        "raw_local_log": "probes/date-fraction/validator.log",
+        "raw_local_log_sha256": "e0db8359a7a6b76465a9e8046575c7c36a1126d0debfdd6a2cafb13b48b8649a",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-fraction --as-of 2026-10-05"
       },
       {
         "fixture": "date-array",
         "field": "eligibility_verified_at",
         "value": [],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-array/validator.log",
-        "raw_local_log_sha256": "3c1e6fccc0504e617afd4d5f41a0d9257a3b028d325d7fb00af0aadf5332ae0b"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got []",
+        "raw_local_log": "probes/date-array/validator.log",
+        "raw_local_log_sha256": "c817ac6411c3346af63799fc62c2398ae558e94a8a79455c860f5a000392f3c4",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-array --as-of 2026-10-05"
       },
       {
         "fixture": "date-object",
         "field": "eligibility_verified_at",
         "value": {},
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-object/validator.log",
-        "raw_local_log_sha256": "792442289e159c791014a5b0d9cb39157f12fb6840657cce5041ede71d1f3bf7"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got {}",
+        "raw_local_log": "probes/date-object/validator.log",
+        "raw_local_log_sha256": "41df8dfc2a98e28f1ee74446393e8e18fc954e2ce383f790429530d6155621ea",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-object --as-of 2026-10-05"
       },
       {
         "fixture": "date-invalid",
         "field": "eligibility_verified_at",
         "value": "not-a-date",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-invalid/validator.log",
-        "raw_local_log_sha256": "399191a8713097b8cb090139536433aa99377e43b303e9ac50122e5ec20f327f"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at: invalid ISO date: not-a-date",
+        "raw_local_log": "probes/date-invalid/validator.log",
+        "raw_local_log_sha256": "21e916b654c0f81fab6f40282f501f411bd3c90186cc20dd46ad4f694fdb91d0",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-invalid --as-of 2026-10-05"
       },
       {
         "fixture": "date-impossible",
         "field": "eligibility_verified_at",
         "value": "2026-02-30",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-impossible/validator.log",
-        "raw_local_log_sha256": "ff64de11b1d6a77783904f1a69c98f8630a3dc8f0dd855954f0fa6e500561218"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at: invalid ISO date: 2026-02-30",
+        "raw_local_log": "probes/date-impossible/validator.log",
+        "raw_local_log_sha256": "212715fc32665e7d6ef97675ea6605811e894879d0a81d4081b8542497742da6",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-impossible --as-of 2026-10-05"
       },
       {
         "fixture": "date-compact",
         "field": "eligibility_verified_at",
         "value": "20260929",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-compact/validator.log",
-        "raw_local_log_sha256": "9653edaed6e39df9654408ce6d72fb06b3236b53cd0031aabc1a6c177ca5d2ff"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got '20260929'",
+        "raw_local_log": "probes/date-compact/validator.log",
+        "raw_local_log_sha256": "d2ddccc0ff70512819ed8c04275a03a748400ad32327af4f90119c64af0b0d5a",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-compact --as-of 2026-10-05"
       },
       {
         "fixture": "date-week",
         "field": "eligibility_verified_at",
         "value": "2026-W39-2",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-week/validator.log",
-        "raw_local_log_sha256": "305de23218e911f53ec054b2dbd1670e5016cef42fb96429bea34bfc0bbab5b5"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at must be a YYYY-MM-DD date, got '2026-W39-2'",
+        "raw_local_log": "probes/date-week/validator.log",
+        "raw_local_log_sha256": "8b07dd747fa922b0e02ca50f770841e7999ba609fff51faaf1ada5da9479c1ae",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-week --as-of 2026-10-05"
       },
       {
         "fixture": "date-datetime",
         "field": "eligibility_verified_at",
         "value": "2026-09-29T00:00:00Z",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-datetime/validator.log",
-        "raw_local_log_sha256": "a39fb49c77f4d9d04a7de99437b0331a0e2373e95c6feca220755271b30e4b22"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at: invalid ISO date: 2026-09-29T00:00:00Z",
+        "raw_local_log": "probes/date-datetime/validator.log",
+        "raw_local_log_sha256": "8202672a2943758b03201aea29093d9af6aeed2e56631597b6aca0a9fb736de1",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-datetime --as-of 2026-10-05"
       },
       {
         "fixture": "date-padded",
         "field": "eligibility_verified_at",
         "value": " 2026-09-29 ",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": false,
         "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-padded/validator.log",
-        "raw_local_log_sha256": "38a111a6628544196076705b88a754236c716c25099978dcf0ab70ae117e485b"
-      },
-      {
-        "fixture": "date-post-cutoff",
-        "field": "eligibility_verified_at",
-        "value": "2026-09-30",
-        "synthetic_date_control": true,
-        "expected_valid": false,
-        "exit_code": 1,
-        "raw_local_log": "probes/candidate/date-post-cutoff/validator.log",
-        "raw_local_log_sha256": "a2e0e2cc35d3134639f63a84b6dd55f73550fd6018890d043d6f7b467aac5aef"
+        "diagnostic": "AssertionError: P-001.eligibility_verified_at: invalid ISO date:  2026-09-29",
+        "raw_local_log": "probes/date-padded/validator.log",
+        "raw_local_log_sha256": "bc29d1612620688384ca7839e1ee49ece83f2646f017663758e27ee6de4e1c74",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/date-padded --as-of 2026-10-05"
       },
       {
         "fixture": "valid-at-cutoff",
         "field": "eligibility_verified_at",
         "value": "2026-09-29",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": true,
         "exit_code": 0,
-        "raw_local_log": "probes/candidate/valid-at-cutoff/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+        "diagnostic": "PASS - source credibility",
+        "raw_local_log": "probes/valid-at-cutoff/validator.log",
+        "raw_local_log_sha256": "9fd9d7f0c4ef1399e8745be32b2976cd7d01fc05403af4f1dabf77004be4639f",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/valid-at-cutoff --as-of 2026-10-05"
       },
       {
         "fixture": "valid-before-cutoff",
         "field": "eligibility_verified_at",
         "value": "2026-08-21",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": true,
         "exit_code": 0,
-        "raw_local_log": "probes/candidate/valid-before-cutoff/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+        "diagnostic": "PASS - source credibility",
+        "raw_local_log": "probes/valid-before-cutoff/validator.log",
+        "raw_local_log_sha256": "9fd9d7f0c4ef1399e8745be32b2976cd7d01fc05403af4f1dabf77004be4639f",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/valid-before-cutoff --as-of 2026-10-05"
       },
       {
         "fixture": "valid-sources",
@@ -1019,78 +661,94 @@
         "value": [
           "S-06"
         ],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": true,
         "exit_code": 0,
-        "raw_local_log": "probes/candidate/valid-sources/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+        "diagnostic": "PASS - source credibility",
+        "raw_local_log": "probes/valid-sources/validator.log",
+        "raw_local_log_sha256": "9fd9d7f0c4ef1399e8745be32b2976cd7d01fc05403af4f1dabf77004be4639f",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/valid-sources --as-of 2026-10-05"
       },
       {
         "fixture": "valid-empty-array-preserved",
         "field": "eligibility_source_ids",
         "value": [],
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": true,
         "exit_code": 0,
-        "raw_local_log": "probes/candidate/valid-empty-array-preserved/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+        "diagnostic": "PASS - source credibility",
+        "raw_local_log": "probes/valid-empty-array-preserved/validator.log",
+        "raw_local_log_sha256": "9fd9d7f0c4ef1399e8745be32b2976cd7d01fc05403af4f1dabf77004be4639f",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/valid-empty-array-preserved --as-of 2026-10-05"
       },
       {
         "fixture": "omitted-sources",
         "field": "omit",
         "value": "eligibility_source_ids",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": true,
         "exit_code": 0,
-        "raw_local_log": "probes/candidate/omitted-sources/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+        "diagnostic": "PASS - source credibility",
+        "raw_local_log": "probes/omitted-sources/validator.log",
+        "raw_local_log_sha256": "9fd9d7f0c4ef1399e8745be32b2976cd7d01fc05403af4f1dabf77004be4639f",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/omitted-sources --as-of 2026-10-05"
       },
       {
         "fixture": "omitted-date",
         "field": "omit",
         "value": "eligibility_verified_at",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": true,
         "exit_code": 0,
-        "raw_local_log": "probes/candidate/omitted-date/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+        "diagnostic": "PASS - source credibility",
+        "raw_local_log": "probes/omitted-date/validator.log",
+        "raw_local_log_sha256": "9fd9d7f0c4ef1399e8745be32b2976cd7d01fc05403af4f1dabf77004be4639f",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/omitted-date --as-of 2026-10-05"
       },
       {
         "fixture": "omitted-both",
         "field": "omit",
         "value": "both",
-        "synthetic_date_control": true,
+        "canonical_data_mutated": true,
         "expected_valid": true,
         "exit_code": 0,
-        "raw_local_log": "probes/candidate/omitted-both/validator.log",
-        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+        "diagnostic": "PASS - source credibility",
+        "raw_local_log": "probes/omitted-both/validator.log",
+        "raw_local_log_sha256": "9fd9d7f0c4ef1399e8745be32b2976cd7d01fc05403af4f1dabf77004be4639f",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/omitted-both --as-of 2026-10-05"
       },
       {
         "fixture": "unchanged-published",
         "field": "unchanged",
         "value": null,
-        "synthetic_date_control": false,
-        "expected_valid": false,
-        "exit_code": 1,
-        "raw_local_log": "probes/candidate/unchanged-published/validator.log",
-        "raw_local_log_sha256": "a2e0e2cc35d3134639f63a84b6dd55f73550fd6018890d043d6f7b467aac5aef"
+        "canonical_data_mutated": false,
+        "expected_valid": true,
+        "exit_code": 0,
+        "diagnostic": "PASS - source credibility",
+        "raw_local_log": "probes/unchanged-published/validator.log",
+        "raw_local_log_sha256": "9fd9d7f0c4ef1399e8745be32b2976cd7d01fc05403af4f1dabf77004be4639f",
+        "command": "python scripts/validate_data.py --root <PROBE_DIR>/unchanged-published --as-of 2026-10-05"
       }
     ]
   },
   "patch": {
     "file": "proposals/pax-eligibility-validation.patch",
-    "sha256": "8c3b8a0723b670e356b6593d8ecc0410ccb78013986e9da5b385b3b46592c3ab",
+    "sha256": "93045a70721ebce5162e9cdd873ee1b30d94abbfd10dca243957e5bac462f03a",
     "files": [
       "scripts/validate_data.py",
       "tests/test_snapshot_boundary.py"
     ],
     "apply_check_against_base": "PASS",
     "reverse_apply_check_against_candidate": "PASS",
-    "replaces_previous_partial_validator_proposal": true,
-    "generated_outputs": "None included. Historical gate artifacts used a synthetic date. After revising the unsupported cutoff guard, require the existing gate on unchanged actual data; no revised candidate or actual-data pass is claimed."
+    "generated_outputs": "None included. Unchanged actual-data full gate passed; generated public trees match baseline and repeated candidate byte-for-byte.",
+    "replaces_cutoff_bearing_proposal_at": "1d3fe18d95140930e50d839b07f87131aad07c1a",
+    "serialization": "git -c diff.suppressBlankEmpty=true --no-pager diff --binary HEAD; suppress empty context-line spaces so the review diff also passes whitespace checks. Applied source/test bytes are identical to those tested."
   },
   "unchanged_data_sha256": {
+    "data/evidence-baseline.json": "79276d96cfa852967fb8630510d66f4f835f6614a6fef94002f7d9c562b5eebe",
     "data/pax-silica.json": "0f33d43ae52d30639ffad2fea1bd6a71d9774bd667cfbe0efd63fd115ec6280d",
+    "data/schemas/pax-silica.schema.json": "c1251e2099ff434ae678ba99f59cd89a5da1ccb4fa726f8f70e68149ab20624a",
+    "data/schemas/sources.schema.json": "9a32260c8391720884c0257678421ca8635381589bd307d2545e9dd5912b04ba",
     "data/sources.json": "c4109ddda578f74bdb8ea9bc6c79d4ef9acc141272a43047184b409b92c01d27"
   },
   "upstream_source_license": {
@@ -1099,15 +757,15 @@
     "notice": "MIT License\n\nCopyright (c) 2026 Bridge Node 7\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
   },
   "limitations": [
-    "Synthetic in-boundary date is not a factual correction or proof of valid publication.",
-    "Owner PR #50 deliberately keeps the field review newer than the full-snapshot boundary. The preserved candidate rejects that intended record and requires chronology-policy revision; T06 remains open.",
-    "Unknown pairing/nonempty-list policy is recorded for owners; no invented required-field rule.",
-    "No upstream issue, pull request, release, deployment, or contact.",
-    "Pax CLI uses its existing uncaught AssertionError style; field diagnostics are actionable but include the existing traceback presentation."
+    "Local candidate verification on macOS/Python 3.12; no new hosted Pax run or upstream adoption. T06 remains open upstream.",
+    "Acceptance of owner-intended data establishes validator compatibility, not independent authentication of historical source review or applicant qualification.",
+    "Optional pairing/minimum-source and additional chronology restrictions require an explicit owner contract; the candidate adds none.",
+    "No upstream issue, pull request, release, deployment, contact or visibility change.",
+    "Pax CLI retains its existing AssertionError/traceback presentation with program and field diagnostics."
   ],
-  "raw_log_policy": "Portable fixture mutations/outcomes and raw-log hashes only; full diagnostics remain in ignored .audit-cache/continuation/pax. The tests/commands reproduce behavior. Synthetic dates are validation controls, not factual data corrections.",
+  "raw_log_policy": "Current logs, probe runner, fixtures, source copies and generated artifacts remain in ignored .audit-cache/t06-actual-data. Portable commands, probe mutations/results and raw-log hashes are published here. Original synthetic artifacts remain in their prior cache and immutable review history.",
   "public_owner_record_review": {
-    "checked_at_utc": "2026-10-05T08:27:47.206600+00:00",
+    "checked_at_utc": "2026-10-05T09:31:55.654264+00:00",
     "source_commit": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
     "records": [
       {
@@ -1143,8 +801,112 @@
     ],
     "resolved_question": "The specific September 30 eligibility review and September 29 overall snapshot difference is owner-intended. The previous factual-date-repair recommendation is withdrawn.",
     "contract_interpretation": "Current generic verified_at constraints do not prove a violation by eligibility_verified_at. PR50 does not authorize a universal rule for every field or settle optional pairing/minimum-source policy.",
-    "candidate_disposition": "Preserve the existing patch and observed test outcomes, but mark the full patch REQUIRES_CHRONOLOGY_POLICY_REVISION_BEFORE_ADOPTION because its cutoff guard rejects the owner-intended record.",
-    "scope_of_this_phase": "T01-T03 compatibility and handoff, plus bounded public owner-decision research. This phase corrects the T06 interpretation/status; it does not implement a revised T06 proposal or rerun its gates.",
+    "candidate_disposition": "The revised proposal removes only the unsupported eligibility cutoff, preserves generic date guards and passes the existing full gate on unchanged published data. Awaiting maintainer acceptance.",
+    "scope_of_this_phase": "T06 review-only candidate correction and actual-data validation; current main still matches the pinned base. Connected GitHub plugin reread PR22/48/50 and source commit; authenticated gh verified main.",
     "source_review_limit": "Owner attribution and declared review intent are established; no independent historical source capture or applicant qualification is asserted."
+  },
+  "actual_data_control": {
+    "program": "P-001",
+    "eligibility_verified_at": "2026-09-30",
+    "snapshot_verified_through": "2026-09-29",
+    "eligibility_source_ids": [
+      "S-06"
+    ],
+    "canonical_data_sha256": "0f33d43ae52d30639ffad2fea1bd6a71d9774bd667cfbe0efd63fd115ec6280d",
+    "source_records_sha256": "c4109ddda578f74bdb8ea9bc6c79d4ef9acc141272a43047184b409b92c01d27",
+    "full_gate_input": "Unchanged source data; no date substitution or locator changes."
+  },
+  "probe_recipe": [
+    "For each probes.candidate record, copy the original data directory into a fresh disposable <PROBE_DIR>/<fixture>/data directory.",
+    "Select P-001 from data/pax-silica.json. If field is eligibility_source_ids or eligibility_verified_at, replace only that field with the recorded value.",
+    "If field is omit, delete only the field named by value; value both means delete eligibility_source_ids and eligibility_verified_at. Do not change any other field.",
+    "If field is unchanged, leave all copied bytes untouched. There is no default eligibility-date substitution in any probe.",
+    "Invoke the patched scripts/validate_data.py with --root <PROBE_DIR>/<fixture> --as-of 2026-10-05 using activated Python 3.12. Expect exit 0 for valid controls; exit 1 and a P-001/field diagnostic for malformed variants."
+  ],
+  "generated_output_verification": {
+    "compared_trees": [
+      "original-source baseline",
+      "revised candidate first build",
+      "revised candidate second build"
+    ],
+    "byte_identical": true,
+    "files": {
+      "WEB_MANIFEST.sha256": "2f92f6b2141fc4e7d56e613f9a44d206ae5d69475405d9bf54ba1c587ebb0ee9",
+      "app.js": "dcaa215db2d023bab70b435deb77d20ee0d64b619ed9b182552fab746df26f1d",
+      "data/pax-silica.json": "0f33d43ae52d30639ffad2fea1bd6a71d9774bd667cfbe0efd63fd115ec6280d",
+      "data/sources.json": "c4109ddda578f74bdb8ea9bc6c79d4ef9acc141272a43047184b409b92c01d27",
+      "index.html": "60a2d4dd1c5834b3bb6ce006be5ecfd17c269443ed47dd0702c28b2249e7cee8",
+      "styles.css": "2f2861e744c00c158ddde9f0b6b8a95bb2ea4997caea19d2f2b6ecd6bb269f47"
+    },
+    "manifest_entries_verified_per_tree": 5,
+    "canonical_and_source_data_copied_byte_for_byte": true
+  },
+  "historical_verification": {
+    "review_commit": "1d3fe18d95140930e50d839b07f87131aad07c1a",
+    "patch": {
+      "file": "proposals/pax-eligibility-validation.patch",
+      "url": "https://github.com/hideouts-io/bridgenode7-technical-review/blob/1d3fe18d95140930e50d839b07f87131aad07c1a/proposals/pax-eligibility-validation.patch",
+      "sha256": "8c3b8a0723b670e356b6593d8ecc0410ccb78013986e9da5b385b3b46592c3ab"
+    },
+    "evidence": {
+      "file": "evidence/pax-eligibility-validation.json",
+      "url": "https://github.com/hideouts-io/bridgenode7-technical-review/blob/1d3fe18d95140930e50d839b07f87131aad07c1a/evidence/pax-eligibility-validation.json",
+      "sha256": "5535ef8e8e86b91d5665bd3a8126138963199dfbbff1c7d768fc6d8130a30d7e"
+    },
+    "aggregate_evidence": {
+      "file": "evidence/verification.json",
+      "url": "https://github.com/hideouts-io/bridgenode7-technical-review/blob/1d3fe18d95140930e50d839b07f87131aad07c1a/evidence/verification.json",
+      "sha256": "ebb74b8c3827a588eefbb782c045916a3569e2bd40aa523230219af0dda76795"
+    },
+    "recorded_results": {
+      "baseline_full_tests": 59,
+      "candidate_synthetic_full_tests": 62,
+      "actual_validator_probes_per_phase": 45,
+      "invalid_variants_rejected": 38,
+      "valid_and_optional_controls_accepted": 7,
+      "published_candidate_gate_exit": 1,
+      "synthetic_candidate_gate_exit": 0,
+      "deterministic_generation": "PASS, two generated trees byte-equal under the disposable synthetic control",
+      "evidence_integrity": "PASS, source ratchet 15, public referenced source IDs 11, active signatory identity 25",
+      "public_boundary_and_readability": "PASS",
+      "browser_uat": "Not repeated; no frontend/source asset changes",
+      "probe_classification_limit": "The historical invalid_variants_rejected count includes the disputed post-cutoff case. Rejection proves candidate behavior, not correctness of that chronology policy."
+    },
+    "interpretation": "The old cutoff-bearing proposal rejected both the post-cutoff probe and unchanged-published control for the same unsupported rule. Its synthetic 62-test gate and all original commands/probes remain at the immutable references above. They are not current acceptance evidence.",
+    "local_cache_preserved": ".audit-cache/continuation/pax"
+  },
+  "maintainer_acceptance_gate": "Apply the revised patch to its exact source base, or re-review/rebase if main changes. Run the existing CI matrix on Ubuntu/Windows with Python 3.11/3.12, including check_repo.py and committed-candidate drift/whitespace checks. Preserve actual dates, generic cutoff rules and optional semantics. Upstream acceptance/release is a maintainer decision.",
+  "patch_serialization_checks": {
+    "checked_at_utc": "2026-10-05T09:37:53.327441+00:00",
+    "patch_sha256": "93045a70721ebce5162e9cdd873ee1b30d94abbfd10dca243957e5bac462f03a",
+    "checks": {
+      "normalized-patch-apply": {
+        "exit_code": 0,
+        "raw_local_log": "logs/normalized-patch-apply.log",
+        "raw_local_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "normalized-patch-reverse": {
+        "exit_code": 0,
+        "raw_local_log": "logs/normalized-patch-reverse.log",
+        "raw_local_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "public-whitespace": {
+        "exit_code": 0,
+        "raw_local_log": "logs/public-whitespace.log",
+        "raw_local_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "applied_source_bytes_match_tested_candidate": true
+  },
+  "independent_review": {
+    "scope": "Read-only patch/code, actual-data controls, commands/probe logs and generated outputs; no runtime gates repeated.",
+    "result": "PASS; no source/test defect found.",
+    "verified_counts": {
+      "command_logs": 10,
+      "probe_logs": 44,
+      "canonical_data_files": 5,
+      "generated_files_per_tree": 6,
+      "manifest_entries_per_tree": 5
+    }
   }
 }

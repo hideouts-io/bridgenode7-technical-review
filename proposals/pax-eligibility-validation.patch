@@ -1,10 +1,10 @@
 diff --git a/scripts/validate_data.py b/scripts/validate_data.py
-index 5bb5f46..535718f 100644
+index 5bb5f46..de5ddb3 100644
 --- a/scripts/validate_data.py
 +++ b/scripts/validate_data.py
-@@ -426,6 +426,52 @@ def validate(
+@@ -426,6 +426,46 @@ def validate(
              )
- 
+
      for program in data["programs"]:
 +        program_id: str = str(program["id"])
 +        if "eligibility_source_ids" in program:
@@ -45,33 +45,29 @@ index 5bb5f46..535718f 100644
 +                    f"{program_id}.eligibility_verified_at must be a "
 +                    f"YYYY-MM-DD date, got {eligibility_value!r}"
 +                )
-+            if eligibility_date > snapshot:
-+                raise AssertionError(
-+                    "record verification postdates snapshot: "
-+                    f"{program_id}.eligibility_verified_at "
-+                    f"{eligibility_date.isoformat()} > {snapshot.isoformat()}"
-+                )
 +
          assert (
              "official"
              in source_states(program)
 diff --git a/tests/test_snapshot_boundary.py b/tests/test_snapshot_boundary.py
-index 568dadc..0f2f2a4 100644
+index 568dadc..ccff13c 100644
 --- a/tests/test_snapshot_boundary.py
 +++ b/tests/test_snapshot_boundary.py
-@@ -86,6 +86,69 @@ class SnapshotBoundaryTests(unittest.TestCase):
+@@ -80,12 +80,71 @@ class SnapshotBoundaryTests(unittest.TestCase):
+     def test_current_snapshot_boundary_accepts_included_verifications(self):
+         with tempfile.TemporaryDirectory() as directory:
+             root = self.fixture(directory)
++            data = json.loads((root / "data/pax-silica.json").read_text(encoding="utf-8"))
++            program = next(record for record in data["programs"] if record["id"] == "P-001")
++            self.assertEqual(data["snapshot"]["verified_through"], "2026-09-29")
++            self.assertEqual(program["eligibility_verified_at"], "2026-09-30")
++            self.assertEqual(program["eligibility_source_ids"], ["S-06"])
+             result = self.run_validator(root)
+             output = result.stdout + result.stderr
+
              self.assertEqual(result.returncode, 0, output)
              self.assertIn("PASS - data integrity", output)
- 
-+    def eligibility_fixture(self, directory: str) -> Path:
-+        """Use a synthetic in-boundary eligibility date, not a factual correction."""
-+        root = self.fixture(directory)
-+        data_path = root / "data/pax-silica.json"
-+        data = json.loads(data_path.read_text(encoding="utf-8"))
-+        data["programs"][0]["eligibility_verified_at"] = data["snapshot"]["verified_through"]
-+        self.write_json(data_path, data)
-+        return root
-+
+
 +    def test_present_eligibility_sources_are_typed_resolved_ids(self) -> None:
 +        values: tuple[object, ...] = (
 +            None, "", " ", "S-06", False, 42, {},
@@ -80,7 +76,7 @@ index 568dadc..0f2f2a4 100644
 +        )
 +        for value in values:
 +            with self.subTest(value=value), tempfile.TemporaryDirectory() as directory:
-+                root = self.eligibility_fixture(directory)
++                root = self.fixture(directory)
 +                data_path = root / "data/pax-silica.json"
 +                data = json.loads(data_path.read_text(encoding="utf-8"))
 +                data["programs"][0]["eligibility_source_ids"] = value
@@ -89,14 +85,14 @@ index 568dadc..0f2f2a4 100644
 +                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
 +                self.assertIn("P-001.eligibility_source_ids", result.stdout + result.stderr)
 +
-+    def test_present_eligibility_dates_are_canonical_and_within_snapshot(self) -> None:
++    def test_present_eligibility_dates_are_canonical(self) -> None:
 +        values: tuple[object, ...] = (
 +            None, "", " ", False, 42, [], {}, "not-a-date",
-+            "2026-02-30", "20260929", "2026-W39-2", "2026-09-30",
++            "2026-02-30", "20260929", "2026-W39-2", " 2026-09-30 ",
 +        )
 +        for value in values:
 +            with self.subTest(value=value), tempfile.TemporaryDirectory() as directory:
-+                root = self.eligibility_fixture(directory)
++                root = self.fixture(directory)
 +                data_path = root / "data/pax-silica.json"
 +                data = json.loads(data_path.read_text(encoding="utf-8"))
 +                data["programs"][0]["eligibility_verified_at"] = value
@@ -109,7 +105,7 @@ index 568dadc..0f2f2a4 100644
 +        for omitted in ((), ("eligibility_source_ids",), ("eligibility_verified_at",),
 +                        ("eligibility_source_ids", "eligibility_verified_at")):
 +            with self.subTest(omitted=omitted), tempfile.TemporaryDirectory() as directory:
-+                root = self.eligibility_fixture(directory)
++                root = self.fixture(directory)
 +                data_path = root / "data/pax-silica.json"
 +                data = json.loads(data_path.read_text(encoding="utf-8"))
 +                for field in omitted:
@@ -118,7 +114,7 @@ index 568dadc..0f2f2a4 100644
 +                result = self.run_validator(root)
 +                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 +        with tempfile.TemporaryDirectory() as directory:
-+            root = self.eligibility_fixture(directory)
++            root = self.fixture(directory)
 +            data_path = root / "data/pax-silica.json"
 +            data = json.loads(data_path.read_text(encoding="utf-8"))
 +            data["programs"][0]["eligibility_source_ids"] = []
@@ -126,6 +122,6 @@ index 568dadc..0f2f2a4 100644
 +            result = self.run_validator(root)
 +            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 +
- 
+
  if __name__ == "__main__":
      unittest.main()
