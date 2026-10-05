@@ -4,7 +4,7 @@
   "repository": "https://github.com/Bridge-Node-7/frontier-decision-engine",
   "source_commit": "4a913756d00cdd321da04bf7350507e571f2f2dd",
   "source_application_version": "0.5.16",
-  "status": "LOCALLY_VERIFIED_WITH_SEPARATE_HARNESS_CORRECTION; UPSTREAM_OPEN",
+  "status": "LOCALLY_AND_HOSTED_VERIFIED_WITH_SEPARATE_HARNESS_CORRECTION; UPSTREAM_OPEN",
   "environment": {
     "os": "macOS 27.0 (26A428)",
     "architecture": "arm64",
@@ -455,5 +455,263 @@
       "combined-after-check.patch": "b745222567fd80aae63be9175ede862ef37688bb278c33dbdbcc63b01a2a4f94"
     },
     "raw_log_policy": "Raw logs, source copies, runtime downloads and environments remain only in ignored .audit-cache/continuation/toolchain/fde. Publish portable outcomes and hashes by integrating this supplement into the existing task evidence."
+  },
+  "hosted_candidate_verification": {
+    "scope": "Hosted candidate verification in hideouts-io/bridgenode7-technical-review; upstream task remains open",
+    "run_id": 37278630678,
+    "run_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678",
+    "review_commit": "587a35f526992a269bd4c24fa32e0bd1fdd647b2",
+    "workflow_sha256": "50952d0798b8194fb7f5bace3ab34704321a14ed9bfc2e62030d2f23bc7e4c33",
+    "source_workflow_hashes": {
+      "ci.yml": "1f410102e78f9145685f3d8cd8f2b15a7ced6a192927b21cd2c6964bc2719b93",
+      "codeql.yml": "9bc531bfb33b544e8b2863674f10cbe0afd29edb0b847da6a1f2a1d3421dace2",
+      "pages.yml": "7684445a1930cffb93d259d5c9c728ecc5e6d4568845eb485f380490b428d879",
+      "release-preflight.yml": "71eb3ff8aa3d1475a415396e84a7ee2c3e98782431c7cd1f4dc125fbac5b6860",
+      "release.yml": "b531be2bc2e10311d115c1a606f8c199a50233bd136faeffe4a7df36153f2e9a"
+    },
+    "command_results_scope": "Exact commands and shells are preserved in command_source at this review commit. Successful executed run steps are listed per job; GitHub job conclusions and logs establish exit success.",
+    "command_source": "https://github.com/hideouts-io/bridgenode7-technical-review/blob/587a35f526992a269bd4c24fa32e0bd1fdd647b2/.github/workflows/candidate-verification.yml",
+    "completed_at_utc": "2026-10-05T07:39:41Z",
+    "jobs": [
+      {
+        "job_id": 111661229444,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678/job/111661229444",
+        "name": "FDE / Ubuntu / Node 22 / combined",
+        "conclusion": "success",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "python": "3.12.3",
+        "temporary_candidate_commit": "1e83d674205f6c7965aac933bc2f96c3a0a7af38",
+        "candidate_commit_pushed": false,
+        "tracked_drift": "NONE",
+        "preparation_artifact_sha256": "dcf7e9736a6bc1f1afc2c60d925c8b1285b7095aaeb1ce0a4f7f18025da29181",
+        "raw_job_log_sha256": "b707739bda0261c7a801a21dbb5d5e8ca49b47c0030b77c07f5abdbdec5b513a",
+        "workflow_job": "fde",
+        "command_results": [
+          {
+            "workflow_step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify external environment selection",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify provenance and prepare temporary candidate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify npm lockfile",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install browser test tooling",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Record resolved tooling",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Refresh combined verification inputs",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Combined complete verification gate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify SARIF attribution and retain analysis counts",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify no generated tracked drift",
+            "conclusion": "success"
+          }
+        ],
+        "node": "v22.23.3",
+        "npm": "10.9.9",
+        "playwright": "1.63.0",
+        "chromium": {
+          "version": "153.0.8010.12",
+          "playwright_build": "v1243"
+        },
+        "node_test_counts": [
+          229
+        ],
+        "complete_gate": "PASS: facts, Node, version, repository, manifest, release browser, framing, context, local release regression",
+        "browser_transport": "Existing release-browser sandbox-fallback used; governed-context native HTTP passed. No new fallback was added.",
+        "codeql": {
+          "scope": "candidate analysis only; execution success does not imply zero findings",
+          "analyses": [
+            {
+              "language": "python",
+              "sarif_sha256": "1515e1aa0eb71f40744b578e49aa0f16d20ee66566f003fc5d7bd453266840ce",
+              "database": {
+                "source_root_verified": true,
+                "changed_source_bytes_verified": {
+                  "scripts/browser_context_e2e.py": "1cc1d8eb6d9cfd7fd97f4726f4b2f789a9c6940e167ae69f2c9add4be50aa8c5"
+                }
+              },
+              "runs": [
+                {
+                  "tool": "CodeQL",
+                  "tool_version": "2.27.1",
+                  "result_count": 0,
+                  "findings": []
+                }
+              ]
+            },
+            {
+              "language": "javascript",
+              "sarif_sha256": "5e99be9d8dce84c8915781ce3ab0079198593673725b35d864a261c81aa4c04a",
+              "database": {
+                "source_root_verified": true,
+                "changed_source_bytes_verified": {
+                  "site/src/lib/governed-context.js": "5198f58a81caf8fb239d2085358ca0286965c61644329ef0dd5a033c77148edf",
+                  "tests/governed-context.test.js": "4247f9e0ec8c8ab9fb0839d804d2da87647354dee07c5e3748392476e5644d18"
+                }
+              },
+              "runs": [
+                {
+                  "tool": "CodeQL",
+                  "tool_version": "2.27.1",
+                  "result_count": 0,
+                  "findings": []
+                }
+              ]
+            }
+          ]
+        },
+        "codeql_report_sha256": "c94557b2dd58f31731a422be28277797ea0a6b4f5affb58a738d5ab466c23c4d",
+        "codeql_file_coverage": [
+          "10 out of 10 Python files and 5 out of 5 GitHub Actions files",
+          "55 out of 55 JavaScript files, 5 out of 5 GitHub Actions files and 3 out of 3 HTML files"
+        ]
+      },
+      {
+        "job_id": 111661229434,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678/job/111661229434",
+        "name": "FDE / Ubuntu / Node 22 / harness",
+        "conclusion": "success",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "python": "3.12.3",
+        "temporary_candidate_commit": "0a6351e5b75ad58b86cee0eb2e632f92b00740f6",
+        "candidate_commit_pushed": false,
+        "tracked_drift": "NONE",
+        "preparation_artifact_sha256": "975b8efa2ff146a6646cf889d571aa1fa1077780ed57f4a9e8c1049ff00c3ca7",
+        "raw_job_log_sha256": "3d34995fdcc89bb9bee7e6c2d650ba906dcc8e1e9fe0bda16d9746e0541bc132",
+        "workflow_job": "fde",
+        "command_results": [
+          {
+            "workflow_step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify external environment selection",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify provenance and prepare temporary candidate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify npm lockfile",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install browser test tooling",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Record resolved tooling",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Harness-only original context checks",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify no generated tracked drift",
+            "conclusion": "success"
+          }
+        ],
+        "node": "v22.23.3",
+        "npm": "10.9.9",
+        "playwright": "1.63.0",
+        "chromium": {
+          "version": "153.0.8010.12",
+          "playwright_build": "v1243"
+        },
+        "node_test_counts": []
+      },
+      {
+        "job_id": 111661229456,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678/job/111661229456",
+        "name": "FDE / Ubuntu / Node 22 / timestamp",
+        "conclusion": "success",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "python": "3.12.3",
+        "temporary_candidate_commit": "048525d8c9b29c00aba89f2d902626d5375c3e47",
+        "candidate_commit_pushed": false,
+        "tracked_drift": "NONE",
+        "preparation_artifact_sha256": "5629468e99b354acd3732216db1cc5911dc27f228e18bdede358b8492f03f6cd",
+        "raw_job_log_sha256": "899e599a5e8154aecb339b49e4ddafa6a2952434268f92143c3b4e66f7bb59b8",
+        "workflow_job": "fde",
+        "command_results": [
+          {
+            "workflow_step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify external environment selection",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify provenance and prepare temporary candidate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify npm lockfile",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install browser test tooling",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Record resolved tooling",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Timestamp-only targeted and Node checks",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify no generated tracked drift",
+            "conclusion": "success"
+          }
+        ],
+        "node": "v22.23.3",
+        "npm": "10.9.9",
+        "playwright": "1.63.0",
+        "chromium": {
+          "version": "153.0.8010.12",
+          "playwright_build": "v1243"
+        },
+        "node_test_counts": [
+          19,
+          229
+        ]
+      }
+    ],
+    "limits": [
+      "Independent hosted checks do not establish upstream adoption, repository policy parity, release acceptance or deployment.",
+      "Owner decisions and historical baseline/candidate limitations remain as recorded; earlier macOS-only statements describe their original checks.",
+      "Timestamp-only hosted checks cover targeted/Node acceptance, not its full browser gate; no Ubuntu timestamp-only transport outcome is inferred.",
+      "CodeQL completed with zero reported results for the configured queries; this is not an exhaustive security assessment."
+    ]
   }
 }

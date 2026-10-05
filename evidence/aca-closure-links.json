@@ -1,6 +1,6 @@
 {
   "task": "T03",
-  "candidate_status": "COMPLETE_LOCALLY_VERIFIED_UPSTREAM_OPEN",
+  "candidate_status": "COMPLETE_LOCALLY_AND_HOSTED_VERIFIED_UPSTREAM_OPEN",
   "checked_at_utc": "2026-10-05T05:18:07.775176+00:00",
   "source": {
     "repository": "Bridge-Node-7/ai-cyber-assurance",
@@ -1100,5 +1100,140 @@
     ],
     "local_availability": "macOS arm64 host; CodeQL CLI and Docker unavailable. No hosted workflow was triggered.",
     "release_scope": "Release preparation/publication are separate from validator adoption; workflow_dispatch on main has release-stage conditions and is not needed to demonstrate local candidate checks."
+  },
+  "hosted_candidate_verification": {
+    "scope": "Hosted candidate verification in hideouts-io/bridgenode7-technical-review; upstream task remains open",
+    "run_id": 37278630678,
+    "run_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678",
+    "review_commit": "587a35f526992a269bd4c24fa32e0bd1fdd647b2",
+    "workflow_sha256": "50952d0798b8194fb7f5bace3ab34704321a14ed9bfc2e62030d2f23bc7e4c33",
+    "source_workflow_hashes": {
+      "codeql.yml": "375d28fd25ef30a1925ff450c14a83ad84669042dcbc8c70305e7ceafb1cf15e",
+      "validate.yml": "f841f6a91dda5feda47daf0d0789ded1870b8dc92db3733e5f54cc82fa5a65ca"
+    },
+    "command_results_scope": "Exact commands and shells are preserved in command_source at this review commit. Successful executed run steps are listed per job; GitHub job conclusions and logs establish exit success.",
+    "command_source": "https://github.com/hideouts-io/bridgenode7-technical-review/blob/587a35f526992a269bd4c24fa32e0bd1fdd647b2/.github/workflows/candidate-verification.yml",
+    "completed_at_utc": "2026-10-05T07:39:41Z",
+    "jobs": [
+      {
+        "job_id": 111661229343,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678/job/111661229343",
+        "name": "ACA validation on ubuntu-latest",
+        "conclusion": "success",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "python": "3.12.14",
+        "temporary_candidate_commit": "a0ba0e1af6f4e8a8dea38da77deb6692866b1b70",
+        "candidate_commit_pushed": false,
+        "tracked_drift": "NONE",
+        "preparation_artifact_sha256": "1e3841023df3d4b033f7917aa2565423c33922c75571e373c68c47800c2f9059",
+        "raw_job_log_sha256": "d1db93f85f6049dc0bc6f1246795315064713fbe24742f353ab3caadab3b4fee",
+        "workflow_job": "aca",
+        "command_results": [
+          {
+            "workflow_step": "Prepare verified ACA candidate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Report source validation workflow hash",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Run ACA validator tests",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Check deterministic ACA metadata",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Validate ACA repository and hashes",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify SARIF attribution and retain analysis counts",
+            "conclusion": "success"
+          }
+        ],
+        "tests": 67,
+        "repository_checks": 17,
+        "manifest_hashes": 73,
+        "metadata_check": "PASS",
+        "codeql": {
+          "scope": "candidate analysis only; execution success does not imply zero findings",
+          "analyses": [
+            {
+              "language": "python",
+              "sarif_sha256": "5643b7ff62a4a3c50ae4b198b9ffb7a67436dd71e66056952bf347fa74f1e5c7",
+              "database": {
+                "source_root_verified": true,
+                "changed_source_bytes_verified": {
+                  "scripts/validate_assurance_case.py": "9a5614f4dc9f0f3d30f650e31c64701325597897b148953a135b9367a94c1fc8",
+                  "tests/test_assurance_case.py": "7a055e0a92f35bfe224b668b871aa673d64f3c31482422e279741bc3848eed57"
+                }
+              },
+              "runs": [
+                {
+                  "tool": "CodeQL",
+                  "tool_version": "2.27.1",
+                  "result_count": 0,
+                  "findings": []
+                }
+              ]
+            }
+          ]
+        },
+        "codeql_report_sha256": "e50b38c3261061482135658c42eb3e5b5e6564d5641ee50d99954a36f09173b3",
+        "codeql_file_coverage": [
+          "9 out of 9 Python files and 2 out of 2 GitHub Actions files"
+        ]
+      },
+      {
+        "job_id": 111661229491,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678/job/111661229491",
+        "name": "ACA validation on windows-latest",
+        "conclusion": "success",
+        "runner_image": "win25-vs2026",
+        "runner_image_version": "20260925.250.1",
+        "python": "3.12.10",
+        "temporary_candidate_commit": "5ff21901edcb510387026b95997d8d3a541da567",
+        "candidate_commit_pushed": false,
+        "tracked_drift": "NONE",
+        "preparation_artifact_sha256": "fa334fb95879fbe5ad7f44878a74e0cef8fe64c7fcda19d6d178eab2f1449811",
+        "raw_job_log_sha256": "2d1b0dcf8d86ebc3f0d8a7debcd29f358d76bc7ed4fe2a265316e8c0aec25f08",
+        "workflow_job": "aca",
+        "command_results": [
+          {
+            "workflow_step": "Prepare verified ACA candidate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Report source validation workflow hash",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Run ACA validator tests",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Check deterministic ACA metadata",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Validate ACA repository and hashes",
+            "conclusion": "success"
+          }
+        ],
+        "tests": 67,
+        "repository_checks": 17,
+        "manifest_hashes": 73,
+        "metadata_check": "PASS"
+      }
+    ],
+    "limits": [
+      "Independent hosted checks do not establish upstream adoption, repository policy parity, release acceptance or deployment.",
+      "Owner decisions and historical baseline/candidate limitations remain as recorded; earlier macOS-only statements describe their original checks.",
+      "CodeQL completed with zero reported results for the configured queries; this is not an exhaustive security assessment."
+    ]
   }
 }

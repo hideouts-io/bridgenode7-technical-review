@@ -497,7 +497,7 @@
       "scope": "Complete source preflight and actual validation-profile/toolkit-version provenance; required generated manifest hashes included; five invalid fixtures plus sentinel rejected before output",
       "integrated_upstream": false,
       "evidence": "evidence/m2m-source-validation.json",
-      "readiness": "LOCALLY_VERIFIED_UPSTREAM_OPEN"
+      "readiness": "LOCALLY_AND_HOSTED_VERIFIED_UPSTREAM_OPEN"
     },
     {
       "file": "proposals/fde-rfc3339-timestamp-contract.patch",
@@ -506,7 +506,7 @@
       "sha256": "eee5bd19bea70cf34d0224209f39de1f3f4fd90b7ec49de2702ce9373a987bf6",
       "scope": "All four timestamp fields: supported RFC3339 lexical/calendar/type/null checks, actual-digest tests, facts/manifest; existing leap-second/precision limits retained",
       "evidence": "evidence/fde-timestamp-contract.json",
-      "readiness": "LOCALLY_VERIFIED_WITH_SEPARATE_HARNESS_UPSTREAM_OPEN",
+      "readiness": "LOCALLY_AND_HOSTED_VERIFIED_WITH_SEPARATE_HARNESS_UPSTREAM_OPEN",
       "integrated_upstream": false
     },
     {
@@ -516,7 +516,7 @@
       "sha256": "72da129d8dac44c13a141adb38e2c02079d05dcda002fe71ed9c82d889115fe4",
       "scope": "Separately reproduced single-thread context HTTP server blocking; native threaded server correction only",
       "evidence": "evidence/fde-timestamp-contract.json",
-      "readiness": "LOCALLY_VERIFIED_UPSTREAM_OPEN",
+      "readiness": "LOCALLY_AND_HOSTED_VERIFIED_UPSTREAM_OPEN",
       "integrated_upstream": false
     },
     {
@@ -546,7 +546,7 @@
       "sha256": "3d4f1c8d9f3aa113171ae67a62fadfcd68b424180cfcc183eb4cfe08a1c2ef9a",
       "scope": "Required retest links, action/finding consistency and closure membership; integration tests and required manifest hashes included",
       "evidence": "evidence/aca-closure-links.json",
-      "readiness": "LOCALLY_VERIFIED_UPSTREAM_OPEN",
+      "readiness": "LOCALLY_AND_HOSTED_VERIFIED_UPSTREAM_OPEN",
       "integrated_upstream": false
     },
     {
@@ -598,7 +598,7 @@
       "FDE original parser rejects second 60, but baseline packets accept two nullable leap-second cases; candidate rejects all four.",
       "Quantum evidence-ledger IDs do not establish complete scope items or an approved eleven-item denominator."
     ],
-    "unexecuted": "Hosted CI matrices, real private cases, production qualification and upstream acceptance."
+    "unexecuted": "At the earlier local checkpoint: hosted CI matrices, real private cases, production qualification and upstream acceptance. The subsequent hosted_candidate_verification block closes only the specified independent hosted checks; the other limits remain."
   },
   "final_artifact_checks": {
     "inventory_records": 8,
@@ -660,7 +660,7 @@
       "additional_runtime_gates": 0,
       "remaining": "Existing Ubuntu/Windows validation jobs and Ubuntu Python CodeQL"
     },
-    "scope": "Local macOS arm64 acceptance and workflow review; all upstream TODOs remain open. No upstream mutation, workflow dispatch, release, deployment or contact."
+    "scope": "Earlier local macOS arm64 phase; these original observations are preserved. The hosted_candidate_verification block records subsequent independent hosted results; all upstream tasks remain open."
   },
   "public_freshness_check": {
     "inventory_reference": "inventory.csv",
@@ -685,5 +685,115 @@
       }
     ],
     "search_limit": "Bounded public issue searches only; absence of results does not establish absence of private owner records, public discussions elsewhere or company capability."
+  },
+  "hosted_candidate_verification": {
+    "scope": "Hosted candidate verification in the public review repository; T01-T07 remain open upstream",
+    "run_id": 37278630678,
+    "run_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678",
+    "review_commit": "587a35f526992a269bd4c24fa32e0bd1fdd647b2",
+    "workflow_sha256": "50952d0798b8194fb7f5bace3ab34704321a14ed9bfc2e62030d2f23bc7e4c33",
+    "conclusion": "success",
+    "required_jobs": 10,
+    "successful_jobs": 10,
+    "completed_at_utc": "2026-10-05T07:39:41Z",
+    "task_evidence": {
+      "T01": "evidence/m2m-source-validation.json",
+      "T02": "evidence/fde-timestamp-contract.json",
+      "T03": "evidence/aca-closure-links.json"
+    },
+    "source_patch_changes": 0,
+    "upstream_mutations": 0,
+    "initial_run": {
+      "run_id": 37276752285,
+      "run_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37276752285",
+      "review_commit": "eb52edae9910a6bd3bcac78d42cfe4ea9e59f550",
+      "conclusion": "failure",
+      "disposition": [
+        "Three Windows preparation jobs rejected review patches after CRLF checkout conversion. Their observed hashes matched the CRLF transformation; repository LF attributes fixed checkout bytes without changing patches.",
+        "ACA and FDE CodeQL analyses completed, but summary collection required an optional SARIF field. Collection now verifies database source roots and archived candidate implementation bytes, with optional SARIF fields handled according to the format."
+      ]
+    },
+    "validation_tooling": {
+      "actionlint": "1.7.12",
+      "workflow_lint": "PASS",
+      "prepare_candidate_real_git_smoke": "Five source/patch combinations passed; corrupted patch rejected before mutation",
+      "windows_line_ending_smoke": "All seven patch hashes preserved in a disposable core.autocrlf=true checkout"
+    },
+    "local_raw_evidence": {
+      "initial_run_logs_zip_sha256": "6689b446bf76f9fbaeb7fc21aea126cf465ae7f82d2ce21592a9384cf85cb300",
+      "successful_run_logs_zip_sha256": "5942808ebf9111f402f5e1bd9121f3577f4e339785efb757bf9a1719e14e1c8c",
+      "policy": "Raw logs and original downloaded artifacts retained in ignored audit cache; portable summaries and public run/job links are published. Hashes identify bytes, not authenticated origin."
+    },
+    "tools_used": [
+      "Connected GitHub plugin: repository metadata, workflow jobs and failed job logs",
+      "Authenticated gh/Git: workflow publication/dispatch, API status, logs and artifacts",
+      "Official pinned CodeQL action interfaces, GitHub SARIF/resolve-database docs and official vscode-codeql database metadata consumer"
+    ],
+    "limits": [
+      "No upstream writes, workflow dispatch, PRs, releases, deployments or contact.",
+      "Final-run FDE/ACA CodeQL used the upstream default query configuration, disabled result/database uploads and automatic overlay/TRAP/dependency caches. Earlier cache uploads and cleanup are recorded below. Zero reported results is not security certification.",
+      "Separate upstream scheduled CodeQL, browser/Pages/release workflows, repository protections and owner acceptance remain outside this phase."
+    ],
+    "cache_retention_correction": {
+      "previous_run": {
+        "run_id": 37277431741,
+        "run_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37277431741",
+        "review_commit": "8f2a14f8cf0d08c793f7044541b8f5945c5bfff0",
+        "conclusion": "success",
+        "required_jobs_passed": 10,
+        "logs_zip_sha256": "a83a9d753bbeabf141178dd9e392576e455d34bfd937a6f7a1c0e6d7bac2f1bb"
+      },
+      "finding": "Successful analysis still stored overlay-base databases in review-repository Actions caches despite analyze upload-database:false. The initial run also stored a JavaScript TRAP cache.",
+      "deleted_own_run_caches": [
+        {
+          "createdAt": "2026-10-05T07:26:00.32964Z",
+          "id": 8505527702,
+          "key": "codeql-overlay-base-database-1-6ef4a4e2076ea140-javascript_python-2.27.1-0849a3ad8549d0214736da1973e16d05e0bd87a1-37277431741-1",
+          "ref": "refs/heads/codex/technical-review",
+          "sizeInBytes": 30195705
+        },
+        {
+          "createdAt": "2026-10-05T07:23:42.552469Z",
+          "id": 8505455377,
+          "key": "codeql-overlay-base-database-1-b8b86a542636698a-python-2.27.1-63d37e2a8273a243feed55710820a3ee2ce730c6-37277431741-1",
+          "ref": "refs/heads/codex/technical-review",
+          "sizeInBytes": 4229683
+        },
+        {
+          "createdAt": "2026-10-05T07:20:09.008952Z",
+          "id": 8505339957,
+          "key": "codeql-trap-1-2.27.1-javascript-eb52edae9910a6bd3bcac78d42cfe4ea9e59f550",
+          "ref": "refs/heads/codex/technical-review",
+          "sizeInBytes": 14212902
+        }
+      ],
+      "remediation": "Deleted only these three review-run cache entries. Kept original run logs locally and on GitHub. Explicit CODEQL_OVERLAY_DATABASE_MODE:overlay-base disables automatic overlay storage; init trap-caching:false and dependency-caching:false disable the other analysis caches.",
+      "correction_commit": "587a35f526992a269bd4c24fa32e0bd1fdd647b2",
+      "cache_api_after_cleanup": [],
+      "cache_api_after_final_run": [],
+      "final_log_inspection": "Both CodeQL jobs use the explicit overlay-base mode; no overlay/TRAP/dependency-cache upload occurred in the final run. Candidate database roots and archived changed implementation/test bytes were verified; final-run databases stayed in runner-temporary storage.",
+      "official_action_sources": [
+        "https://github.com/github/codeql-action/blob/2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2/init/action.yml",
+        "https://github.com/github/codeql-action/blob/2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2/src/config-utils.ts",
+        "https://github.com/github/codeql-action/blob/2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2/src/overlay/caching.ts",
+        "https://github.com/github/codeql-action/blob/2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2/src/trap-caching.ts",
+        "https://github.com/github/codeql-action/blob/2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2/src/caching-utils.ts"
+      ],
+      "retained_artifacts": "Fourteen-day workflow artifacts contain bounded preparation/test/coverage/package metadata and normalized CodeQL counts/source hashes; no raw SARIF or analysis database is in those artifacts.",
+      "cache_api_checked_at_utc": "2026-10-05T07:45:02.308549+00:00"
+    },
+    "publication_integrity": {
+      "patch_hashes_and_individual_applicability": 7,
+      "fde_combined_applicability": "PASS",
+      "clean_original_source_snapshots": 8,
+      "evidence_json_records_parsed": 8,
+      "local_markdown_targets": 71,
+      "unique_pinned_source_citations": 29,
+      "required_hosted_jobs": 10,
+      "workflow_and_task_run_provenance": "PASS",
+      "audit_cache_and_bytecode_excluded": true,
+      "bounded_public_secret_pattern_scan": "No configured secret patterns found",
+      "scope": "File/hash/applicability/source-line integrity and bounded secret-pattern review; not exhaustive semantic, external-link or credential scanning."
+    }
   }
 }

@@ -4,7 +4,7 @@
   "repository": "Bridge-Node-7/materials-to-mission",
   "source_commit": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
   "verified_at_utc": "2026-10-05T05:17:49.574882+00:00",
-  "status": "LOCALLY_VERIFIED_UPSTREAM_OPEN",
+  "status": "LOCALLY_AND_HOSTED_VERIFIED_UPSTREAM_OPEN",
   "environment": {
     "os": "Darwin",
     "macos_version": "27.0",
@@ -278,7 +278,7 @@
     }
   ],
   "limitations": [
-    "Initial local macOS arm64 Python 3.11 evidence is preserved; additional declared Python 3.12/3.13 runtime checks are recorded under declared_runtime_verification. Hosted Linux/Windows parity remains unverified.",
+    "Initial local macOS arm64 Python 3.11 evidence is preserved; additional declared Python 3.12/3.13 runtime checks are recorded under declared_runtime_verification. Hosted Linux/Windows checks were unexecuted at that earlier local checkpoint; hosted_candidate_verification records the subsequent successful independent matrix.",
     "No upstream modifications, commits, pushes, issues, or pull requests were made by this task.",
     "Validation does not authenticate source declarations, independently verify evidence credibility, authorize a decision, or qualify a mission.",
     "No frontend change; prior browser evidence remains a separate audit result and was not rerun without a behavioral reason.",
@@ -594,6 +594,352 @@
       "Validation concerns public synthetic source contracts; no source credibility, qualification, approval or mission readiness established.",
       "No upstream actions, source adaptation, commits, pushes or root report edits performed."
     ],
-    "command_notation": "BASELINE is preserved exact original source; CANDIDATE is a fresh disposable local checkout; REVIEW is the review repository; EXTERNAL is ignored evidence/environment storage. Commands use the matching isolated runtime. Both candidate indexes contain only the known published patch to enable the nonmutation check; no candidate commits were created."
+    "command_notation": "BASELINE is preserved exact original source; CANDIDATE is a fresh disposable local checkout; REVIEW is the review repository; EXTERNAL is ignored evidence/environment storage. Commands use the matching isolated runtime. Both candidate indexes contain only the known published patch to enable the nonmutation check; no candidate commits were created.",
+    "scope_note": "Earlier local runtime phase. Remaining hosted checks listed in this block describe that checkpoint; subsequent review-repository outcomes are in hosted_candidate_verification. Upstream adoption remains open."
+  },
+  "hosted_candidate_verification": {
+    "scope": "Hosted candidate verification in hideouts-io/bridgenode7-technical-review; upstream task remains open",
+    "run_id": 37278630678,
+    "run_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678",
+    "review_commit": "587a35f526992a269bd4c24fa32e0bd1fdd647b2",
+    "workflow_sha256": "50952d0798b8194fb7f5bace3ab34704321a14ed9bfc2e62030d2f23bc7e4c33",
+    "source_workflow_hashes": {
+      "browser-uat.yml": "4e910cb0bf95ca0eef1c6ea2f7325514503030f3133f0fc779ef23fa079b7030",
+      "ci.yml": "e4c583c88f0eae027cfc1f2868168bc8b50e17e07859cad2ec21a5ad5eb6ac87",
+      "codeql.yml": "9bc531bfb33b544e8b2863674f10cbe0afd29edb0b847da6a1f2a1d3421dace2",
+      "pages.yml": "59f22010291e29a09c4d06728d7b6864207da32ebace15e52f59f27a83c91a18",
+      "release.yml": "aafda6507b039ab55261ed1fc4ef0c3437ed0c383f959ea82d31d8b440a6b818"
+    },
+    "command_results_scope": "Exact commands and shells are preserved in command_source at this review commit. Successful executed run steps are listed per job; GitHub job conclusions and logs establish exit success.",
+    "command_source": "https://github.com/hideouts-io/bridgenode7-technical-review/blob/587a35f526992a269bd4c24fa32e0bd1fdd647b2/.github/workflows/candidate-verification.yml",
+    "completed_at_utc": "2026-10-05T07:39:41Z",
+    "jobs": [
+      {
+        "job_id": 111661229393,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678/job/111661229393",
+        "name": "M2M / Ubuntu / Python 3.12 consumer",
+        "conclusion": "success",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "python": "3.12.14",
+        "temporary_candidate_commit": "88608331b444571fa841ab76035e74fb85e6adcb",
+        "candidate_commit_pushed": false,
+        "tracked_drift": "NONE",
+        "preparation_artifact_sha256": "47e4ebafbbfe56a04df44c2fdffdb9a48912738213608a88ef63f8f29aaf37ae",
+        "raw_job_log_sha256": "b298915b8ee126caa2588c13fa60996f4a59eb8a47a3baea76cc18ea0423a546",
+        "workflow_job": "m2m-consumer",
+        "command_results": [
+          {
+            "workflow_step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify external environment selection",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify provenance and prepare temporary candidate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Privacy path scan",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify consumer manifest",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Follow documented consumer path and prove FMA interoperability",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Retain consumer results and verify no tracked drift",
+            "conclusion": "success"
+          }
+        ],
+        "consumer": {
+          "valid": true,
+          "validation_profile": "m0-strict-0.4.0",
+          "toolkit_version": "0.7.6"
+        },
+        "checks": [
+          "consumer-only dependencies and editable installation",
+          "installed CLI version",
+          "public method evaluation",
+          "public source validation",
+          "FMA export and pinned interface hashes",
+          "tracked drift"
+        ]
+      },
+      {
+        "job_id": 111661229504,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678/job/111661229504",
+        "name": "M2M / ubuntu-latest / Python 3.11",
+        "conclusion": "success",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "python": "3.11.16",
+        "temporary_candidate_commit": "5b0f7c3f9e23812b0ddf3174d94b302061b25a6b",
+        "candidate_commit_pushed": false,
+        "tracked_drift": "NONE",
+        "preparation_artifact_sha256": "c5568ac19aae56f939849aab8485c09d6953c5db2cb8bb1452dc4f67a87abe2b",
+        "raw_job_log_sha256": "f14a69d23689332370b726043068087e12f87efcf3523895b96893b367f1790a",
+        "workflow_job": "m2m",
+        "command_results": [
+          {
+            "workflow_step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify external environment selection",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify provenance and prepare temporary candidate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Privacy path scan",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install declared development dependencies",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install candidate package",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Complete maintainer gate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify gate left tracked source unchanged",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Retain test and coverage counts",
+            "conclusion": "success"
+          }
+        ],
+        "tests": {
+          "tests": 302,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "coverage_percent": 95.512082853855,
+        "checks": [
+          "privacy scan",
+          "complete maintainer gate",
+          "deterministic packaging",
+          "tracked drift"
+        ]
+      },
+      {
+        "job_id": 111661229583,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678/job/111661229583",
+        "name": "M2M / ubuntu-latest / Python 3.13",
+        "conclusion": "success",
+        "runner_image": "ubuntu24",
+        "runner_image_version": "20260927.320.1",
+        "python": "3.13.15",
+        "temporary_candidate_commit": "804965490c3b67b343aa30d9250d3b3c86191c65",
+        "candidate_commit_pushed": false,
+        "tracked_drift": "NONE",
+        "preparation_artifact_sha256": "83d09ea8e455cf8dcbf0235d34bf5b9694c833d5bb89636e28f4364de33ae004",
+        "raw_job_log_sha256": "63b84d041835fcf407971794e43fc6c3ae303cd846de2d28f8510ff4c1726daf",
+        "workflow_job": "m2m",
+        "command_results": [
+          {
+            "workflow_step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify external environment selection",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify provenance and prepare temporary candidate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Privacy path scan",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install declared development dependencies",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install candidate package",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Complete maintainer gate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify gate left tracked source unchanged",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Retain test and coverage counts",
+            "conclusion": "success"
+          }
+        ],
+        "tests": {
+          "tests": 302,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "coverage_percent": 95.3970080552359,
+        "checks": [
+          "privacy scan",
+          "complete maintainer gate",
+          "deterministic packaging",
+          "tracked drift"
+        ]
+      },
+      {
+        "job_id": 111661229420,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678/job/111661229420",
+        "name": "M2M / windows-latest / Python 3.11",
+        "conclusion": "success",
+        "runner_image": "win25-vs2026",
+        "runner_image_version": "20260925.250.1",
+        "python": "3.11.9",
+        "temporary_candidate_commit": "df4a7991ba255e586dfe4d04b27b537c4e17aed7",
+        "candidate_commit_pushed": false,
+        "tracked_drift": "NONE",
+        "preparation_artifact_sha256": "ff52be3cba25c0e99604a2f44ec471114c42e7ab4fb1195217606961a158eb43",
+        "raw_job_log_sha256": "0f6e866b59af8679addff67697d9dd3d95174dac8c76aba1b9541e8fac27d11e",
+        "workflow_job": "m2m",
+        "command_results": [
+          {
+            "workflow_step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify external environment selection",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify provenance and prepare temporary candidate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Privacy path scan",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install declared development dependencies",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install candidate package",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Complete maintainer gate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify gate left tracked source unchanged",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Retain test and coverage counts",
+            "conclusion": "success"
+          }
+        ],
+        "tests": {
+          "tests": 302,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "coverage_percent": 95.512082853855,
+        "checks": [
+          "privacy scan",
+          "complete maintainer gate",
+          "deterministic packaging",
+          "tracked drift"
+        ]
+      },
+      {
+        "job_id": 111661229485,
+        "job_url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678/job/111661229485",
+        "name": "M2M / windows-latest / Python 3.13",
+        "conclusion": "success",
+        "runner_image": "win25-vs2026",
+        "runner_image_version": "20260925.250.1",
+        "python": "3.13.15",
+        "temporary_candidate_commit": "ba1afd4d1ea59c08094f93a03e34ef394060e1cb",
+        "candidate_commit_pushed": false,
+        "tracked_drift": "NONE",
+        "preparation_artifact_sha256": "c6810c0342a480cca7fc33eeafd0092c0df6184a5bb190286102a4b5683f63d4",
+        "raw_job_log_sha256": "258813a2ae1839153a0485eddebc8abbe04a1f71889fbd40d7933742531c91d4",
+        "workflow_job": "m2m",
+        "command_results": [
+          {
+            "workflow_step": "Create external project environment",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify external environment selection",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify provenance and prepare temporary candidate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Privacy path scan",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install declared development dependencies",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Install candidate package",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Complete maintainer gate",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Verify gate left tracked source unchanged",
+            "conclusion": "success"
+          },
+          {
+            "workflow_step": "Retain test and coverage counts",
+            "conclusion": "success"
+          }
+        ],
+        "tests": {
+          "tests": 302,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "coverage_percent": 95.3970080552359,
+        "checks": [
+          "privacy scan",
+          "complete maintainer gate",
+          "deterministic packaging",
+          "tracked drift"
+        ]
+      }
+    ],
+    "limits": [
+      "Independent hosted checks do not establish upstream adoption, repository policy parity, release acceptance or deployment.",
+      "Owner decisions and historical baseline/candidate limitations remain as recorded; earlier macOS-only statements describe their original checks."
+    ]
   }
 }
