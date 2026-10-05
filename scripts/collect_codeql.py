@@ -33,6 +33,8 @@ def collect_run(value: object, source: Path) -> dict[str, object]:
             location = require_object(location_value, "SARIF location")
             physical = require_object(location["physicalLocation"], "SARIF physicalLocation")
             artifact = require_object(physical["artifactLocation"], "SARIF artifactLocation")
+            if artifact.get("uriBaseId") != "%SRCROOT%":
+                raise ValueError(f"SARIF result uses an unverified URI base: {artifact.get('uriBaseId')}")
             relative = require_string(artifact["uri"], "SARIF artifact URI")
             if urlparse(relative).scheme:
                 raise ValueError(f"Expected a source-relative SARIF location: {relative}")
@@ -41,11 +43,9 @@ def collect_run(value: object, source: Path) -> dict[str, object]:
                 raise ValueError(f"SARIF result location is outside the candidate source: {relative}")
             paths.append(path.relative_to(source).as_posix())
         findings.append({"rule_id": require_string(result["ruleId"], "SARIF ruleId"), "files": paths})
-    properties = require_object(run.get("properties", {}), "SARIF properties")
     return {
         "tool": name, "tool_version": driver.get("semanticVersion", driver.get("version")),
         "source_root_verified": True, "result_count": len(results), "findings": findings,
-        "metric_results": properties.get("metricResults", []),
     }
 
 
