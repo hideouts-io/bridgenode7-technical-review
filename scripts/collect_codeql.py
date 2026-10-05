@@ -6,9 +6,47 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 from urllib.parse import unquote, urlparse
+from zipfile import ZipFile
 
 from prepare_candidate import require_list, require_object, require_string
+
+
+def verify_database(codeql: Path, database: Path, source: Path, language: str, evidence: Path) -> dict[str, object]:
+    """Verify the database root and archived bytes of candidate implementation changes."""
+    result = subprocess.run(
+        [str(codeql), "resolve", "database", str(database), "--format=json"],
+        check=True, text=True, encoding="utf-8", stdout=subprocess.PIPE,
+    )
+    metadata = require_object(json.loads(result.stdout), "CodeQL database metadata")
+    prefix = Path(require_string(metadata["sourceLocationPrefix"], "database sourceLocationPrefix"))
+    if prefix.resolve() != source:
+        raise ValueError(f"CodeQL database root {prefix} does not identify {source}")
+    languages = require_list(metadata["languages"], "database languages")
+    if language not in languages:
+        raise ValueError(f"Expected database language {language}; found {languages}")
+    archive_path = Path(require_string(metadata["sourceArchiveZip"], "database sourceArchiveZip"))
+    preparation = require_object(json.loads((evidence / "preparation.json").read_text()), "preparation")
+    changes = [require_string(value, "changed file") for value in require_list(preparation["changed_files"], "changed_files")]
+    suffixes = {"python": {".py"}, "javascript": {".js", ".mjs", ".cjs", ".ts"}}
+    expected = [name for name in changes if Path(name).suffix in suffixes[language]]
+    if not expected:
+        raise ValueError(f"No changed {language} implementation files to verify in the database")
+    archive_prefix = source.as_posix().lstrip("/") + "/"
+    verified: dict[str, str] = {}
+    with ZipFile(archive_path) as archive:
+        names = {name.lstrip("/"): name for name in archive.namelist()}
+        for relative in expected:
+            member = archive_prefix + relative
+            if member not in names:
+                raise ValueError(f"Candidate implementation missing from CodeQL source archive: {relative}")
+            archived = hashlib.sha256(archive.read(names[member])).hexdigest()
+            current = hashlib.sha256((source / relative).read_bytes()).hexdigest()
+            if archived != current:
+                raise ValueError(f"CodeQL archived different candidate bytes for {relative}: {archived}")
+            verified[relative] = archived
+    return {"source_root_verified": True, "changed_source_bytes_verified": verified}
 
 
 def collect_run(value: object, source: Path) -> dict[str, object]:
@@ -18,11 +56,12 @@ def collect_run(value: object, source: Path) -> dict[str, object]:
     name = require_string(driver["name"], "SARIF driver.name")
     if name != "CodeQL":
         raise ValueError(f"Expected CodeQL SARIF, found {name}")
-    bases = require_object(run["originalUriBaseIds"], "SARIF originalUriBaseIds")
-    root = require_object(bases["%SRCROOT%"], "SARIF %SRCROOT%")
-    uri = require_string(root["uri"], "SARIF source URI")
-    if uri.rstrip("/") != source.as_uri().rstrip("/"):
-        raise ValueError(f"SARIF source root {uri} does not identify {source}")
+    if "originalUriBaseIds" in run:
+        bases = require_object(run["originalUriBaseIds"], "SARIF originalUriBaseIds")
+        root = require_object(bases["%SRCROOT%"], "SARIF %SRCROOT%")
+        uri = require_string(root["uri"], "SARIF source URI")
+        if uri.rstrip("/") != source.as_uri().rstrip("/"):
+            raise ValueError(f"SARIF source root {uri} does not identify {source}")
     results = require_list(run["results"], "SARIF results")
     findings: list[dict[str, object]] = []
     for value in results:
@@ -33,7 +72,7 @@ def collect_run(value: object, source: Path) -> dict[str, object]:
             location = require_object(location_value, "SARIF location")
             physical = require_object(location["physicalLocation"], "SARIF physicalLocation")
             artifact = require_object(physical["artifactLocation"], "SARIF artifactLocation")
-            if artifact.get("uriBaseId") != "%SRCROOT%":
+            if "uriBaseId" in artifact and artifact["uriBaseId"] != "%SRCROOT%":
                 raise ValueError(f"SARIF result uses an unverified URI base: {artifact.get('uriBaseId')}")
             relative = require_string(artifact["uri"], "SARIF artifact URI")
             if urlparse(relative).scheme:
@@ -45,7 +84,7 @@ def collect_run(value: object, source: Path) -> dict[str, object]:
         findings.append({"rule_id": require_string(result["ruleId"], "SARIF ruleId"), "files": paths})
     return {
         "tool": name, "tool_version": driver.get("semanticVersion", driver.get("version")),
-        "source_root_verified": True, "result_count": len(results), "findings": findings,
+        "result_count": len(results), "findings": findings,
     }
 
 
@@ -54,6 +93,8 @@ def main() -> None:
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--sarif", type=Path, required=True)
     parser.add_argument("--evidence", type=Path, required=True)
+    parser.add_argument("--codeql", type=Path, required=True)
+    parser.add_argument("--databases", type=Path, required=True)
     parser.add_argument("--language", action="append", required=True)
     args = parser.parse_args()
     source: Path = args.source.resolve()
@@ -70,6 +111,7 @@ def main() -> None:
             raise ValueError(f"No analysis runs in {path}")
         summaries.append({
             "language": language, "sarif_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "database": verify_database(args.codeql, args.databases / language, source, language, args.evidence),
             "runs": [collect_run(run, source) for run in runs],
         })
     args.evidence.mkdir(parents=True, exist_ok=True)
