@@ -11,7 +11,7 @@ All **eight public repositories** under the canonical [Bridge-Node-7 account](ht
 | Order | Finding | Practical effect | Next action |
 | --- | --- | --- | --- |
 | 1 | [F01: M2M export bypasses source acceptance](FINDINGS.md#f01) | Source-policy failures can still become portable outputs. Target-schema PASS does not supply the missing source check. | Review the complete source-preflight and profile/version-provenance candidate. |
-| 2 | [F02: FDE accepts malformed freshness dates](FINDINGS.md#f02) | Invalid expiry metadata can be labelled CURRENT and active-eligible. | Use the tested guard as a first step; finish contract-valid date-time enforcement. |
+| 2 | [F02: FDE accepts malformed freshness dates](FINDINGS.md#f02) | Invalid expiry metadata can be labelled CURRENT and active-eligible. | Review supported-format validation and the separate test-server correction; decide the leap-second policy. |
 | 3 | [F03: ACA accepts disconnected closure links](FINDINGS.md#f03) | Closed-finding communication can be generated from inconsistent declared retest/action relationships. | Review the complete required-link and closure-consistency candidate. |
 | 4 | [F04: FIW verification fails on macOS aliases](FINDINGS.md#f04) | The documented local gate produces 32 errors from inconsistent path identity. | Review the tested one-line root correction and sealed-manifest updates. |
 | 5 | [F05: FMA validates null criticality, then fails coverage](FINDINGS.md#f05) | Initial validation and downstream command behavior disagree. | Give the maintainer the minimal input and early-validation specification. |
@@ -28,20 +28,20 @@ These are tested local software/data observations and a documented example incon
 | [TODO.md](TODO.md) | Seven prioritized actions with responsible roles, access dependencies, effort, and measurable acceptance checks. |
 | [WEEK_PLAN.md](WEEK_PLAN.md) | A seven-day, 28-hour external investigation/preparation plan with achievable deliverables. |
 | [inventory.csv](inventory.csv) | All repositories, purpose/audience, dependencies, inspected SHAs, docs/examples, tests, workflows, licenses, releases, relationships, and coverage limits. |
-| [proposals/README.md](proposals/README.md) | Five focused candidate patches, exact source bases, tested scope, and remaining work. |
+| [proposals/README.md](proposals/README.md) | Six focused candidate patches, exact source bases, tested scope, and remaining work. |
 | [evidence/verification.json](evidence/verification.json) | Recorded local checks, captured hosted-run links, patch hashes, and raw-log provenance. |
 
 Estimated maintainer implementation effort is **15–28 hours**, with **8–16 hours** for the first three tasks. That is separate from the external review plan and excludes owner-response delays, optional macOS CI work, release approvals, and deployment. No new dashboard, scoring model, broad framework, or additional public repository is justified by these findings.
 
 ## What the checks establish
 
-FMA's 255 tests, ACA's 64 tests, M2M's 300-test complete gate, Pax's 59-test gate, and Quantum's 50-test offline gate passed on the inspected sources. M2M browser UAT and Pax Chromium UAT also passed. FIW's 181-test baseline had 32 errors; its candidate passed all 181 tests. FDE's 226 Node tests passed, but its full unchanged-source gate failed twice at an intermittent local context-handoff/module-fetch step. Isolated context and release checks passed; a full candidate run passed. The expiry patch does not explain that transport behavior.
+FMA's 255 tests, ACA's 64 tests, M2M's 300-test complete gate, Pax's 59-test gate, and Quantum's 50-test offline gate passed on the inspected sources. M2M browser UAT and Pax Chromium UAT also passed. FIW's 181-test baseline had 32 errors; its candidate passed all 181 tests. FDE's 226 baseline Node tests passed, but its full unchanged-source gate failed at the context handoff. Controlled probes isolated a single-threaded local test-server blockage. The timestamp-only proposal still fails there; the separately corrected harness and timestamp proposal together pass the complete 229-test/browser gate.
 
 The complete M2M and ACA candidates pass 302 and 67 tests respectively, with their existing metadata/repository gates. M2M rejects all five checked-in invalid cases plus a synthetic boundary sentinel before output; ACA rejects 20 invalid relationship variants before rendering. These are candidate results, separate from unchanged-source baselines.
 
 The bounded Markdown check found no missing targets in **556 extracted inline links**; six checked company URLs returned HTTP 200. Fragments and all external sources were not exhaustively checked. Quantum's network checker received an automated NSA HTTP 403 despite independent web access; it is an access limitation, not a confirmed broken reference. Public source/release differences are expressly documented as intentional, so this review does not turn them into backlog items.
 
-Two candidates need particular care: FDE's patch fixes malformed-value/null conflation but remains incomplete for date-format enforcement; Pax's validator exposes the published chronology error but supplies no factual replacement date. FMA's evaluation-only rights and maintainer contribution policy are respected by providing an original-input specification rather than a proprietary source patch.
+Two candidates need particular care: FDE retains the native runtime's leap-second and millisecond limits, which require an explicit contract-owner decision; Pax's validator exposes the published chronology error but supplies no factual replacement date. FMA's evaluation-only rights and maintainer contribution policy are respected by providing an original-input specification rather than a proprietary source patch.
 
 ## Scope, tools, and sharing state
 

@@ -1,0 +1,231 @@
+{
+  "task": "T02 / F02 \u2014 FDE timestamp contract and separately verified browser-harness correction",
+  "captured_at_utc": "2026-10-05T05:24:27.697026+00:00",
+  "repository": "https://github.com/Bridge-Node-7/frontier-decision-engine",
+  "source_commit": "4a913756d00cdd321da04bf7350507e571f2f2dd",
+  "source_application_version": "0.5.16",
+  "status": "PRIVATE_CANDIDATE_VERIFIED_WITH_SEPARATE_HARNESS_CORRECTION; UPSTREAM_OPEN",
+  "environment": {
+    "os": "macOS 27.0 (26A428)",
+    "architecture": "arm64",
+    "node": "24.19.0",
+    "npm": "11.19.1",
+    "python": "3.11.16",
+    "playwright": "1.63.0",
+    "chromium": "153.0.8010.12",
+    "declared_node_engine": ">=22",
+    "ci_node": "22",
+    "ci_parity": "Declared Node engine satisfied; Ubuntu / CI Node 22 parity not established."
+  },
+  "patches": [
+    {
+      "file": "proposals/fde-rfc3339-timestamp-contract.patch",
+      "sha256": "eee5bd19bea70cf34d0224209f39de1f3f4fd90b7ec49de2702ce9373a987bf6",
+      "applies_to_exact_source_commit": true,
+      "scope": "Strict non-leap-second RFC3339 parsing, four field-specific guards, three real-digest behavioral tests, generated test count and site manifest."
+    },
+    {
+      "file": "proposals/fde-context-threaded-harness.patch",
+      "sha256": "72da129d8dac44c13a141adb38e2c02079d05dcda002fe71ed9c82d889115fe4",
+      "applies_to_exact_source_commit": true,
+      "scope": "Only the context test server: use native ThreadingHTTPServer; remove unused socketserver import. No product code change."
+    }
+  ],
+  "commands": {
+    "tooling": "Use the bundled Node 24.19.0 runtime and a local Python 3.11.16 venv on PATH; install pinned requirements-dev.txt only in that venv. Reuse the matching Playwright Chromium cache.",
+    "setup": [
+      "python3.11 -m venv <FDE_EVIDENCE>/venv",
+      "<FDE_EVIDENCE>/venv/bin/python -m pip install --disable-pip-version-check -r requirements-dev.txt",
+      "npm ci --ignore-scripts --no-audit --no-fund"
+    ],
+    "timestamp_targeted": "node --test tests/governed-context.test.js",
+    "generated_inputs": [
+      "npm run manifest",
+      "npm run facts",
+      "npm run manifest"
+    ],
+    "full_gate": "npm run check",
+    "baseline_and_candidate_probe": "node <FDE_EVIDENCE>/freshness-probe.mjs <SOURCE_COPY> <FDE_EVIDENCE>/synthetic-valid-packet.json",
+    "diagnostic": "PYTHONPATH=<CANDIDATE_COPY>/scripts python <FDE_EVIDENCE>/context-diagnostic.py",
+    "threaded_diagnostic": "PYTHONPATH=<CANDIDATE_COPY>/scripts python <FDE_EVIDENCE>/context-threaded-diagnostic.py",
+    "idle_socket_probe": "python <FDE_EVIDENCE>/server-preopen-probe.py <CANDIDATE_COPY>/site",
+    "harness_only_baseline_context": "npm --prefix <EXACT_BASE_PLUS_HARNESS_ONLY> run test:context",
+    "patch_check": "git -C <EXACT_BASE_COPY> apply --check <TIMESTAMP_PATCH> <HARNESS_PATCH>"
+  },
+  "checks": [
+    {
+      "name": "baseline existing governed-context tests",
+      "outcome": "PASS",
+      "passed": 16,
+      "failed": 0,
+      "log": "baseline-targeted.log"
+    },
+    {
+      "name": "timestamp-only governed-context tests",
+      "outcome": "PASS",
+      "passed": 19,
+      "failed": 0,
+      "added_behavioral_tests": 3,
+      "malformed_mutations": 104,
+      "individual_null_controls": 4,
+      "valid_timestamp_controls": 10,
+      "log": "candidate-targeted.log"
+    },
+    {
+      "name": "actual-digest differential probe",
+      "outcome": "PASS",
+      "rows_per_snapshot": 28,
+      "baseline_non_rfc3339_and_impossible_calendar_accepted": 8,
+      "candidate_non_rfc3339_and_impossible_calendar_accepted": 0,
+      "valid_offset_controls_passed": 4,
+      "logs": [
+        "baseline-probe.json",
+        "candidate-probe.json"
+      ],
+      "baseline_leap_second_packets_rejected_required_fields": 2,
+      "baseline_leap_second_packets_accepted_nullable_fields": 2,
+      "candidate_leap_second_packets_rejected_all_fields": 4
+    },
+    {
+      "name": "timestamp-only full gate",
+      "outcome": "FAIL",
+      "exit_code": 1,
+      "node_tests_passed": 229,
+      "node_tests_failed": 0,
+      "passed_stages": [
+        "facts:check",
+        "test",
+        "validate:version",
+        "validate",
+        "manifest",
+        "test:e2e",
+        "test:framing"
+      ],
+      "failed_stage": "test:context \u2014 30-second handoff wait timeout",
+      "not_reached": [
+        "test:release"
+      ],
+      "log": "candidate-check.log"
+    },
+    {
+      "name": "instrumented original context harness",
+      "outcome": "FAIL",
+      "exit_code": 1,
+      "observed": [
+        "decision-ui.js HTTP 200",
+        "Imported module connection reset / socket not connected",
+        "Dynamic module fetch error",
+        "Handoff wait timeout"
+      ],
+      "log": "context-diagnostic.log"
+    },
+    {
+      "name": "controlled idle-socket probe",
+      "outcome": "PASS",
+      "single_thread_result": "TimeoutError",
+      "threaded_http_result": 200,
+      "logs": [
+        "server-preopen-probe.json",
+        "server-preopen-reproducible.log"
+      ]
+    },
+    {
+      "name": "same browser diagnostic with threaded context server only",
+      "outcome": "PASS",
+      "exit_code": 0,
+      "log": "context-threaded-diagnostic.log"
+    },
+    {
+      "name": "exact baseline plus harness patch only: context browser check",
+      "outcome": "PASS",
+      "exit_code": 0,
+      "log": "baseline-with-harness-context.log"
+    },
+    {
+      "name": "timestamp plus separate harness correction: full gate",
+      "outcome": "PASS",
+      "exit_code": 0,
+      "node_tests_passed": 229,
+      "node_tests_failed": 0,
+      "passed_stages": [
+        "facts:check",
+        "test",
+        "validate:version",
+        "validate",
+        "manifest",
+        "test:e2e",
+        "test:framing",
+        "test:context",
+        "test:release"
+      ],
+      "site_manifest_entries": 43,
+      "log": "candidate-with-harness-check.log"
+    },
+    {
+      "name": "separate and combined exact-base patch applicability; diff whitespace",
+      "outcome": "PASS"
+    },
+    {
+      "name": "original source clone preservation",
+      "outcome": "PASS",
+      "git_status": "clean",
+      "source_head_unchanged": true
+    }
+  ],
+  "research": [
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc3339#section-5.6",
+      "use": "Mandatory date/time components, offsets, case variants and fractional seconds."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc3339#section-5.7",
+      "use": "Gregorian day bounds and leap-second restrictions."
+    },
+    {
+      "url": "https://json-schema.org/draft/2020-12/json-schema-validation#name-dates-times-and-duration",
+      "use": "The schema date-time format references RFC3339."
+    },
+    {
+      "url": "https://docs.python.org/3.11/library/http.server.html#http.server.ThreadingHTTPServer",
+      "use": "Vendor documents threaded servers for browser preopened sockets that can block a single-thread server."
+    }
+  ],
+  "limitations": [
+    "The timestamp-only full gate failed. Only the combined timestamp and separately disclosed context-harness correction passed the full gate. This does not mean the timestamp change corrected HTTP transport.",
+    "RFC3339 permits announced leap seconds. Native Date cannot parse second 60 in either baseline or candidate. At packet level the baseline rejects the two required-field cases but accepts the two nullable-field cases through the original parsing gap; the candidate rejects all four. Maintainers must document the supported subset or choose a deliberate leap-second policy. This proposal does not claim complete RFC3339 acceptance.",
+    "Native Date retains the existing millisecond comparison precision and truncates finer fractions. Sub-millisecond ordering is not newly implemented.",
+    "Existing chronology, five-minute future-skew limit, freshness states, integrity logic and legacy 0.2 inspection rules are preserved.",
+    "The release browser suite reported its pre-existing sandbox-fallback static routing for seven display modes. The context suite passed over native localhost HTTP after the separate harness correction. No new fallback, retry or product workaround was introduced.",
+    "Private candidate proposals are not upstream implementation or maintainer acceptance. No source repository was published or modified remotely.",
+    "Public synthetic fixtures and local verification only; no private data, authenticated-origin verification, human/device accessibility attestation or hosted release equivalence."
+  ],
+  "raw_evidence_sha256": {
+    "baseline-targeted.log": "52030e49a6dffc583ea6379eb77c51326374d7582515d459c5c3c8cb32600f3d",
+    "candidate-targeted.log": "4e44fffe33d572896123558f6d6a207cc652018e8f55890de5226f16e5d2c5a6",
+    "candidate-check.log": "8183006745cebd5d1633293a9c2f541b2384499541f1333ac7bd189c02cac6f4",
+    "context-diagnostic.log": "99b70221c2ef0694f7bb4a6835c19e52e4c211c13627c7a854836c6352a25917",
+    "context-threaded-diagnostic.log": "b6ffe72cdac6a374298888a935d2a2856f95c036dcb5fecee646260396c604b4",
+    "baseline-with-harness-context.log": "3bfabe0ace2897feb3d14defef735c50ad4f1e6b141155e2ff5a9879f688740b",
+    "candidate-with-harness-check.log": "96cab6b6094327638eb0eb3cd47e9d4b49bc77bb0be12dd2b533e48984010976",
+    "baseline-probe.json": "b1608d01aeea92e4bb4fcea8b044949a6c24b4a6ed2a169bdee945510917e52e",
+    "candidate-probe.json": "e43287a7140c623552b87946aea41c90be1e99064841cebc48de23d851f45348",
+    "server-preopen-probe.json": "f1bee1c72aa17daee81b5f7b227fef2458b16703f8163a8ff77cfb7c1f65db48",
+    "server-preopen-reproducible.log": "426d2113c53eabb7a5f7ce58e7be035d92fd689ed5df9563641ebf9be6a2852a",
+    "candidate-generate.log": "2c46d7e2e382c1423ea9a20ea8a0ba5885aa03905532ba9b80853f27eeecc7ac",
+    "environment-install.log": "c3e1677d29c32ecaa2e51e83a312132cc648c6fdc7cef02bcb1f0dd9201f2d1b",
+    "npm-install.log": "61d7daec871c3fa83ce66c667861ea7707959da0899ed518faea66e1c0ddee2f"
+  },
+  "local_reproduction_artifacts_sha256": {
+    "freshness-probe.mjs": "10da3d46618ddbdd3d4e5621720c1a7b4860e5791595ded9d8be93251cb6f1e7",
+    "synthetic-valid-packet.json": "98ae5a7c41c0049a0fc50f076adaf4a331f80bb8f12f228422b0cf0e816fed92",
+    "server-preopen-probe.py": "f82c254b0c1dd468e141f374f04ad23068d356d3f4ff46cd3d3cef88071f001a",
+    "context-diagnostic.py": "25237e0706ca3e28c1e467fb53910123cf7e3158dd7a50021da9fbd8154b9cb3",
+    "context-threaded-diagnostic.py": "bc554b9ab92681d6f6eb06973c9395c143fe7008cdde21ae6dafa5d4a86f7b61"
+  },
+  "upstream_source_license": {
+    "name": "Apache-2.0",
+    "url": "https://github.com/Bridge-Node-7/frontier-decision-engine/blob/4a913756d00cdd321da04bf7350507e571f2f2dd/LICENSE",
+    "notice": "\n                                 Apache License\n                           Version 2.0, January 2004\n                        http://www.apache.org/licenses/\n\n   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION\n\n   1. Definitions.\n\n      \"License\" shall mean the terms and conditions for use, reproduction,\n      and distribution as defined by Sections 1 through 9 of this document.\n\n      \"Licensor\" shall mean the copyright owner or entity authorized by\n      the copyright owner that is granting the License.\n\n      \"Legal Entity\" shall mean the union of the acting entity and all\n      other entities that control, are controlled by, or are under common\n      control with that entity. For the purposes of this definition,\n      \"control\" means (i) the power, direct or indirect, to cause the\n      direction or management of such entity, whether by contract or\n      otherwise, or (ii) ownership of fifty percent (50%) or more of the\n      outstanding shares, or (iii) beneficial ownership of such entity.\n\n      \"You\" (or \"Your\") shall mean an individual or Legal Entity\n      exercising permissions granted by this License.\n\n      \"Source\" form shall mean the preferred form for making modifications,\n      including but not limited to software source code, documentation\n      source, and configuration files.\n\n      \"Object\" form shall mean any form resulting from mechanical\n      transformation or translation of a Source form, including but\n      not limited to compiled object code, generated documentation,\n      and conversions to other media types.\n\n      \"Work\" shall mean the work of authorship, whether in Source or\n      Object form, made available under the License, as indicated by a\n      copyright notice that is included in or attached to the work\n      (an example is provided in the Appendix below).\n\n      \"Derivative Works\" shall mean any work, whether in Source or Object\n      form, that is based on (or derived from) the Work and for which the\n      editorial revisions, annotations, elaborations, or other modifications\n      represent, as a whole, an original work of authorship. For the purposes\n      of this License, Derivative Works shall not include works that remain\n      separable from, or merely link (or bind by name) to the interfaces of,\n      the Work and Derivative Works thereof.\n\n      \"Contribution\" shall mean any work of authorship, including\n      the original version of the Work and any modifications or additions\n      to that Work or Derivative Works thereof, that is intentionally\n      submitted to Licensor for inclusion in the Work by the copyright owner\n      or by an individual or Legal Entity authorized to submit on behalf of\n      the copyright owner. For the purposes of this definition, \"submitted\"\n      means any form of electronic, verbal, or written communication sent\n      to the Licensor or its representatives, including but not limited to\n      communication on electronic mailing lists, source code control systems,\n      and issue tracking systems that are managed by, or on behalf of, the\n      Licensor for the purpose of discussing and improving the Work, but\n      excluding communication that is conspicuously marked or otherwise\n      designated in writing by the copyright owner as \"Not a Contribution.\"\n\n      \"Contributor\" shall mean Licensor and any individual or Legal Entity\n      on behalf of whom a Contribution has been received by Licensor and\n      subsequently incorporated within the Work.\n\n   2. Grant of Copyright License. Subject to the terms and conditions of\n      this License, each Contributor hereby grants to You a perpetual,\n      worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n      copyright license to reproduce, prepare Derivative Works of,\n      publicly display, publicly perform, sublicense, and distribute the\n      Work and such Derivative Works in Source or Object form.\n\n   3. Grant of Patent License. Subject to the terms and conditions of\n      this License, each Contributor hereby grants to You a perpetual,\n      worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n      (except as stated in this section) patent license to make, have made,\n      use, offer to sell, sell, import, and otherwise transfer the Work,\n      where such license applies only to those patent claims licensable\n      by such Contributor that are necessarily infringed by their\n      Contribution(s) alone or by combination of their Contribution(s)\n      with the Work to which such Contribution(s) was submitted. If You\n      institute patent litigation against any entity (including a\n      cross-claim or counterclaim in a lawsuit) alleging that the Work\n      or a Contribution incorporated within the Work constitutes direct\n      or contributory patent infringement, then any patent licenses\n      granted to You under this License for that Work shall terminate\n      as of the date such litigation is filed.\n\n   4. Redistribution. You may reproduce and distribute copies of the\n      Work or Derivative Works thereof in any medium, with or without\n      modifications, and in Source or Object form, provided that You\n      meet the following conditions:\n\n      (a) You must give any other recipients of the Work or\n          Derivative Works a copy of this License; and\n\n      (b) You must cause any modified files to carry prominent notices\n          stating that You changed the files; and\n\n      (c) You must retain, in the Source form of any Derivative Works\n          that You distribute, all copyright, patent, trademark, and\n          attribution notices from the Source form of the Work,\n          excluding those notices that do not pertain to any part of\n          the Derivative Works; and\n\n      (d) If the Work includes a \"NOTICE\" text file as part of its\n          distribution, then any Derivative Works that You distribute must\n          include a readable copy of the attribution notices contained\n          within such NOTICE file, excluding those notices that do not\n          pertain to any part of the Derivative Works, in at least one\n          of the following places: within a NOTICE text file distributed\n          as part of the Derivative Works; within the Source form or\n          documentation, if provided along with the Derivative Works; or,\n          within a display generated by the Derivative Works, if and\n          wherever such third-party notices normally appear. The contents\n          of the NOTICE file are for informational purposes only and\n          do not modify the License. You may add Your own attribution\n          notices within Derivative Works that You distribute, alongside\n          or as an addendum to the NOTICE text from the Work, provided\n          that such additional attribution notices cannot be construed\n          as modifying the License.\n\n      You may add Your own copyright statement to Your modifications and\n      may provide additional or different license terms and conditions\n      for use, reproduction, or distribution of Your modifications, or\n      for any such Derivative Works as a whole, provided Your use,\n      reproduction, and distribution of the Work otherwise complies with\n      the conditions stated in this License.\n\n   5. Submission of Contributions. Unless You explicitly state otherwise,\n      any Contribution intentionally submitted for inclusion in the Work\n      by You to the Licensor shall be under the terms and conditions of\n      this License, without any additional terms or conditions.\n      Notwithstanding the above, nothing herein shall supersede or modify\n      the terms of any separate license agreement you may have executed\n      with Licensor regarding such Contributions.\n\n   6. Trademarks. This License does not grant permission to use the trade\n      names, trademarks, service marks, or product names of the Licensor,\n      except as required for reasonable and customary use in describing the\n      origin of the Work and reproducing the content of the NOTICE file.\n\n   7. Disclaimer of Warranty. Unless required by applicable law or\n      agreed to in writing, Licensor provides the Work (and each\n      Contributor provides its Contributions) on an \"AS IS\" BASIS,\n      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or\n      implied, including, without limitation, any warranties or conditions\n      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A\n      PARTICULAR PURPOSE. You are solely responsible for determining the\n      appropriateness of using or redistributing the Work and assume any\n      risks associated with Your exercise of permissions under this License.\n\n   8. Limitation of Liability. In no event and under no legal theory,\n      whether in tort (including negligence), contract, or otherwise,\n      unless required by applicable law (such as deliberate and grossly\n      negligent acts) or agreed to in writing, shall any Contributor be\n      liable to You for damages, including any direct, indirect, special,\n      incidental, or consequential damages of any character arising as a\n      result of this License or out of the use or inability to use the\n      Work (including but not limited to damages for loss of goodwill,\n      work stoppage, computer failure or malfunction, or any and all\n      other commercial damages or losses), even if such Contributor\n      has been advised of the possibility of such damages.\n\n   9. Accepting Warranty or Additional Liability. While redistributing\n      the Work or Derivative Works thereof, You may choose to offer,\n      and charge a fee for, acceptance of support, warranty, indemnity,\n      or other liability obligations and/or rights consistent with this\n      License. However, in accepting such obligations, You may act only\n      on Your own behalf and on Your sole responsibility, not on behalf\n      of any other Contributor, and only if You agree to indemnify,\n      defend, and hold each Contributor harmless for any liability\n      incurred by, or claims asserted against, such Contributor by reason\n      of your accepting any such warranty or additional liability.\n\n   END OF TERMS AND CONDITIONS\n\n   APPENDIX: How to apply the Apache License to your work.\n\n      To apply the Apache License to your work, attach the following\n      boilerplate notice, with the fields enclosed by brackets \"[]\"\n      replaced with your own identifying information. (Don't include\n      the brackets!)  The text should be enclosed in the appropriate\n      comment syntax for the file format. We also recommend that a\n      file or class name and description of purpose be included on the\n      same \"printed page\" as the copyright notice for easier\n      identification within third-party archives.\n\n   Copyright [yyyy] [name of copyright owner]\n\n   Licensed under the Apache License, Version 2.0 (the \"License\");\n   you may not use this file except in compliance with the License.\n   You may obtain a copy of the License at\n\n       http://www.apache.org/licenses/LICENSE-2.0\n\n   Unless required by applicable law or agreed to in writing, software\n   distributed under the License is distributed on an \"AS IS\" BASIS,\n   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n   See the License for the specific language governing permissions and\n   limitations under the License.\n"
+  },
+  "raw_log_policy": "Original failure, combined success, browser diagnostics and controlled socket-probe logs are retained in ignored .audit-cache/continuation/fde and identified by hashes; only portable outcomes are published."
+}

@@ -499,11 +499,23 @@
       "readiness": "LOCALLY_VERIFIED_UPSTREAM_OPEN"
     },
     {
-      "file": "proposals/fde-nullable-date-guard.partial.patch",
+      "file": "proposals/fde-rfc3339-timestamp-contract.patch",
       "repository": "frontier-decision-engine",
       "base_sha": "4a913756d00cdd321da04bf7350507e571f2f2dd",
-      "sha256": "880913a3ace4331c737890c878fcc312bfb3d530252d7c99e61293c9f917d4ca",
-      "scope": "Partial guard only; full date-time enforcement unresolved",
+      "sha256": "eee5bd19bea70cf34d0224209f39de1f3f4fd90b7ec49de2702ce9373a987bf6",
+      "scope": "All four timestamp fields: supported RFC3339 lexical/calendar/type/null checks, actual-digest tests, facts/manifest; existing leap-second/precision limits retained",
+      "evidence": "evidence/fde-timestamp-contract.json",
+      "readiness": "LOCALLY_VERIFIED_WITH_SEPARATE_HARNESS_UPSTREAM_OPEN",
+      "integrated_upstream": false
+    },
+    {
+      "file": "proposals/fde-context-threaded-harness.patch",
+      "repository": "frontier-decision-engine",
+      "base_sha": "4a913756d00cdd321da04bf7350507e571f2f2dd",
+      "sha256": "72da129d8dac44c13a141adb38e2c02079d05dcda002fe71ed9c82d889115fe4",
+      "scope": "Separately reproduced single-thread context HTTP server blocking; native threaded server correction only",
+      "evidence": "evidence/fde-timestamp-contract.json",
+      "readiness": "LOCALLY_VERIFIED_UPSTREAM_OPEN",
       "integrated_upstream": false
     },
     {
@@ -533,7 +545,7 @@
       "integrated_upstream": false
     }
   ],
-  "raw_log_policy": "Original logs and isolated environments retained locally under ignored .audit-cache; above digests identify artifacts. This JSON contains portable summaries,not a copy of all raw logs.",
+  "raw_log_policy": "Original logs and isolated environments are retained locally under ignored .audit-cache; recorded digests identify those bytes. Published JSON contains portable outcomes and recipes, not raw execution logs. Withheld logs cannot be independently inspected from this repository; hashes alone are provenance commitments, not public availability or proof of their contents.",
   "publication": {
     "remote": "https://github.com/hideouts-io/bridgenode7-technical-review",
     "visibility": "PRIVATE",
