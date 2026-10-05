@@ -1,0 +1,191 @@
+# Independent validation of the public MIT-licensed Pax candidate; no upstream writes.
+name: Pax candidate verification
+'on':
+  workflow_dispatch: null
+permissions:
+  contents: read
+concurrency:
+  group: pax-candidate-verification-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+jobs:
+  gate:
+    name: Pax / ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.11', '3.12']
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out exact review workflow and proposal
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          path: review
+          persist-credentials: false
+      - name: Check out pinned Pax source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Bridge-Node-7/pax-silica
+          ref: 2f62f678d06f8444ddc7788ce03e1f1f46cf4cba
+          path: candidate
+          persist-credentials: false
+      - name: Set up declared Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Create external project environment
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          import subprocess
+          import sys
+          root = Path(os.environ["RUNNER_TEMP"]) / "pax-venv"
+          subprocess.run([sys.executable, "-m", "venv", str(root)], check=True)
+          with Path(os.environ["GITHUB_PATH"]).open("a", encoding="utf-8") as stream:
+              stream.write(str(root / ("Scripts" if os.name == "nt" else "bin")) + "\n")
+          PY
+      - name: Verify environment and prepare exact candidate
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          import sys
+          expected = (Path(os.environ["RUNNER_TEMP"]) / "pax-venv").resolve()
+          if Path(sys.prefix).resolve() != expected:
+              raise RuntimeError(f"Expected project environment {expected}; selected {sys.prefix}")
+          print(sys.version)
+          PY
+          python review/scripts/prepare_pax_candidate.py \
+            --source candidate --review review --evidence "$RUNNER_TEMP/evidence" \
+            --baseline-build "$RUNNER_TEMP/pax-baseline-build"
+      - name: Run complete existing repository gate
+        working-directory: candidate
+        run: |
+          set -euo pipefail
+          python scripts/check_repo.py 2>&1 | tee "$RUNNER_TEMP/pax-full-gate.log"
+          git --no-pager diff --check
+          git --no-pager diff --exit-code
+      - name: Verify actual data and unchanged deterministic public output
+        run: |
+          python review/scripts/collect_pax_results.py \
+            --source candidate --review review --evidence "$RUNNER_TEMP/evidence" \
+            --gate-log "$RUNNER_TEMP/pax-full-gate.log" \
+            --baseline-build "$RUNNER_TEMP/pax-baseline-build" \
+            --candidate-build "$RUNNER_TEMP/pax-candidate-build" \
+            --repeat-build "$RUNNER_TEMP/pax-repeat-build"
+      - name: Retain bounded platform verification evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: pax-${{ matrix.os }}-py${{ matrix.python }}
+          path: ${{ runner.temp }}/evidence/
+          if-no-files-found: error
+          retention-days: 14
+  codeql:
+    name: Pax CodeQL / ${{ matrix.language }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: read
+    env:
+      CODEQL_OVERLAY_DATABASE_MODE: overlay-base
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: python
+            sarif-language: python
+          - language: javascript-typescript
+            sarif-language: javascript
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out exact review workflow and proposal
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          path: review
+          persist-credentials: false
+      - name: Check out pinned Pax source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Bridge-Node-7/pax-silica
+          ref: 2f62f678d06f8444ddc7788ce03e1f1f46cf4cba
+          path: candidate
+          persist-credentials: false
+      - name: Set up Python for source preparation
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Prepare exact candidate and record source provenance
+        run: |
+          python review/scripts/prepare_pax_candidate.py \
+            --source candidate --review review --evidence "$RUNNER_TEMP/evidence" \
+            --baseline-build "$RUNNER_TEMP/pax-baseline-build"
+      - name: Initialize configured candidate CodeQL language
+        id: codeql-init
+        uses: github/codeql-action/init@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2
+        with:
+          languages: ${{ matrix.language }}
+          source-root: candidate
+          db-location: ${{ runner.temp }}/pax-codeql-databases
+          trap-caching: 'false'
+          dependency-caching: 'false'
+      - name: Analyze configured candidate CodeQL language
+        id: codeql-analysis
+        if: (success() || failure()) && steps.codeql-init.outcome == 'success'
+        uses: github/codeql-action/analyze@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2
+        with:
+          upload: never
+          upload-database: false
+          checkout_path: ${{ github.workspace }}/candidate
+          output: ${{ runner.temp }}/pax-sarif
+      - name: Verify analysis attribution and collect bounded results
+        if: (success() || failure()) && steps.codeql-analysis.outcome == 'success'
+        env:
+          BN7_CODEQL: ${{ steps.codeql-init.outputs.codeql-path }}
+        run: |
+          python review/scripts/collect_pax_codeql.py \
+            --source candidate --sarif "$RUNNER_TEMP/pax-sarif" \
+            --evidence "$RUNNER_TEMP/evidence" --language '${{ matrix.sarif-language }}' \
+            --codeql "$BN7_CODEQL" --databases "$RUNNER_TEMP/pax-codeql-databases"
+      - name: Verify analysis left candidate unchanged
+        working-directory: candidate
+        run: |
+          set -euo pipefail
+          git --no-pager diff --check
+          git --no-pager diff --exit-code
+      - name: Retain bounded analysis evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: pax-codeql-${{ matrix.sarif-language }}
+          path: ${{ runner.temp }}/evidence/
+          if-no-files-found: error
+          retention-days: 14
+  complete:
+    name: Pax verification complete
+    if: always()
+    needs: [gate, codeql]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every configured platform and language check
+        env:
+          PAX_GATE_RESULT: ${{ needs.gate.result }}
+          PAX_CODEQL_RESULT: ${{ needs.codeql.result }}
+        run: |
+          set -euo pipefail
+          test "$PAX_GATE_RESULT" = success
+          test "$PAX_CODEQL_RESULT" = success
