@@ -1,0 +1,293 @@
+{
+  "format": "bn7.review.candidate-verification/1",
+  "task": "T01",
+  "repository": "Bridge-Node-7/materials-to-mission",
+  "source_commit": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+  "verified_at_utc": "2026-10-05T05:17:49.574882+00:00",
+  "status": "LOCALLY_VERIFIED_UPSTREAM_OPEN",
+  "environment": {
+    "os": "Darwin",
+    "macos_version": "27.0",
+    "architecture": "arm64",
+    "python": "3.11.16",
+    "python_matches_declared_ci_version": true,
+    "dependencies": {
+      "materials-to-mission": "0.7.6",
+      "jsonschema": "4.26.0",
+      "referencing": "0.37.0",
+      "pytest": "9.1.1",
+      "coverage": "7.16.2",
+      "setuptools": "84.0.0"
+    }
+  },
+  "commands": [
+    {
+      "working_directory": "CANDIDATE",
+      "command": "python -m pip install -r requirements-dev.txt",
+      "purpose": "Install exactly declared dependencies in isolated environment",
+      "exit": 0
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "python -m pip install --no-deps --no-build-isolation -e .",
+      "purpose": "Install disposable candidate editable package",
+      "exit": 0
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "python scripts/check_repo.py",
+      "phase": "unmodified baseline",
+      "exit": 0,
+      "tests": 300,
+      "skipped": 0
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "python -m pytest tests/test_fma_interoperability.py -q",
+      "phase": "candidate targeted",
+      "exit": 0,
+      "tests": 4
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "python scripts/check_repo.py --update-evidence",
+      "phase": "candidate generated-evidence refresh",
+      "exit": 0,
+      "tests": 302
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "git --no-pager diff -- REPO_FILE_MANIFEST.sha256",
+      "phase": "review generated changes: only two source/test hashes changed"
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "git --no-pager diff --check",
+      "exit": 0
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "python scripts/check_repo.py",
+      "phase": "subsequent nonmutating candidate full gate",
+      "exit": 0,
+      "tests": 302,
+      "skipped": 0,
+      "combined_statement_branch_coverage_percent": 95.512082853855
+    },
+    {
+      "working_directory": "EXTERNAL",
+      "command": "python CANDIDATE/scripts/export_fma_projection.py CANDIDATE/examples/synthetic-critical-material-pathway/case.json --output-dir EXTERNAL/candidate-valid",
+      "exit": 0
+    },
+    {
+      "working_directory": "EXTERNAL",
+      "command": "python BASELINE/scripts/export_fma_projection.py CANDIDATE/examples/synthetic-critical-material-pathway/case.json --output-dir EXTERNAL/baseline-valid",
+      "exit": 0
+    },
+    {
+      "working_directory": "EXTERNAL",
+      "command": "python verify_candidate.py",
+      "exit": 0,
+      "script_local_cache_path": "continuation/m2m/verify_candidate.py",
+      "script_sha256": "6a8da663b394ae8d6bdb4c964e3cbec626e5bbba866c284d83d44eddc4a82215"
+    },
+    {
+      "working_directory": "BASELINE",
+      "command": "git apply --check EXTERNAL/m2m-source-validation.patch",
+      "exit": 0
+    }
+  ],
+  "results": {
+    "source_preflight": "existing validate_case(public=True, profile=DEFAULT_VALIDATION_PROFILE), failing before any output is created",
+    "profile_provenance": {
+      "graph_metadata": "source_validation_profile",
+      "manifest_source": "validation_profile",
+      "value": "m0-strict-0.4.0",
+      "value_source": "ValidationResult.validation_profile"
+    },
+    "version_provenance": {
+      "graph_metadata": "source_toolkit_version",
+      "manifest_source": "toolkit_version",
+      "value": "0.7.6",
+      "value_source": "existing materials_to_mission.__version__ helper, same as CLI toolkit_version"
+    },
+    "contract_review": "Graph metadata is an extensible object; projection manifest has no pinned schema. Additive producer provenance requires no schema, interface, adapter or contract version change.",
+    "target_contracts": "Pinned FMA contract identities and hashes are unchanged; exporter validates produced graph/receipt using those contracts.",
+    "deterministic_valid_output": "three artifacts byte-identical on repeated candidate exports in real CLI integration test",
+    "baseline_candidate_valid_graph_comparison": "identical after removing the two new metadata provenance fields",
+    "baseline_candidate_decision_receipt_comparison": "byte-identical; original HOLD and proposed decision state preserved",
+    "invalid_fixture_count": 5,
+    "additional_boundary_sentinel_count": 1,
+    "fixture_inventory_correction": "Earlier review incorrectly said six checked-in invalid cases. Exact source tree contains five; with the additional sentinel there are six rejection probes total.",
+    "rejection_probes": [
+      {
+        "fixture": "hidden-unknown.json",
+        "source_valid": false,
+        "finding_codes": [
+          "VISIBLE_UNCERTAINTY"
+        ],
+        "exporter_exit": 2,
+        "output_exists": false
+      },
+      {
+        "fixture": "missing-human-owner.json",
+        "source_valid": false,
+        "finding_codes": [
+          "SCHEMA"
+        ],
+        "exporter_exit": 2,
+        "output_exists": false
+      },
+      {
+        "fixture": "protected-public-token.json",
+        "source_valid": false,
+        "finding_codes": [
+          "PUBLIC_BOUNDARY"
+        ],
+        "exporter_exit": 2,
+        "output_exists": false
+      },
+      {
+        "fixture": "schema-missing-required.json",
+        "source_valid": false,
+        "finding_codes": [
+          "SCHEMA"
+        ],
+        "exporter_exit": 2,
+        "output_exists": false
+      },
+      {
+        "fixture": "triggered-critical-advance.json",
+        "source_valid": false,
+        "finding_codes": [
+          "CRITICAL_CONDITION"
+        ],
+        "exporter_exit": 2,
+        "output_exists": false
+      },
+      {
+        "fixture": "public-boundary-sentinel.json",
+        "source_valid": false,
+        "finding_codes": [
+          "PUBLIC_BOUNDARY"
+        ],
+        "exporter_exit": 2,
+        "output_exists": false
+      }
+    ]
+  },
+  "consumer": {
+    "repository": "Bridge-Node-7/frontier-mission-assurance",
+    "source_commit": "f99dd2174c74f26b648321e02f8d30e2cff10230",
+    "version": "0.11.2",
+    "python": "3.14.7",
+    "source_unchanged": true,
+    "commands": [
+      {
+        "command": "fma validate EXTERNAL/candidate-valid/assurance-graph.json",
+        "exit": 0,
+        "result": "VALID with existing warning: E-005 evidence is not linked to a supported claim/assumption"
+      },
+      {
+        "command": "fma decision EXTERNAL/candidate-valid/assurance-graph.json EXTERNAL/candidate-valid/decision-receipt.json",
+        "exit": 0,
+        "result": "DECISION PASS; all decision basis references resolve"
+      }
+    ],
+    "rights_scope": "unchanged proprietary evaluation consumer only; no FMA source patch supplied",
+    "claim_limit": "Structural and reference validation of a proposed synthetic disposition, not authorization, source credibility, or mission qualification."
+  },
+  "patch": {
+    "file": "proposals/m2m-source-validation.patch",
+    "sha256": "ff69375080888612f33d7c308bf0878d1e5ee728fb6b84833ffdbdab5fb5aa0b",
+    "files": [
+      "scripts/export_fma_projection.py",
+      "tests/test_fma_interoperability.py",
+      "REPO_FILE_MANIFEST.sha256"
+    ],
+    "generated_changes_included": true,
+    "generated_changes_scope": "only the two modified script/test hashes in REPO_FILE_MANIFEST.sha256",
+    "apply_check_against_exact_clean_source": "PASS",
+    "required_after_adaptation": "python scripts/check_repo.py --update-evidence; review generated diff; python scripts/check_repo.py"
+  },
+  "original_source_status": "clean, exact baseline HEAD preserved",
+  "raw_logs": [
+    {
+      "local_cache_path": "continuation/m2m/logs/baseline-check.log",
+      "sha256": "75208a90c8199945465ca5b5099f7f5f7d03889f590315c8b2ff1791e8885c41"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/baseline-valid-export.log",
+      "sha256": "c511aa4657beac34322d2e670f0cea2eacf575addd6566bdbd575d321aedea7f"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/candidate-check.log",
+      "sha256": "86d8df95d2db06939fa7db6e3328b46e69ceaac396ccf604085d245936fb17f7"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/candidate-probes.log",
+      "sha256": "5f1bef9d7990ccb6139f9cf747997fe4ef596fd10f0e8001636905271cec72a9"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/candidate-refresh.log",
+      "sha256": "4433e29b274b1a19d796063cccb0a77aaa16b3a69aae17de487663bed13cfcb6"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/candidate-valid-export.log",
+      "sha256": "64c36e6cccbee56afc1d7a2310b92f5d57a2ab3ea1abc68f7583ae55c42ed39f"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/environment-install.log",
+      "sha256": "7acb2f75a78c5481f40fd983f0bd326faf82c6032696425fc276383fe59caa89"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/fma-consumer-decision.log",
+      "sha256": "7d2c78cc549962da5c5e8fcc6899f98c1bf8a55a659bf50e7bdbef973623a1a8"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/fma-consumer-graph.log",
+      "sha256": "9fdae398f432aadb17108cea058179385c90a8f0ddbb881d5ff75a6c4da06cab"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/probe-hidden-unknown.log",
+      "sha256": "5b6109b9528ccda148a5d07fd30226b26f556f04371fca3e492cde682ec01ad3"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/probe-missing-human-owner.log",
+      "sha256": "0f3c7ceff8db21e13e86cdbd001c5dfb802875c93fa0d6b324a198d00ddec65c"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/probe-protected-public-token.log",
+      "sha256": "4df03c92fe28eb3b8e111ef3bc743cfa855f69e575110f24c5e62b08996c9852"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/probe-public-boundary-sentinel.log",
+      "sha256": "22c20d6739dacee08fdd10f147f2dc8cc3bd25a17b58c6c228defa7bd2293b70"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/probe-schema-missing-required.log",
+      "sha256": "9bbc5476b8b51c6fe58fb0de6abcda330e87b15bb615334f6a97446259f35df8"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/probe-triggered-critical-advance.log",
+      "sha256": "ade81ebf1923f7d014cc0c11afe4afbe5e14d2935616792a61cde7306f0cb519"
+    },
+    {
+      "local_cache_path": "continuation/m2m/logs/targeted-tests.log",
+      "sha256": "25216d52c2a8e3f9f0baef0c48148e38c03a6db18d66b650ef169972f6a30c24"
+    }
+  ],
+  "limitations": [
+    "Local macOS arm64 Python 3.11 validation, not the full hosted Linux/Windows and Python matrix.",
+    "No upstream modifications, commits, pushes, issues, or pull requests were made by this task.",
+    "Validation does not authenticate source declarations, independently verify evidence credibility, authorize a decision, or qualify a mission.",
+    "No frontend change; prior browser evidence remains a separate audit result and was not rerun without a behavioral reason.",
+    "Raw logs, generated packages, synthetic output artifacts and environments remain in ignored local audit cache."
+  ],
+  "command_notation": "CANDIDATE, BASELINE and EXTERNAL denote disposable candidate checkout, pinned clean source checkout, and external evidence/output directory. Python refers to the isolated declared Python 3.11.16 candidate environment except the FMA consumer, which used the existing unchanged Python 3.14.7 evaluation environment.",
+  "upstream_source_license": {
+    "name": "MIT",
+    "url": "https://github.com/Bridge-Node-7/materials-to-mission/blob/2a8d26af86e8adb8b1e34550045782d1a20418a4/LICENSE",
+    "notice": "MIT License\n\nCopyright (c) 2026 Bridge Node 7\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+  }
+}

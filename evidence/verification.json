@@ -492,9 +492,11 @@
       "file": "proposals/m2m-source-validation.patch",
       "repository": "materials-to-mission",
       "base_sha": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
-      "sha256": "c107b41f0cd6daf2e8d8f6cae1ede4cc2c1e31b7c9bd35600ba546dd5f6c2d36",
-      "scope": "Tested source-preflight candidate; generated evidence omitted; profile-provenance review remains",
-      "integrated_upstream": false
+      "sha256": "ff69375080888612f33d7c308bf0878d1e5ee728fb6b84833ffdbdab5fb5aa0b",
+      "scope": "Complete source preflight and actual validation-profile/toolkit-version provenance; required generated manifest hashes included; five invalid fixtures plus sentinel rejected before output",
+      "integrated_upstream": false,
+      "evidence": "evidence/m2m-source-validation.json",
+      "readiness": "LOCALLY_VERIFIED_UPSTREAM_OPEN"
     },
     {
       "file": "proposals/fde-nullable-date-guard.partial.patch",
@@ -519,6 +521,16 @@
       "sha256": "862f081fe3d3b1d712dc1cfa74b95843e1f822453ef99338e98dd8ee658176e1",
       "scope": "Validator only; actual date correction unresolved; tested nonempty-invalid/date-boundary/source-ID cases",
       "integrated_upstream": false
+    },
+    {
+      "file": "proposals/aca-closure-links.patch",
+      "repository": "ai-cyber-assurance",
+      "base_sha": "9033bf73bbd3923c5de0a9c6fb9959b4c140de64",
+      "sha256": "3d4f1c8d9f3aa113171ae67a62fadfcd68b424180cfcc183eb4cfe08a1c2ef9a",
+      "scope": "Required retest links, action/finding consistency and closure membership; integration tests and required manifest hashes included",
+      "evidence": "evidence/aca-closure-links.json",
+      "readiness": "LOCALLY_VERIFIED_UPSTREAM_OPEN",
+      "integrated_upstream": false
     }
   ],
   "raw_log_policy": "Original logs and isolated environments retained locally under ignored .audit-cache; above digests identify artifacts. This JSON contains portable summaries,not a copy of all raw logs.",
@@ -535,5 +547,6 @@
     "collaborators_invited": false,
     "upstream_modified": false
   },
-  "command_notation": "Commands use portable external-path placeholders; original local output logs are retained in .audit-cache and identified by digest."
+  "command_notation": "Commands use portable external-path placeholders; original local output logs are retained in .audit-cache and identified by digest.",
+  "repository_verification_scope": "Original audit baseline and initial exploratory candidate results/logs. Current candidate scope and acceptance are recorded under candidate_patches and their linked evidence files; original observations are retained as provenance."
 }

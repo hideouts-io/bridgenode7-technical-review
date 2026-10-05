@@ -1,0 +1,1078 @@
+{
+  "task": "T03",
+  "candidate_status": "COMPLETE_LOCALLY_VERIFIED_UPSTREAM_OPEN",
+  "checked_at_utc": "2026-10-05T05:18:07.775176+00:00",
+  "source": {
+    "repository": "Bridge-Node-7/ai-cyber-assurance",
+    "base_commit": "9033bf73bbd3923c5de0a9c6fb9959b4c140de64",
+    "source_version": "0.6.1",
+    "original_snapshot_unchanged": true
+  },
+  "environment": {
+    "python": "3.12.14",
+    "python_implementation": "CPython",
+    "os": "macOS-27.0-arm64-arm-64bit",
+    "machine": "arm64",
+    "matches_configured_python_minor": "3.12",
+    "dependencies": "standard library only"
+  },
+  "changes": [
+    "Require nonempty string finding_ref and corrective_action_ref on every retest.",
+    "Check that the referenced corrective action targets the retest finding.",
+    "Require a closed finding to record the retested corrective action in corrective_action_refs.",
+    "Do not perform chronology dictionary lookup on a non-string action reference already rejected by required/typed-reference checks.",
+    "Add three real validator/renderer CLI integration tests; preserve existing policy checks.",
+    "Refresh only the two affected deterministic manifest hashes; file inventory, version and generated example views remain unchanged."
+  ],
+  "commands": [
+    {
+      "phase": "baseline",
+      "command": "python -m unittest discover -s tests -p 'test_*.py'",
+      "exit_code": 0,
+      "local_log": "logs/baseline-unittest.log",
+      "raw_local_log_sha256": "480d529d7065c4ef653496e154739585b4e594e27d3d2754814820ba65e3bb8c"
+    },
+    {
+      "phase": "candidate",
+      "command": "python -m unittest discover -s tests -p 'test_assurance_case.py'",
+      "exit_code": 0,
+      "local_log": "logs/candidate-assurance-tests.log",
+      "raw_local_log_sha256": "dbdbbe160d2e56c942208cf73f3a0a8be1754e80eb8afc08faacd2767efb6555"
+    },
+    {
+      "phase": "candidate",
+      "command": "python scripts/refresh_release_metadata.py --root . --write",
+      "exit_code": 0,
+      "local_log": "logs/candidate-metadata-refresh.log",
+      "raw_local_log_sha256": "5a49af5500be96b66eb201e5ac64c21d208895f6b4b63e9d680df6fd0f398ebb"
+    },
+    {
+      "phase": "candidate",
+      "command": "python -m unittest discover -s tests -p 'test_*.py'",
+      "exit_code": 0,
+      "local_log": "logs/candidate-unittest.log",
+      "raw_local_log_sha256": "4b7c9e4ed6811534f55af53df8ba7bd521678beb1b30274fd7a0e76a503cbfa3"
+    },
+    {
+      "phase": "candidate",
+      "command": "python scripts/refresh_release_metadata.py --root . --check",
+      "exit_code": 0,
+      "local_log": "logs/candidate-metadata-check.log",
+      "raw_local_log_sha256": "5a49af5500be96b66eb201e5ac64c21d208895f6b4b63e9d680df6fd0f398ebb"
+    },
+    {
+      "phase": "candidate",
+      "command": "python scripts/validate_repo.py --root . --json-output <EVIDENCE_DIR>/candidate-validation-report.json",
+      "exit_code": 0,
+      "local_log": "logs/candidate-repository.log",
+      "raw_local_log_sha256": "daea72aa5ad1b7a0236cada8787409fd0dc0f30f8d205e24836d5b6844d88da9"
+    },
+    {
+      "phase": "candidate",
+      "command": "sha256sum -c MANIFEST.sha256",
+      "exit_code": 0,
+      "local_log": "logs/candidate-hashes.log",
+      "raw_local_log_sha256": "05a5ba96e05515a87c1a7c7305a43bf13ad05f524693f4ef65638eb9725dfe85"
+    },
+    {
+      "phase": "candidate",
+      "command": "git --no-pager diff --check",
+      "exit_code": 0,
+      "local_log": "logs/candidate-diff-check.log",
+      "raw_local_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "results": {
+    "baseline_tests": 64,
+    "candidate_targeted_tests": 45,
+    "candidate_full_tests": 67,
+    "candidate_repository_checks": 17,
+    "candidate_manifest_hashes": 73,
+    "synthetic_fixture_variants": 23,
+    "cli_invocations_per_phase": 46,
+    "invalid_variants_rejected": 20,
+    "valid_variants_accepted": 3,
+    "render_outputs_per_valid_variant": 3,
+    "invalid_renderer_output_directories_created": 0,
+    "candidate_tracebacks": 0
+  },
+  "probe_recipe": {
+    "source_fixture": "10-examples/synthetic-ai-agent-assurance/assurance-case.json",
+    "as_of": "2026-10-04",
+    "required_fields": [
+      "finding_ref",
+      "corrective_action_ref"
+    ],
+    "required_field_negative_values": [
+      "missing",
+      null,
+      "",
+      " ",
+      42,
+      [],
+      {},
+      "MISSING-001",
+      "CTRL-001"
+    ],
+    "crosswired_action": "Set retests[0].corrective_action_ref to CA-002, whose finding_ref is FIND-002, while the retest remains FIND-001.",
+    "unrecorded_closure_action": "Duplicate corrective_actions[0] with id CA-004, then set retests[0].corrective_action_ref to CA-004 without adding CA-004 to findings[0].corrective_action_refs.",
+    "additional_action_positive_control": "Add CA-004 to the finding corrective_action_refs from the preceding variant.",
+    "original_valid_controls": [
+      "synthetic-ai-agent-assurance",
+      "synthetic-cryptographic-assurance-case"
+    ]
+  },
+  "probes": {
+    "baseline": [
+      {
+        "fixture": "missing-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "7944b820db6f43d7cfe4b2f80c1a8334d242b40600056ac5edc37013962118ac",
+        "raw_local_log": "probes/baseline/missing-finding_ref/validator.log"
+      },
+      {
+        "fixture": "missing-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "47e1cfd031b472ef2da3f9bd800cb3ae6c4ba0b0f82b289f4de00f1d772dbb5c",
+        "raw_local_log": "probes/baseline/missing-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "null-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "7944b820db6f43d7cfe4b2f80c1a8334d242b40600056ac5edc37013962118ac",
+        "raw_local_log": "probes/baseline/null-finding_ref/validator.log"
+      },
+      {
+        "fixture": "null-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "47e1cfd031b472ef2da3f9bd800cb3ae6c4ba0b0f82b289f4de00f1d772dbb5c",
+        "raw_local_log": "probes/baseline/null-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "empty-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "6c4e6ea8f528f9934fa0d2863c236bc07908ab3c73d152c74cfccc40bdcf76fe",
+        "raw_local_log": "probes/baseline/empty-finding_ref/validator.log"
+      },
+      {
+        "fixture": "empty-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "abcb89bfeedc366218cac87a39811f80516c316dfb7c7ab0c44dbc94f4aa1765",
+        "raw_local_log": "probes/baseline/empty-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "whitespace-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "817755a16f39c80707a6d7b876cc5e73e09a8210ca7d3ea90d49d96a6f4f1a5e",
+        "raw_local_log": "probes/baseline/whitespace-finding_ref/validator.log"
+      },
+      {
+        "fixture": "whitespace-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "481ba0d2e54988d7460984c0eb580c4bf2939e5d9dd27b501d74a5fa823250b0",
+        "raw_local_log": "probes/baseline/whitespace-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "number-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "660ec62ce07050a0fb4057e9d0e51aaa7febbed37abd9cd87eb0ce574232c001",
+        "raw_local_log": "probes/baseline/number-finding_ref/validator.log"
+      },
+      {
+        "fixture": "number-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "3838493fd76fb00148af58a3b6a3c55075e268bde56e0d0ca94f216d9319eb62",
+        "raw_local_log": "probes/baseline/number-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "array-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "b0288986075a670790474083c6cfcc8e31be55a6b4cf521dc7979f6611b9f139",
+        "raw_local_log": "probes/baseline/array-finding_ref/validator.log"
+      },
+      {
+        "fixture": "array-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "21e7de062a36f9f94e41c064f3455d7fa3cd9cdd2dd985efc1a212e56df892c4",
+        "raw_local_log": "probes/baseline/array-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "object-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "9ca628f317bc5c823aed4a47e88fd068a7fd665b29c62f4164b9c2a9d472d401",
+        "raw_local_log": "probes/baseline/object-finding_ref/validator.log"
+      },
+      {
+        "fixture": "object-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "45b6908372c936262bf69b6fdb4656e28199f9b9fd84686e60b5a7556b907c84",
+        "raw_local_log": "probes/baseline/object-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "unresolved-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "b66cfa318b35e1126e85e4bf5ad92a7ba265e9f769d5b72a2364adc2ae1b139e",
+        "raw_local_log": "probes/baseline/unresolved-finding_ref/validator.log"
+      },
+      {
+        "fixture": "unresolved-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "773cd6f252527a23c9e6e98505ea1547978e7bf4f6f4cc21a152943e1238e3de",
+        "raw_local_log": "probes/baseline/unresolved-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "wrong-collection-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "611bca9f80d8ded5dd44821156f0b7d4d55f0390ea55499735570fcb02f62629",
+        "raw_local_log": "probes/baseline/wrong-collection-finding_ref/validator.log"
+      },
+      {
+        "fixture": "wrong-collection-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "06c99bcc65687266f8787d722d0c004df73dd0a801c1dea0db168d8373d8745b",
+        "raw_local_log": "probes/baseline/wrong-collection-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "missing-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 0,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "e3dc2fa1e3fce7e10767e650b1e801292e8df0365afb5ac7eea721ecb76644a4",
+        "raw_local_log": "probes/baseline/missing-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "missing-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 0,
+        "output_directory_created": true,
+        "traceback": false,
+        "raw_local_log_sha256": "2323ab6079e2551e540d235759799658d62fc45005b1b75445825e30493f4cf2",
+        "raw_local_log": "probes/baseline/missing-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "null-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 0,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "e3dc2fa1e3fce7e10767e650b1e801292e8df0365afb5ac7eea721ecb76644a4",
+        "raw_local_log": "probes/baseline/null-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "null-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 0,
+        "output_directory_created": true,
+        "traceback": false,
+        "raw_local_log_sha256": "1cd11c08355dc49237189cb6a5369bbf8b530b3522dc3ff83c95b0535d9c064c",
+        "raw_local_log": "probes/baseline/null-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "empty-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "edb922943583b2206af0e53dd51a681e1dab9f04f6f8f6793d1d8e74c42d677a",
+        "raw_local_log": "probes/baseline/empty-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "empty-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "809aa1cad19963e5ec9d432881481a10588b5ce7d375b48929f20becf2cbf679",
+        "raw_local_log": "probes/baseline/empty-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "whitespace-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "addb0b364d415d9766da17f0c5bae38d692ee8982b0cb2132c1bbad8f361c9c3",
+        "raw_local_log": "probes/baseline/whitespace-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "whitespace-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "e87dbbda63ba3d49b7d3db156dff96ec8fcef8bd2ed7b3560f0a50f021942d37",
+        "raw_local_log": "probes/baseline/whitespace-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "number-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "13b0f1e6db82b514bc1661e7e8efc0985e3c9673434bcd4839d48e22d9e6dade",
+        "raw_local_log": "probes/baseline/number-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "number-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "aa2f17124fc8eaac073f47090760aef908f737987672b5791e0fc6ef9ef3a19e",
+        "raw_local_log": "probes/baseline/number-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "array-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": true,
+        "raw_local_log_sha256": "875f3014bd7bf2db366cccb8dcdf8aacbe335758f67529be4081470ef826a806",
+        "raw_local_log": "probes/baseline/array-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "array-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": true,
+        "raw_local_log_sha256": "41b05437bbaf27e1dd538c3b2c09ac933b64677575984e9374506e39451c5ed8",
+        "raw_local_log": "probes/baseline/array-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "object-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": true,
+        "raw_local_log_sha256": "89dce914e0e216fa9771cf3767b5b1570382a1412b0be385413eb2f44f359e41",
+        "raw_local_log": "probes/baseline/object-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "object-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": true,
+        "raw_local_log_sha256": "55cdd1f2800c53a7d9828dcbd10f1bf9adad02ffa298c7f769cd5ca42bbaa093",
+        "raw_local_log": "probes/baseline/object-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "unresolved-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "e61a7971397e6347b31fe65a936d8889ea454285c7f522ba4e2a99abf8960fc8",
+        "raw_local_log": "probes/baseline/unresolved-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "unresolved-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "fcdbb88c37f93cb95f0d9acff398575b0fdabb23e99a28550b669ec62ee5cbc4",
+        "raw_local_log": "probes/baseline/unresolved-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "wrong-collection-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "42c725a269606215cb5339303601ca8b0bcd359618304bda147c76ab30e571f7",
+        "raw_local_log": "probes/baseline/wrong-collection-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "wrong-collection-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "52a2b5a46111f730303d5f6d5511109f56380e4b5b9640c7dca5259c57bb159a",
+        "raw_local_log": "probes/baseline/wrong-collection-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "crosswired-action",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 0,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "e3dc2fa1e3fce7e10767e650b1e801292e8df0365afb5ac7eea721ecb76644a4",
+        "raw_local_log": "probes/baseline/crosswired-action/validator.log"
+      },
+      {
+        "fixture": "crosswired-action",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 0,
+        "output_directory_created": true,
+        "traceback": false,
+        "raw_local_log_sha256": "93fd272bd6a0f41a91b7c38bb095757f2db76002840d424f883d730c4723eada",
+        "raw_local_log": "probes/baseline/crosswired-action/renderer.log"
+      },
+      {
+        "fixture": "unrecorded-closure-action",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 0,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "7472421e5cfab4e3edff5c7df01dcf9a8c87d708f4b8b9a98cecc972f2530a77",
+        "raw_local_log": "probes/baseline/unrecorded-closure-action/validator.log"
+      },
+      {
+        "fixture": "unrecorded-closure-action",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 0,
+        "output_directory_created": true,
+        "traceback": false,
+        "raw_local_log_sha256": "396fa645779733c51c3f5a24975a66ee47aba738f2c54e04b0910f65df25e0fd",
+        "raw_local_log": "probes/baseline/unrecorded-closure-action/renderer.log"
+      },
+      {
+        "fixture": "recorded-additional-action",
+        "operation": "validator",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "7472421e5cfab4e3edff5c7df01dcf9a8c87d708f4b8b9a98cecc972f2530a77",
+        "raw_local_log": "probes/baseline/recorded-additional-action/validator.log"
+      },
+      {
+        "fixture": "recorded-additional-action",
+        "operation": "renderer",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": true,
+        "traceback": false,
+        "raw_local_log_sha256": "41fd73ad6c006e03af64a3a55396059c73c800d122314502a0d49391f63226d0",
+        "raw_local_log": "probes/baseline/recorded-additional-action/renderer.log"
+      },
+      {
+        "fixture": "synthetic-ai-agent-assurance",
+        "operation": "validator",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "e3dc2fa1e3fce7e10767e650b1e801292e8df0365afb5ac7eea721ecb76644a4",
+        "raw_local_log": "probes/baseline/synthetic-ai-agent-assurance/validator.log"
+      },
+      {
+        "fixture": "synthetic-ai-agent-assurance",
+        "operation": "renderer",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": true,
+        "traceback": false,
+        "raw_local_log_sha256": "1c7d63273ea8d1d4fd573a89fa5c939cfa644d406f6cbe109201e8d63b8d2e32",
+        "raw_local_log": "probes/baseline/synthetic-ai-agent-assurance/renderer.log"
+      },
+      {
+        "fixture": "synthetic-cryptographic-assurance-case",
+        "operation": "validator",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "76639e4f31322954af3b3d6c3293ff4dfc10bec5363b1966136cf3be1c62625d",
+        "raw_local_log": "probes/baseline/synthetic-cryptographic-assurance-case/validator.log"
+      },
+      {
+        "fixture": "synthetic-cryptographic-assurance-case",
+        "operation": "renderer",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": true,
+        "traceback": false,
+        "raw_local_log_sha256": "e048040983e1fb7964f4ab9ed2c4a0e1d22c60f1f851d3996c085443e271a0d0",
+        "raw_local_log": "probes/baseline/synthetic-cryptographic-assurance-case/renderer.log"
+      }
+    ],
+    "candidate": [
+      {
+        "fixture": "missing-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "9bf11d68e54510dbb056d1f9d4894c61827310782a999de6c0dfcaee795338a0",
+        "raw_local_log": "probes/candidate/missing-finding_ref/validator.log"
+      },
+      {
+        "fixture": "missing-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "06e12978b060c49b1b520c8c555b2ab4e19e2ef370b15708b2f58ad12c55d89e",
+        "raw_local_log": "probes/candidate/missing-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "null-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "9bf11d68e54510dbb056d1f9d4894c61827310782a999de6c0dfcaee795338a0",
+        "raw_local_log": "probes/candidate/null-finding_ref/validator.log"
+      },
+      {
+        "fixture": "null-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "06e12978b060c49b1b520c8c555b2ab4e19e2ef370b15708b2f58ad12c55d89e",
+        "raw_local_log": "probes/candidate/null-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "empty-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "3bea4022b25c93cc2acb196614b7f0ebada15665efb8c170728d584331f7218e",
+        "raw_local_log": "probes/candidate/empty-finding_ref/validator.log"
+      },
+      {
+        "fixture": "empty-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "c2e22a48fcfcbdc41f210c576a9f975e14632675d756ec88cf475b0f724236f6",
+        "raw_local_log": "probes/candidate/empty-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "whitespace-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "2fcd0a5a7eb7da5be7d0d015854e4879c5f8939b37cadf6838f864afa792516b",
+        "raw_local_log": "probes/candidate/whitespace-finding_ref/validator.log"
+      },
+      {
+        "fixture": "whitespace-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "f33db80e25408290bb4eee75093409770e502e6f691f4fadea2366ef8e51627b",
+        "raw_local_log": "probes/candidate/whitespace-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "number-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "6d81685bcba022e2f672cea9cd7df9efa42c1890cf71a7a05eaf4a8985f7561f",
+        "raw_local_log": "probes/candidate/number-finding_ref/validator.log"
+      },
+      {
+        "fixture": "number-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "a5cdab9f7f0a99da0ee0974981ba8b462c58fc8d2d64fd0435ba6b5c62b7ca89",
+        "raw_local_log": "probes/candidate/number-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "array-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "7ba791836ffbd8f9364bd4fd0339a78c384bda4ab1b9a094bfc43ee2c3456bd7",
+        "raw_local_log": "probes/candidate/array-finding_ref/validator.log"
+      },
+      {
+        "fixture": "array-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "b746afa638a8e432004565e9ccfa78c54076ab25f52c8e7d798ee0977642ad4b",
+        "raw_local_log": "probes/candidate/array-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "object-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "14e74d831eb06fb1e1da9ee25d888589d735d7e4bc59dc53edf918ed609c1889",
+        "raw_local_log": "probes/candidate/object-finding_ref/validator.log"
+      },
+      {
+        "fixture": "object-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "ba4cf1e32e82727abcf77fdfb2634f83aaf761b8dc53949dba5aeeee6f242fb7",
+        "raw_local_log": "probes/candidate/object-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "unresolved-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "da21792f892f679a1e08e94a60ab1f94e799be080a09e666f4696d9524b75c2f",
+        "raw_local_log": "probes/candidate/unresolved-finding_ref/validator.log"
+      },
+      {
+        "fixture": "unresolved-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "156730be2a4a8955923963c37d80d9908f7f9023ebd23ed9d5f35f0addd6258d",
+        "raw_local_log": "probes/candidate/unresolved-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "wrong-collection-finding_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "a52d010564867f7254b50c679d80668b85e9efcc376b5314c230b5e58b0e9919",
+        "raw_local_log": "probes/candidate/wrong-collection-finding_ref/validator.log"
+      },
+      {
+        "fixture": "wrong-collection-finding_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "53cbf69a9b1e67bfc191dac6ae8098c4d9e929f3b886704a9fc4a86a6951b332",
+        "raw_local_log": "probes/candidate/wrong-collection-finding_ref/renderer.log"
+      },
+      {
+        "fixture": "missing-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "f273198b285fd8aace6a37fa95269bb650d9dbcc8bc73a273e55762f0b27356e",
+        "raw_local_log": "probes/candidate/missing-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "missing-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "d8c76a5d0324163c24ab15192521b88a7368d8fccf32ba65a43645e0016e51ea",
+        "raw_local_log": "probes/candidate/missing-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "null-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "f273198b285fd8aace6a37fa95269bb650d9dbcc8bc73a273e55762f0b27356e",
+        "raw_local_log": "probes/candidate/null-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "null-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "d8c76a5d0324163c24ab15192521b88a7368d8fccf32ba65a43645e0016e51ea",
+        "raw_local_log": "probes/candidate/null-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "empty-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "de4a47868ba1e433b42731c1faccd6ca8deaa93ec7cb4450cf81a6cc0a764564",
+        "raw_local_log": "probes/candidate/empty-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "empty-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "8ed14d5a702caa3a055f8d007a4ebc87536890ef4ddf4647c493f49ae3aa1562",
+        "raw_local_log": "probes/candidate/empty-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "whitespace-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "1395e6f98979244e8205dada257309f903f2a5ffcbe2ef538d99df409615d20d",
+        "raw_local_log": "probes/candidate/whitespace-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "whitespace-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "1201c4635a2a116bc4357e0ca88fe2ead38b5076633e4b001c91fb6441d35c11",
+        "raw_local_log": "probes/candidate/whitespace-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "number-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "3e5de2fc98b56e583ddff32ecdcdd8d3eb8fb55934cc17f362d778664ab91347",
+        "raw_local_log": "probes/candidate/number-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "number-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "c31d58b197497c78d976bf3ecfabd38b76b0069a6503820ee7f7ae0da559b2a0",
+        "raw_local_log": "probes/candidate/number-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "array-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "458741f24e15ab2bcd09150712ce2172a9aff77dd4debfae79f6e27e8401762e",
+        "raw_local_log": "probes/candidate/array-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "array-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "2397d5bf4bdbded9c699120c709c42361caeed2a19514f1ecc4919cb4379b4f5",
+        "raw_local_log": "probes/candidate/array-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "object-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "8a51d3527f9ea32fde142f59a93170239ffbe45cc9b69e6f4a2a55c262029dad",
+        "raw_local_log": "probes/candidate/object-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "object-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "01f6da1e6ad9fba25811b866764d6e02b8a0443c3a0c3334395dcebe11ba9007",
+        "raw_local_log": "probes/candidate/object-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "unresolved-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "bce04a00435ca8e8f0fa9b23cfca1e9794e8c356aeff973a01712b28c2f66e96",
+        "raw_local_log": "probes/candidate/unresolved-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "unresolved-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "7669ae48d79ee9ed0f505178f97182ea2df4973591b8648f634c196b44ad5fe0",
+        "raw_local_log": "probes/candidate/unresolved-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "wrong-collection-corrective_action_ref",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "5550144faba5bc8e0cddd20b13f2a79d0dbfa48110e36d87afca160495247308",
+        "raw_local_log": "probes/candidate/wrong-collection-corrective_action_ref/validator.log"
+      },
+      {
+        "fixture": "wrong-collection-corrective_action_ref",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "c3773c8c082c9e9709c8b6c8b68b9ddbd6debb9ff771d6ed06cee9d42db360ec",
+        "raw_local_log": "probes/candidate/wrong-collection-corrective_action_ref/renderer.log"
+      },
+      {
+        "fixture": "crosswired-action",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "219f8e3a72b953e8902a196be2b59f55f5d7e1582142418621fc06b2b684d6fa",
+        "raw_local_log": "probes/candidate/crosswired-action/validator.log"
+      },
+      {
+        "fixture": "crosswired-action",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "2abdd0277fdd8555dac55642e756801229f70e2fd3cbd3b284514615843d6515",
+        "raw_local_log": "probes/candidate/crosswired-action/renderer.log"
+      },
+      {
+        "fixture": "unrecorded-closure-action",
+        "operation": "validator",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "aa585a3633e68a0a01cb21894405c2f17db234c03e041ee330d98b0aa866dd97",
+        "raw_local_log": "probes/candidate/unrecorded-closure-action/validator.log"
+      },
+      {
+        "fixture": "unrecorded-closure-action",
+        "operation": "renderer",
+        "expected_valid": false,
+        "exit_code": 1,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "ee07da3f06789d9a9f619b5348c309d8f75b69c39e45284978e1afb11aedbb2b",
+        "raw_local_log": "probes/candidate/unrecorded-closure-action/renderer.log"
+      },
+      {
+        "fixture": "recorded-additional-action",
+        "operation": "validator",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "7472421e5cfab4e3edff5c7df01dcf9a8c87d708f4b8b9a98cecc972f2530a77",
+        "raw_local_log": "probes/candidate/recorded-additional-action/validator.log"
+      },
+      {
+        "fixture": "recorded-additional-action",
+        "operation": "renderer",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": true,
+        "traceback": false,
+        "raw_local_log_sha256": "002a14092a20e7e80bae8e8dc48470b00f867b51093ecdfc4d0cc921900beadb",
+        "raw_local_log": "probes/candidate/recorded-additional-action/renderer.log"
+      },
+      {
+        "fixture": "synthetic-ai-agent-assurance",
+        "operation": "validator",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "e3dc2fa1e3fce7e10767e650b1e801292e8df0365afb5ac7eea721ecb76644a4",
+        "raw_local_log": "probes/candidate/synthetic-ai-agent-assurance/validator.log"
+      },
+      {
+        "fixture": "synthetic-ai-agent-assurance",
+        "operation": "renderer",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": true,
+        "traceback": false,
+        "raw_local_log_sha256": "80d00cea79f0bf1a0351ed891f104018bd0411e3f85c0608199ce11718c95102",
+        "raw_local_log": "probes/candidate/synthetic-ai-agent-assurance/renderer.log"
+      },
+      {
+        "fixture": "synthetic-cryptographic-assurance-case",
+        "operation": "validator",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": false,
+        "traceback": false,
+        "raw_local_log_sha256": "76639e4f31322954af3b3d6c3293ff4dfc10bec5363b1966136cf3be1c62625d",
+        "raw_local_log": "probes/candidate/synthetic-cryptographic-assurance-case/validator.log"
+      },
+      {
+        "fixture": "synthetic-cryptographic-assurance-case",
+        "operation": "renderer",
+        "expected_valid": true,
+        "exit_code": 0,
+        "output_directory_created": true,
+        "traceback": false,
+        "raw_local_log_sha256": "963226d4953a94330668341f3cb8787ef2b51e3deca32d065c200a167337e979",
+        "raw_local_log": "probes/candidate/synthetic-cryptographic-assurance-case/renderer.log"
+      }
+    ]
+  },
+  "patch": {
+    "file": "proposals/aca-closure-links.patch",
+    "sha256": "3d4f1c8d9f3aa113171ae67a62fadfcd68b424180cfcc183eb4cfe08a1c2ef9a",
+    "files": [
+      "MANIFEST.sha256",
+      "scripts/validate_assurance_case.py",
+      "tests/test_assurance_case.py"
+    ],
+    "apply_check_against_base": "PASS",
+    "reverse_apply_check_against_candidate": "PASS",
+    "generated_files_included": [
+      "MANIFEST.sha256"
+    ],
+    "generated_inventory": "REPO_MANIFEST.json regenerated through the established command and byte-unchanged; no inventory/version change."
+  },
+  "upstream_source_license": {
+    "name": "MIT",
+    "url": "https://github.com/Bridge-Node-7/ai-cyber-assurance/blob/9033bf73bbd3923c5de0a9c6fb9959b4c140de64/LICENSE",
+    "notice": "MIT License\n\nCopyright (c) 2026 Bridge Node 7\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+  },
+  "limitations": [
+    "Local synthetic cases only; no evidence authenticity, factual truth, control effectiveness or operational approval claim.",
+    "No upstream implementation, issues, pull requests, release or contact.",
+    "Hosted Ubuntu/Windows execution and CodeQL were not run locally.",
+    "This proposal closes the documented relationship gaps, not an exhaustive schema/validator conformance audit."
+  ],
+  "raw_log_policy": "Portable per-invocation outcomes and original-log hashes only; full diagnostics remain in ignored .audit-cache/continuation/aca. Probe recipes and the integration tests in the patch reproduce the behavior."
+}

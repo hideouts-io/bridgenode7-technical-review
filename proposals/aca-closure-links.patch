@@ -1,0 +1,108 @@
+diff --git a/MANIFEST.sha256 b/MANIFEST.sha256
+index 3e95e1c..501fcce 100644
+--- a/MANIFEST.sha256
++++ b/MANIFEST.sha256
+@@ -64,9 +64,9 @@ a46e527714e0d25ad88fa23d6bbf5eaba354ab492e5be7f1714b383b5e9e88cc  START_HERE.md
+ 87b241b275c591694846560e9879f50c9da3150f854efdabd782c539772f3033  VERSION
+ 1597bfac38a43f73b90f07e71d572a9cb54c39cf5aeeed3939a9e869f0de8fd5  scripts/refresh_release_metadata.py
+ a458f43a8d3237beea8abe87da3583b1572decb9d94d2f26f0c325fe3013be8e  scripts/render_assurance_outputs.py
+-3ffb55e8a744f7764796a7847350d0de12b7f9b03d0d9d0d4766dcbc35659009  scripts/validate_assurance_case.py
++9a5614f4dc9f0f3d30f650e31c64701325597897b148953a135b9367a94c1fc8  scripts/validate_assurance_case.py
+ 4daabcb457901ec5d3a3ba023652fc70971b6c617982a3a292558ec5dd7d1c96  scripts/validate_repo.py
+-40857efbc3f9d5fa1fa4bfe165071c17c594d5715d3ecd3dd306c24cd3c9a377  tests/test_assurance_case.py
++7a055e0a92f35bfe224b668b871aa673d64f3c31482422e279741bc3848eed57  tests/test_assurance_case.py
+ 6a7acac94f3e55927793e6943c9f4bd80bb0f01dfeeccaaca2bdfab7f956fc88  tests/test_cryptographic_change.py
+ fc1f5dccfbd2c26b12f3e42908c77a88dc119f8bb3c75582fd5e149f2e0a784d  tests/test_navigation.py
+ 1e6f47fc3c5ca3a5a3b99e87f17670ff18cfab4b97261a088a5c3730533ccaf9  tests/test_release_metadata.py
+diff --git a/scripts/validate_assurance_case.py b/scripts/validate_assurance_case.py
+index 4f0f688..4965e63 100644
+--- a/scripts/validate_assurance_case.py
++++ b/scripts/validate_assurance_case.py
+@@ -366,16 +366,23 @@ def validate_case(data: dict[str, Any]) -> list[str]:
+ 
+     retest_dates: dict[str, date] = {}
+     for rid, retest in retest_by_id.items():
+-        for field in ("tester", "method"):
++        for field in ("finding_ref", "corrective_action_ref", "tester", "method"):
+             if not _nonempty(retest.get(field)):
+                 errors.append(f"{rid}.{field} is required.")
++        ca_ref: object = retest.get("corrective_action_ref")
++        finding_ref: object = retest.get("finding_ref")
++        ca: dict[str, object] | None = ca_by_id.get(ca_ref) if isinstance(ca_ref, str) else None
++        if ca and ca.get("finding_ref") != finding_ref:
++            errors.append(
++                f"{rid} corrective action {ca_ref} must reference retest finding "
++                f"{finding_ref!r}, not {ca.get('finding_ref')!r}."
++            )
+         tested = _parse_date(retest.get("tested_at"), f"{rid}.tested_at", errors)
+         if tested:
+             retest_dates[rid] = tested
+             if reviewed and tested > reviewed:
+                 errors.append(f"{rid}.tested_at must not be after case.reviewed_at.")
+-            ca_ref = retest.get("corrective_action_ref")
+-            created, completed = ca_dates.get(ca_ref, (None, None))
++            created, completed = ca_dates.get(ca_ref, (None, None)) if isinstance(ca_ref, str) else (None, None)
+             threshold = completed or created
+             if threshold and tested < threshold:
+                 errors.append(f"{rid}.tested_at must not precede corrective action {ca_ref} completion/creation.")
+@@ -412,6 +419,11 @@ def validate_case(data: dict[str, Any]) -> list[str]:
+             errors.append(f"{fid} is closed but retest {retest_ref} did not pass.")
+         if retest and retest.get("finding_ref") != fid:
+             errors.append(f"{fid} retest {retest_ref} must reference the same finding.")
++        if retest and isinstance(ca_refs, list) and retest.get("corrective_action_ref") not in ca_refs:
++            errors.append(
++                f"{fid} retest {retest_ref} corrective action {retest.get('corrective_action_ref')!r} "
++                "must be recorded in corrective_action_refs."
++            )
+         closed_at = finding_closed_dates.get(fid)
+         tested_at = retest_dates.get(retest_ref) if isinstance(retest_ref, str) else None
+         if closed_at and tested_at and closed_at < tested_at:
+diff --git a/tests/test_assurance_case.py b/tests/test_assurance_case.py
+index f4d12d9..3029436 100644
+--- a/tests/test_assurance_case.py
++++ b/tests/test_assurance_case.py
+@@ -95,6 +95,44 @@ class AssuranceCaseTests(unittest.TestCase):
+         data = load_fixture(); data["retests"][0]["finding_ref"] = "FIND-002"
+         self.assertTrue(any("must reference the same finding" in x for x in validator.validate_case(data)))
+ 
++    def assert_case_rejected_before_rendering(self, data: dict[str, object], labels: tuple[str, ...]) -> None:
++        with tempfile.TemporaryDirectory() as temp:
++            case_path = Path(temp) / "assurance-case.json"
++            case_path.write_text(json.dumps(data), encoding="utf-8")
++            output_dir = Path(temp) / "generated"
++            for command in (
++                [sys.executable, str(VALIDATOR_PATH), str(case_path), "--as-of", AS_OF.isoformat()],
++                [sys.executable, str(RENDERER_PATH), str(case_path), "--output-dir", str(output_dir), "--as-of", AS_OF.isoformat()],
++            ):
++                result = subprocess.run(command, capture_output=True, text=True, check=False)
++                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
++                for label in labels:
++                    self.assertIn(label, result.stdout)
++                self.assertFalse(output_dir.exists())
++
++    def test_retest_requires_nonempty_typed_finding_and_action_links(self) -> None:
++        values: tuple[object, ...] = (None, "", " ", 42, [], {})
++        for field in ("finding_ref", "corrective_action_ref"):
++            with self.subTest(field=field, missing=True):
++                data = load_fixture(); del data["retests"][0][field]
++                self.assert_case_rejected_before_rendering(data, (f"RETEST-001.{field} is required",))
++            for value in values:
++                with self.subTest(field=field, value=value):
++                    data = load_fixture(); data["retests"][0][field] = value
++                    self.assert_case_rejected_before_rendering(data, (f"RETEST-001.{field} is required",))
++
++    def test_retest_corrective_action_must_belong_to_its_finding(self) -> None:
++        data = load_fixture(); data["retests"][0]["corrective_action_ref"] = "CA-002"
++        self.assert_case_rejected_before_rendering(data, ("RETEST-001", "CA-002", "FIND-001", "FIND-002"))
++
++    def test_closed_finding_records_the_retested_corrective_action(self) -> None:
++        data = load_fixture()
++        data["corrective_actions"].append(dict(data["corrective_actions"][0], id="CA-004"))
++        data["retests"][0]["corrective_action_ref"] = "CA-004"
++        self.assert_case_rejected_before_rendering(data, ("FIND-001", "RETEST-001", "CA-004", "corrective_action_refs"))
++        data["findings"][0]["corrective_action_refs"].append("CA-004")
++        self.assertEqual(validator.validate_case(data), [])
++
+     def test_unknown_cannot_support_closure(self) -> None:
+         data = load_fixture(); data["findings"][0]["closure_evidence_refs"] = ["EVID-003"]
+         self.assertTrue(any("uses Unknown evidence" in x for x in validator.validate_case(data)))

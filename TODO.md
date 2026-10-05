@@ -6,9 +6,9 @@ Estimated maintainer implementation effort is **15–28 hours**, excluding optio
 
 | Order | Task | Priority | Responsible role | Effort | Current preparation |
 | --- | --- | --- | --- | --- | --- |
-| 1 | [T01: Validate M2M source before FMA projection](#t01) | P1 | M2M maintainer | 2–4 h | Locally tested candidate |
+| 1 | [T01: Validate M2M source before FMA projection](#t01) | P1 | M2M maintainer | 2–4 h | Complete candidate locally verified; profile/version provenance included |
 | 2 | [T02: Enforce FDE freshness date contract](#t02) | P1 | FDE maintainer; context-contract owner | 4–8 h | Partial candidate tested; date-format work remains |
-| 3 | [T03: Bind ACA retests to the corrective action being closed](#t03) | P1 | ACA structured-case maintainer | 2–4 h | Reproductions and correction specification |
+| 3 | [T03: Bind ACA retests to the corrective action being closed](#t03) | P1 | ACA structured-case maintainer | 2–4 h | Complete candidate locally verified |
 | 4 | [T04: Normalize FIW roots consistently](#t04) | P2 | FIW maintainer | 1–2 h | Locally tested candidate with refreshed manifests |
 | 5 | [T05: Reject explicit null FMA criticality early](#t05) | P2 | FMA maintainer | 1–2 h | Evaluation-only bug specification |
 | 6 | [T06: Correct and validate Pax eligibility provenance](#t06) | P2 | Source-data maintainer; evidence reviewer | 2–3 h | Validator candidate tested; factual date unresolved |
@@ -20,11 +20,11 @@ Estimated maintainer implementation effort is **15–28 hours**, excluding optio
 
 **Affected scope:** `materials-to-mission/scripts/export_fma_projection.py`, existing interoperability integration tests, and generated validation evidence. **Benefit:** users receive the same source-policy rejection through the export route as through the producer's validation route. **Priority rationale:** portable artifacts should not conceal known source-policy failure behind target-schema PASS.
 
-Reuse the existing `validate_case` function with explicit public validation and the current default profile after the synthetic/public-safe declaration check. Raise an actionable error containing existing finding codes, paths, and messages before any output is written. Preserve the valid deterministic transformation, loss-aware extensions, pinned FMA contracts, and human-authority limitations. Record the source validation profile in projection provenance during the final interface review; a target schema version alone does not identify semantic acceptance.
+Reuse the existing `validate_case` function with explicit public validation and the current default profile after the synthetic/public-safe declaration check. Raise an actionable error containing existing finding codes, paths, and messages before any output is written. Preserve the valid deterministic transformation, loss-aware extensions, pinned FMA contracts, and human-authority limitations. The candidate records the actual `ValidationResult.validation_profile` and toolkit `__version__` in the extensible graph metadata and manifest source fields, without changing schema or adapter versions.
 
-**Acceptance:** the valid synthetic case still exports deterministically; all six checked-in invalid cases and the synthetic boundary-marker case exit nonzero before creating output; the valid graph/receipt remains usable under the pinned FMA contracts. Refresh evidence with the repository's existing `check_repo.py --update-evidence` path, review the generated changes, and require a subsequent non-mutating full gate. The candidate already passes 301 tests, but profile-provenance recording remains a final-review item.
+**Acceptance:** the valid synthetic case still exports deterministically; all five checked-in invalid cases and the additional synthetic boundary-marker case exit nonzero before creating output; the valid graph/receipt remains usable under the pinned FMA contracts. Refresh evidence with the repository's existing `check_repo.py --update-evidence` path, review the generated changes, and require a subsequent non-mutating full gate. The complete candidate passes 302 tests and four targeted CLI interoperability tests on Python 3.11.16; the decision receipt is byte-identical to the valid baseline, and the unchanged FMA consumer accepts graph/reference checks. [Current verification](evidence/m2m-source-validation.json) preserves the existing consumer warning and exact limits.
 
-**Dependencies/access:** no new service or dependency; confirm the semantic-profile identity with the maintainer. The external reviewer can prepare/replay the [candidate](proposals/m2m-source-validation.patch); applying it, refreshing upstream evidence, and publishing require Bridge Node 7 maintainers.
+**Dependencies/access:** no new service or dependency. The semantic-profile identity is taken from the existing validation result, not inferred. The external reviewer has prepared the [candidate](proposals/m2m-source-validation.patch); interface acceptance, applying it upstream, required gates, and publishing require Bridge Node 7 maintainers.
 
 ## T02
 
@@ -46,9 +46,9 @@ First reject non-null deadlines when the existing parser cannot parse them. Comp
 
 Require nonempty `finding_ref` and `corrective_action_ref` in retests. Keep existing typed reference resolution, compare the corrective action's finding to the retest's finding, and require a closed finding's successful retest action to be one of its recorded corrective actions. Preserve independent-retest rationale, chronology, completed-action, closure-evidence, and human-authority checks.
 
-**Acceptance:** the original AI-agent and cryptographic examples still validate/render. Removing a retest's action link or linking it to another finding's action fails with retest/action/finding identifiers. Rendering invalid closure records stops before producing communication artifacts. Existing 64 tests and metadata/hash/repository checks pass. Add only the useful real-validator behavior coverage for these missing relationships; no new graph framework or runtime schema dependency is necessary.
+**Acceptance:** the original AI-agent and cryptographic examples still validate/render. Removing a retest's action link or linking it to another finding's action fails with retest/action/finding identifiers. Rendering invalid closure records stops before producing communication artifacts. The complete candidate passes 67 tests, 17 repository checks, and all 73 manifest hashes on Python 3.12.14. Twenty invalid synthetic variants fail before rendering output; both original examples and a correctly linked additional action pass. [Current verification](evidence/aca-closure-links.json) records actual CLI results and reproduction recipes. Three useful integration tests extend the existing suite; no new graph framework or runtime schema dependency is necessary.
 
-**Dependencies/access:** no private case is needed to reproduce the issue. The external reviewer can supply the two synthetic edits described in F03 and the correction specification; source implementation, metadata refresh, and release approval require the ACA maintainer.
+**Dependencies/access:** no private case is needed to reproduce the issue. The external reviewer has prepared the [candidate](proposals/aca-closure-links.patch), including the required manifest hashes. Source implementation, metadata refresh after adaptation, and release approval require the ACA maintainer.
 
 ## T04
 
