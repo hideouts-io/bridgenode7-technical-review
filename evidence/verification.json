@@ -525,9 +525,13 @@
   "publication": {
     "remote": "https://github.com/hideouts-io/bridgenode7-technical-review",
     "visibility": "PRIVATE",
-    "report_remote_state": "EMPTY_REMOTE_LOCAL_UNCOMMITTED_REPORT",
-    "commits_created": false,
-    "push_performed": false,
+    "report_remote_state": "PRIVATE_BRANCH_PUBLISHED",
+    "branch": "codex/technical-review",
+    "branch_url": "https://github.com/hideouts-io/bridgenode7-technical-review/tree/codex/technical-review",
+    "initial_publication_commit": "78c78526b515e8f609e1564e182fc093e5ef9f94",
+    "initial_publication_verified": true,
+    "commits_created": true,
+    "push_performed": true,
     "collaborators_invited": false,
     "upstream_modified": false
   },

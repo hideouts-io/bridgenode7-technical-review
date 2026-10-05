@@ -1,6 +1,6 @@
 # Bridge Node 7 technical review
 
-**Independent external assessment · Private preparation · October 4, 2026**
+**Independent external assessment · Private review · October 4, 2026**
 
 The public GitHub estate already has substantial documentation, explicit evidence/authority limits, and successful recent hosted validation. This review recommends seven focused corrections to validation, source-policy enforcement, reproducibility, provenance, and an existing worked example. The strongest improvements reuse the code and methods already present.
 
@@ -47,6 +47,6 @@ The [profile's canonical-source statement](https://github.com/Bridge-Node-7/Brid
 
 Research used the authenticated GitHub CLI/public API, public Git clones, native web research of primary sources, and existing project validation tools in isolated local environments. The GitHub plugin was discovered and suggested but was **not connected or used**. Dependencies stayed in local audit environments. Research was selective; no internal or credentialed Bridge Node 7 systems were accessed.
 
-The requested private repository exists at [hideouts-io/bridgenode7-technical-review](https://github.com/hideouts-io/bridgenode7-technical-review), with PRIVATE visibility and administrative access verified for `hideouts-io`. **The remote is currently empty: these files are prepared locally and remain uncommitted.** The user's instructions require explicit authorization before commits and pushes. No upstream Bridge Node 7 repository was changed, and no issue, pull request, collaborator invitation, or CEO message was sent.
+The review is published in the private [hideouts-io/bridgenode7-technical-review repository](https://github.com/hideouts-io/bridgenode7-technical-review/tree/codex/technical-review), on `codex/technical-review`. The initial package's remote commit and PRIVATE visibility were verified after the user authorized commits and pushes. No upstream Bridge Node 7 repository was changed, and no issue, pull request, collaborator invitation, or CEO message was sent.
 
-After the user approves committing/pushing the reviewed package, the repository can carry the report. CEO access still requires an explicitly authorized invitation or another user-approved sharing method. This assessment is independent and does not imply official Bridge Node 7 sponsorship.
+CEO access still requires an explicitly authorized invitation or another user-approved sharing method. This assessment is independent and does not imply official Bridge Node 7 sponsorship.

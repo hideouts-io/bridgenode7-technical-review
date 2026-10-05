@@ -1,6 +1,6 @@
 # Candidate changes for maintainer review
 
-These are private proposals against exact public-source commits. None is applied to Bridge Node 7's repositories, committed, released, or deployed. [TODO.md](../TODO.md) owns the complete implementation scope and acceptance criteria; this file records candidate provenance and actual verification.
+These are private proposals against exact public-source commits, committed only to this review repository. None is applied to Bridge Node 7's repositories, released, or deployed. [TODO.md](../TODO.md) owns the complete implementation scope and acceptance criteria; this file records candidate provenance and actual verification.
 
 | Candidate | Repository/base | Included change | Local result and remaining work |
 | --- | --- | --- | --- |

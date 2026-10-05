@@ -1,6 +1,6 @@
 # Prioritized implementation TODO
 
-All tasks are **open upstream**. Prepared patches are private, uncommitted candidates; they are not deployed fixes. Priority definitions, evidence, reproduced behavior, and primary references are in [FINDINGS.md](FINDINGS.md). [Proposal status](proposals/README.md) records the tested scope of each candidate.
+All tasks are **open upstream**. Prepared patches are private review candidates; they are not deployed fixes. Priority definitions, evidence, reproduced behavior, and primary references are in [FINDINGS.md](FINDINGS.md). [Proposal status](proposals/README.md) records the tested scope of each candidate.
 
 Estimated maintainer implementation effort is **15–28 hours**, excluding optional macOS CI work, owner-response delays, release approvals, and production deployment. The first three tasks account for **8–16 hours**. These estimates assume an engineer familiar with the repository and an available declared toolchain. The separate external-review workload is in [WEEK_PLAN.md](WEEK_PLAN.md).
 
@@ -102,4 +102,4 @@ Use the canonical ten-domain template, including Critical-link protection and Cr
 
 The private review author can complete evidence preparation and proposed changes without upstream permissions. Every upstream task remains open until the responsible maintainer accepts and implements it with the stated checks. An unanswered internal question is recorded as a dependency, not converted into a company deficiency.
 
-The private GitHub repository has been created. This report and its candidates remain local and uncommitted until the user explicitly authorizes commits and pushes. CEO access requires a separately authorized collaborator invitation or another user-approved sharing method.
+The report and its candidates are published on the private review repository's `codex/technical-review` branch under the user's explicit authorization. Upstream implementation remains open. CEO access requires a separately authorized collaborator invitation or another user-approved sharing method.
