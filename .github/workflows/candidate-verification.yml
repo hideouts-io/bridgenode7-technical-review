@@ -1,0 +1,469 @@
+# Independent hosted validation only. No upstream publication or deployment jobs.
+# M2M/ACA MIT and FDE Apache-2.0 source notices are retained in their evidence JSON records.
+name: Hosted candidate verification
+'on':
+  workflow_dispatch: null
+permissions:
+  contents: read
+concurrency:
+  group: candidate-verification-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  m2m:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-latest
+        - windows-latest
+        python:
+        - '3.11'
+        - '3.13'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+    - name: Check out review workflow and published proposals
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        path: review
+        persist-credentials: false
+    - name: Check out pinned public source
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        repository: Bridge-Node-7/materials-to-mission
+        ref: 2a8d26af86e8adb8b1e34550045782d1a20418a4
+        path: candidate
+        persist-credentials: false
+    - name: Set up declared Python
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+      with:
+        python-version: ${{ matrix.python }}
+    - name: Create external project environment
+      shell: bash
+      run: |
+        python - <<'PYTHON'
+        import os
+        from pathlib import Path
+        import subprocess
+        import sys
+        root = Path(os.environ["RUNNER_TEMP"]) / "candidate-venv"
+        subprocess.run([sys.executable, "-m", "venv", str(root)], check=True)
+        with Path(os.environ["GITHUB_PATH"]).open("a", encoding="utf-8") as stream:
+            stream.write(str(root / ("Scripts" if os.name == "nt" else "bin")) + "\n")
+        PYTHON
+    - name: Verify external environment selection
+      shell: bash
+      run: |
+        python - <<'PYTHON'
+        import os
+        from pathlib import Path
+        import sys
+        expected = (Path(os.environ["RUNNER_TEMP"]) / "candidate-venv").resolve()
+        observed = Path(sys.prefix).resolve()
+        if observed != expected:
+            raise RuntimeError(f"Expected project environment {expected}; selected {observed}")
+        print(sys.version)
+        PYTHON
+    - name: Verify provenance and prepare temporary candidate
+      id: prepare
+      shell: bash
+      working-directory: .
+      run: |
+        python review/scripts/prepare_candidate.py --source candidate --review review --evidence "$RUNNER_TEMP/evidence" --patch proposals/m2m-source-validation.patch
+    - name: Privacy path scan
+      run: python scripts/check_privacy.py
+    - name: Install declared development dependencies
+      run: python -m pip install -r requirements-dev.txt
+    - name: Install candidate package
+      run: python -m pip install --no-deps --no-build-isolation -e .
+    - name: Complete maintainer gate
+      run: python scripts/check_repo.py
+    - name: Verify gate left tracked source unchanged
+      run: git --no-pager diff --exit-code
+    - name: Retain test and coverage counts
+      shell: bash
+      run: |
+        cp build/pytest-junit.xml "$RUNNER_TEMP/evidence/"
+        cp build/coverage.json "$RUNNER_TEMP/evidence/"
+        cp VALIDATION_REPORT.md "$RUNNER_TEMP/evidence/"
+        python -m pip freeze > "$RUNNER_TEMP/evidence/python-packages.txt"
+        git --no-pager diff --exit-code
+    - name: Retain bounded verification evidence
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      with:
+        name: m2m-${{ matrix.os }}-py${{ matrix.python }}
+        path: ${{ runner.temp }}/evidence/
+        if-no-files-found: error
+        retention-days: 14
+    name: M2M / ${{ matrix.os }} / Python ${{ matrix.python }}
+    defaults:
+      run:
+        working-directory: candidate
+  m2m-consumer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - name: Check out review workflow and published proposals
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        path: review
+        persist-credentials: false
+    - name: Check out pinned public source
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        repository: Bridge-Node-7/materials-to-mission
+        ref: 2a8d26af86e8adb8b1e34550045782d1a20418a4
+        path: candidate
+        persist-credentials: false
+    - name: Set up consumer Python
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+      with:
+        python-version: '3.12'
+    - name: Create external project environment
+      shell: bash
+      run: |
+        python - <<'PYTHON'
+        import os
+        from pathlib import Path
+        import subprocess
+        import sys
+        root = Path(os.environ["RUNNER_TEMP"]) / "candidate-venv"
+        subprocess.run([sys.executable, "-m", "venv", str(root)], check=True)
+        with Path(os.environ["GITHUB_PATH"]).open("a", encoding="utf-8") as stream:
+            stream.write(str(root / ("Scripts" if os.name == "nt" else "bin")) + "\n")
+        PYTHON
+    - name: Verify external environment selection
+      shell: bash
+      run: |
+        python - <<'PYTHON'
+        import os
+        from pathlib import Path
+        import sys
+        expected = (Path(os.environ["RUNNER_TEMP"]) / "candidate-venv").resolve()
+        observed = Path(sys.prefix).resolve()
+        if observed != expected:
+            raise RuntimeError(f"Expected project environment {expected}; selected {observed}")
+        print(sys.version)
+        PYTHON
+    - name: Verify provenance and prepare temporary candidate
+      id: prepare
+      shell: bash
+      working-directory: .
+      run: |
+        python review/scripts/prepare_candidate.py --source candidate --review review --evidence "$RUNNER_TEMP/evidence" --patch proposals/m2m-source-validation.patch
+    - name: Privacy path scan
+      run: python scripts/check_privacy.py
+    - name: Verify consumer manifest
+      shell: bash
+      run: |
+        python scripts/build_manifest.py
+        git --no-pager diff --exit-code
+    - name: Follow documented consumer path and prove FMA interoperability
+      shell: bash
+      run: |
+        set -euo pipefail
+        python -m pip install -r requirements.txt
+        python -m pip install --no-deps --no-build-isolation -e .
+        EXPECTED_VERSION="$(tr -d '\r\n' < VERSION)"
+        test "$(m2m --version)" = "m2m ${EXPECTED_VERSION}"
+        python scripts/evaluate_public_method.py
+        mkdir -p build
+        m2m validate \
+          examples/synthetic-critical-material-pathway/case.json \
+          --public \
+          --profile m0-strict-0.4.0 \
+          --json > build/consumer-validation.json
+        python - <<'PY'
+        import json
+        from pathlib import Path
+        data = json.loads(Path("build/consumer-validation.json").read_text())
+        assert data["valid"] is True
+        expected_version = Path("VERSION").read_text(encoding="utf-8").strip()
+        assert data["toolkit_version"] == expected_version
+        assert data["validation_profile"] == "m0-strict-0.4.0"
+        PY
+
+        python scripts/export_fma_projection.py \
+          examples/synthetic-critical-material-pathway/case.json \
+          --output-dir build/fma-projection
+
+        python - <<'PY'
+        import hashlib
+        import json
+        from pathlib import Path
+
+        interfaces = json.loads(Path("INTERFACES.json").read_text(encoding="utf-8"))
+        assert interfaces["format"] == "bn7.interfaces/0.1"
+        assert interfaces["system"] == "materials-to-mission"
+        assert "application_version" not in interfaces
+        for contract in interfaces["accepts"]:
+            path = Path(contract["schema_path"])
+            assert hashlib.sha256(path.read_bytes()).hexdigest() == contract["sha256"]
+            assert contract["authority"] == "PINNED_PORTABLE_VALIDATION_CONTRACT"
+        provided = interfaces["provides"]
+        assert len(provided) == 1
+        assert provided[0]["authority"] == "PRODUCER_OWNED_PORTABLE_CONTRACT"
+        projection = json.loads(Path("build/fma-projection/projection-manifest.json").read_text(encoding="utf-8"))
+        assert projection["target_contract_sha256"] == {
+            contract["contract_id"]: contract["sha256"]
+            for contract in interfaces["accepts"]
+        }
+        PY
+    - name: Retain consumer results and verify no tracked drift
+      shell: bash
+      run: |
+        cp build/consumer-validation.json "$RUNNER_TEMP/evidence/"
+        cp build/fma-projection/projection-manifest.json "$RUNNER_TEMP/evidence/"
+        python -m pip freeze > "$RUNNER_TEMP/evidence/python-packages.txt"
+        git --no-pager diff --exit-code
+    - name: Retain bounded verification evidence
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      with:
+        name: m2m-ubuntu-py3.12-consumer
+        path: ${{ runner.temp }}/evidence/
+        if-no-files-found: error
+        retention-days: 14
+    name: M2M / Ubuntu / Python 3.12 consumer
+    defaults:
+      run:
+        working-directory: candidate
+  fde:
+    name: FDE / Ubuntu / Node 22 / ${{ matrix.candidate }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        candidate:
+        - timestamp
+        - harness
+        - combined
+    defaults:
+      run:
+        shell: bash
+        working-directory: candidate
+    steps:
+    - name: Check out review workflow and published proposals
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        path: review
+        persist-credentials: false
+    - name: Check out pinned public source
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        repository: Bridge-Node-7/frontier-decision-engine
+        ref: 4a913756d00cdd321da04bf7350507e571f2f2dd
+        path: candidate
+        persist-credentials: false
+    - name: Set up declared Node
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+      with:
+        node-version: 22
+        package-manager-cache: false
+    - name: Create external project environment
+      shell: bash
+      run: |
+        python - <<'PYTHON'
+        import os
+        from pathlib import Path
+        import subprocess
+        import sys
+        root = Path(os.environ["RUNNER_TEMP"]) / "candidate-venv"
+        subprocess.run([sys.executable, "-m", "venv", str(root)], check=True)
+        with Path(os.environ["GITHUB_PATH"]).open("a", encoding="utf-8") as stream:
+            stream.write(str(root / ("Scripts" if os.name == "nt" else "bin")) + "\n")
+        PYTHON
+    - name: Verify external environment selection
+      shell: bash
+      run: |
+        python - <<'PYTHON'
+        import os
+        from pathlib import Path
+        import sys
+        expected = (Path(os.environ["RUNNER_TEMP"]) / "candidate-venv").resolve()
+        observed = Path(sys.prefix).resolve()
+        if observed != expected:
+            raise RuntimeError(f"Expected project environment {expected}; selected {observed}")
+        print(sys.version)
+        PYTHON
+    - name: Verify provenance and prepare temporary candidate
+      shell: bash
+      working-directory: .
+      run: |
+        python review/scripts/prepare_candidate.py --source candidate --review review --evidence "$RUNNER_TEMP/evidence" --patch proposals/fde-rfc3339-timestamp-contract.patch
+      if: matrix.candidate == 'timestamp'
+    - name: Verify provenance and prepare temporary candidate
+      shell: bash
+      working-directory: .
+      run: |
+        python review/scripts/prepare_candidate.py --source candidate --review review --evidence "$RUNNER_TEMP/evidence" --patch proposals/fde-context-threaded-harness.patch
+      if: matrix.candidate == 'harness'
+    - name: Verify provenance and prepare temporary candidate
+      shell: bash
+      working-directory: .
+      run: |
+        python review/scripts/prepare_candidate.py --source candidate --review review --evidence "$RUNNER_TEMP/evidence" --patch proposals/fde-rfc3339-timestamp-contract.patch --patch proposals/fde-context-threaded-harness.patch
+      if: matrix.candidate == 'combined'
+    - name: Initialize required candidate CodeQL
+      id: codeql-init
+      if: matrix.candidate == 'combined'
+      uses: github/codeql-action/init@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2
+      with:
+        languages: python,javascript-typescript
+        source-root: candidate
+        db-location: ${{ runner.temp }}/candidate-codeql-databases
+    - name: Verify npm lockfile
+      run: npm ci --ignore-scripts --no-audit --no-fund
+    - name: Install browser test tooling
+      run: |
+        python3 -m pip install --disable-pip-version-check -r requirements-dev.txt
+        python3 -m playwright install --with-deps chromium
+    - name: Record resolved tooling
+      run: |
+        node --version
+        npm --version
+        python3 --version
+        python3 -m playwright --version
+        python3 -m pip freeze > "$RUNNER_TEMP/evidence/python-packages.txt"
+        node --version > "$RUNNER_TEMP/evidence/node-version.txt"
+        npm --version > "$RUNNER_TEMP/evidence/npm-version.txt"
+    - name: Timestamp-only targeted and Node checks
+      if: matrix.candidate == 'timestamp'
+      run: |
+        node --test tests/governed-context.test.js
+        npm test
+    - name: Harness-only original context checks
+      if: matrix.candidate == 'harness'
+      run: npm run test:context
+    - name: Refresh combined verification inputs
+      if: matrix.candidate == 'combined'
+      run: |
+        npm run manifest
+        npm run facts
+        npm run manifest
+    - name: Combined complete verification gate
+      if: matrix.candidate == 'combined'
+      run: npm run check
+    - name: Run required candidate CodeQL
+      if: (success() || failure()) && matrix.candidate == 'combined' && steps.codeql-init.outcome == 'success'
+      uses: github/codeql-action/analyze@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2
+      with:
+        upload: never
+        upload-database: false
+        checkout_path: ${{ github.workspace }}/candidate
+        output: ${{ runner.temp }}/candidate-sarif
+      id: codeql-analysis
+    - name: Verify SARIF attribution and retain analysis counts
+      if: (success() || failure()) && matrix.candidate == 'combined' && steps.codeql-analysis.outcome == 'success'
+      working-directory: .
+      run: |
+        python review/scripts/collect_codeql.py --source candidate --sarif "$RUNNER_TEMP/candidate-sarif" --evidence "$RUNNER_TEMP/evidence" --language python --language javascript
+    - name: Verify no generated tracked drift
+      run: |
+        git --no-pager diff --exit-code
+        git --no-pager diff --check
+    - name: Retain bounded verification evidence
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      with:
+        name: fde-ubuntu-node22-${{ matrix.candidate }}
+        path: ${{ runner.temp }}/evidence/
+        if-no-files-found: error
+        retention-days: 14
+  aca:
+    name: ACA validation on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-latest
+        - windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - name: Check out review package
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        ref: ${{ github.sha }}
+        path: review
+        persist-credentials: false
+    - name: Check out pinned ACA source
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        repository: Bridge-Node-7/ai-cyber-assurance
+        ref: 9033bf73bbd3923c5de0a9c6fb9959b4c140de64
+        path: candidate
+        persist-credentials: false
+    - name: Set up Python
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+      with:
+        python-version: '3.12'
+    - name: Prepare verified ACA candidate
+      run: |
+        set -euo pipefail
+        python review/scripts/prepare_candidate.py \
+          --source candidate \
+          --review review \
+          --evidence "$RUNNER_TEMP/evidence" \
+          --patch proposals/aca-closure-links.patch
+    - name: Initialize required Python CodeQL
+      if: matrix.os == 'ubuntu-latest'
+      uses: github/codeql-action/init@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2
+      with:
+        languages: python
+        source-root: candidate
+      id: codeql-init
+    - name: Report source validation workflow hash
+      working-directory: candidate
+      run: |
+        set -euo pipefail
+        sha256sum .github/workflows/validate.yml
+    - name: Run ACA validator tests
+      working-directory: candidate
+      run: |
+        set -euo pipefail
+        python -m unittest discover -s tests -p 'test_*.py'
+    - name: Check deterministic ACA metadata
+      working-directory: candidate
+      run: |
+        set -euo pipefail
+        python scripts/refresh_release_metadata.py --root . --check
+    - name: Validate ACA repository and hashes
+      working-directory: candidate
+      run: |
+        set -euo pipefail
+        command -v sha256sum
+        python scripts/validate_repo.py \
+          --root . \
+          --json-output "$RUNNER_TEMP/evidence/aca-validation.json"
+        sha256sum -c MANIFEST.sha256
+        git --no-pager diff --check
+        git --no-pager diff --exit-code
+    - name: Run required Python CodeQL analysis
+      id: codeql-analysis
+      if: (success() || failure()) && matrix.os == 'ubuntu-latest' && steps.codeql-init.outcome == 'success'
+      uses: github/codeql-action/analyze@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2
+      with:
+        checkout_path: ${{ github.workspace }}/candidate
+        output: ${{ runner.temp }}/aca-codeql-results
+        upload: never
+        upload-database: 'false'
+    - name: Verify SARIF attribution and retain analysis counts
+      if: (success() || failure()) && matrix.os == 'ubuntu-latest' && steps.codeql-analysis.outcome == 'success'
+      run: |
+        python review/scripts/collect_codeql.py --source candidate --sarif "$RUNNER_TEMP/aca-codeql-results" --evidence "$RUNNER_TEMP/evidence" --language python
+    - name: Upload ACA normalized evidence
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      with:
+        name: aca-validation-${{ matrix.os }}
+        path: ${{ runner.temp }}/evidence
+        if-no-files-found: error
+        retention-days: 30
