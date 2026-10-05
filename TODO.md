@@ -1,6 +1,6 @@
 # Prioritized implementation TODO
 
-All tasks are **open upstream**. Prepared patches are private review candidates; they are not deployed fixes. Priority definitions, evidence, reproduced behavior, and primary references are in [FINDINGS.md](FINDINGS.md). [Proposal status](proposals/README.md) records the tested scope of each candidate.
+All tasks are **open upstream**. Prepared patches are independent review candidates; they are not deployed fixes. Priority definitions, evidence, reproduced behavior, and primary references are in [FINDINGS.md](FINDINGS.md). [Proposal status](proposals/README.md) records the tested scope of each candidate.
 
 Estimated maintainer implementation effort is **15–28 hours**, excluding optional macOS CI work, owner-response delays, release approvals, and production deployment. The first three tasks account for **8–16 hours**. These estimates assume an engineer familiar with the repository and an available declared toolchain. The separate external-review workload is in [WEEK_PLAN.md](WEEK_PLAN.md).
 
@@ -9,10 +9,10 @@ Estimated maintainer implementation effort is **15–28 hours**, excluding optio
 | 1 | [T01: Validate M2M source before FMA projection](#t01) | P1 | M2M maintainer | 2–4 h | Complete candidate locally verified; profile/version provenance included |
 | 2 | [T02: Enforce FDE freshness date contract](#t02) | P1 | FDE maintainer; context-contract owner | 4–8 h | Supported-format candidate verified with separate context-server correction; leap-second policy remains |
 | 3 | [T03: Bind ACA retests to the corrective action being closed](#t03) | P1 | ACA structured-case maintainer | 2–4 h | Complete candidate locally verified |
-| 4 | [T04: Normalize FIW roots consistently](#t04) | P2 | FIW maintainer | 1–2 h | Locally tested candidate with refreshed manifests |
+| 4 | [T04: Normalize FIW roots consistently](#t04) | P2 | FIW maintainer | 1–2 h | Reverified candidate, alias handling and deterministic package |
 | 5 | [T05: Reject explicit null FMA criticality early](#t05) | P2 | FMA maintainer | 1–2 h | Evaluation-only bug specification |
-| 6 | [T06: Correct and validate Pax eligibility provenance](#t06) | P2 | Source-data maintainer; evidence reviewer | 2–3 h | Validator candidate tested; factual date unresolved |
-| 7 | [T07: Align the quantum worked example with its rubric](#t07) | P2 | PQC methodology maintainer; assessor | 3–5 h | Focused update specification |
+| 6 | [T06: Correct and validate Pax eligibility provenance](#t06) | P2 | Source-data maintainer; evidence reviewer | 2–3 h | Typed validator verified; actual provenance and optional-field policy unresolved |
+| 7 | [T07: Align the quantum worked example with its rubric](#t07) | P2 | PQC methodology maintainer; assessor | 3–5 h | Traceability correction verified; coverage NOT_ESTABLISHED pending owner decisions |
 
 ## T01
 
@@ -58,7 +58,7 @@ Require nonempty `finding_ref` and `corrective_action_ref` in retests. Keep exis
 
 Review the [candidate](proposals/fiw-canonical-root.patch), which adds the root-resolution line and required deterministic manifest updates. Confirm that canonicalization remains consistent with the existing scanner and containment policy. A focused macOS execution of the existing test/compile commands is justified by this observed failure; it is optional additional work, estimated at 1–2 hours, rather than a broad new platform matrix.
 
-**Acceptance:** the unchanged alias-root reproduction succeeds after the correction; the existing 181 tests pass with zero errors/skips, compile checks pass, and the ordinary validator reports 20/20. Negative file-policy tests retain their existing meaning. Manifest checks and diff checks pass at the exact source base.
+**Acceptance:** the unchanged alias-root reproduction succeeds after the correction; the existing 181 tests pass with zero errors/skips, compile checks pass, and both ordinary and actual alias-root validators report 20/20. Negative file-policy tests retain their existing meaning. All 133 manifest hashes, whitespace checks and repeated deterministic package checks pass at the exact source base. [Reverification](evidence/fiw-root-verification.json) records the commands and log hashes; generated test archives remain private cache artifacts.
 
 **Dependencies/access:** macOS and declared validation dependencies; no service credentials. The external reviewer has prepared and locally validated the patch. Applying it and deciding whether to add the focused hosted smoke job require the FIW maintainer.
 
@@ -70,7 +70,7 @@ Review the [candidate](proposals/fiw-canonical-root.patch), which adds the root-
 
 Distinguish an omitted optional value from an explicitly invalid null. Enforce the existing numeric range and type semantics at validation; do not make coverage silently replace null with zero.
 
-**Acceptance:** the minimal F05 graph fails `fma validate` with exit 2 and a node/field diagnostic. Omission, numeric 0, and numeric 5 remain accepted; Boolean and out-of-range values remain rejected. Coverage returns the same early validation error, and the existing 255-test `make check` gate passes.
+**Acceptance:** the minimal F05 graph fails `fma validate` with exit 2 and a node/field diagnostic. Omission, numeric 0, and numeric 5 remain accepted; Boolean and out-of-range values remain rejected. Coverage returns the same early validation error, and the existing 255-test `make check` gate passes. [Fourteen unchanged-source CLI calls](evidence/fma-criticality-specification.json) reproduce the null mismatch and valid/invalid controls. No candidate implementation or candidate full-gate result is asserted.
 
 **Dependencies/access:** FMA's evaluation/review rights and contribution policy apply. The external reviewer can provide the original synthetic input and specification; only the FMA maintainer should implement the source change. No proprietary patch is included and no additional runtime dependency is proposed.
 
@@ -80,26 +80,26 @@ Distinguish an omitted optional value from an explicitly invalid null. Enforce t
 
 **Affected scope:** `pax-silica/data/pax-silica.json`, `scripts/validate_data.py`, and regenerated evidence/site artifacts. **Benefit:** the published cutoff and field-level source review agree, and orphan eligibility references cannot pass publication validation. **Priority rationale:** this is a specific published provenance inconsistency, not evidence that the program's eligibility category is wrong.
 
-Have the evidence owner establish the actual eligibility review date and intended corpus boundary from the review record. Correct those fields only on that basis. Extend the existing source-ID and ISO-date/snapshot checks to `eligibility_source_ids` and `eligibility_verified_at`. Replace S-06's search locator with the verified official detail URL while reviewing that same record.
+Have the evidence owner establish the actual eligibility review date and intended corpus boundary from the review record. Correct those fields only on that basis. The candidate extends existing source-ID/date conventions to present `eligibility_source_ids` and `eligibility_verified_at`, with program/field diagnostics. Review replacing S-06's search locator with the verified official detail URL while preserving truthful historical locator/note provenance.
 
-**Acceptance:** invalid dates, post-snapshot eligibility dates, and orphan eligibility sources fail. Settle the intended optional-field contract and explicitly check present-but-empty, null, and wrong-type values; the candidate does not yet establish exhaustive handling of those cases. The corrected canonical data and generated distribution preserve the supported eligibility category and source. The full 59-test gate, deterministic generation, and relevant browser behavior pass. Do not backdate evidence or advance the corpus boundary merely to make validation pass.
+**Acceptance:** invalid, noncanonical or post-snapshot eligibility dates and malformed/orphan source IDs fail. The candidate rejects 38 invalid variants and accepts seven valid/optional controls in real CLI probes. A present date must be a real `YYYY-MM-DD` string; a present source field must be an array of nonempty resolved IDs. Independent omission and empty arrays remain accepted because the current contract defines neither pairing nor minimum items; the owner must decide those rules. The 62-test full gate and deterministic generation pass with an explicitly synthetic disposable date control. After factual correction, require the actual-data full gate and relevant existing browser behavior to pass. Do not backdate evidence or advance the corpus boundary merely to satisfy validation.
 
-**Dependencies/access:** the [validator candidate](proposals/pax-eligibility-validation.patch) is tested but intentionally rejects the current published contradiction. Its positive full-gate test used a synthetic date fixture, not an evidence-backed data correction. The external reviewer can prepare/replay the validator; the source reviewer must supply the factual correction, and maintainers must publish it.
+**Dependencies/access:** the [validator candidate](proposals/pax-eligibility-validation.patch) intentionally rejects the unchanged published data and stops its full gate before generation. Its positive gate used a synthetic fixture, not an evidence-backed correction. [Verification and exact owner questions](evidence/pax-eligibility-validation.json) cover the actual review date/cutoff, optional pairing/minimum policy and locator/note provenance. Actual canonical data is byte-unchanged. The evidence owner must supply the review record; generated publication and release approval require the repository maintainer.
 
 ## T07
 
 **Make the current quantum Decision Pack teach its canonical readiness method.** [Evidence and references: F07](FINDINGS.md#f07).
 
-**Affected scope:** `quantum-readiness-space-communications/examples/sample-small-satellite-decision-pack/04-migration-readiness-profile.md` and `05-evidence-confidence-and-coverage.md`. **Benefit:** a new assessor can follow the recommended example without silently changing the published method. **Priority rationale:** correct the existing worked example before adding new research features or scoring logic.
+**Affected scope:** the existing sample pack's `04-migration-readiness-profile.md`, `05-evidence-confidence-and-coverage.md`, one necessary matching sentence in `10-decision-record-and-review.md`, and generated manifests. **Benefit:** a new assessor can follow the canonical method and see unsupported completeness/coverage claims. **Priority rationale:** correct the worked example before adding research features or scoring logic.
 
-Use the canonical ten-domain template, including Critical-link protection and Crypto-agility architecture. Map existing fictional observations into the appropriate domains, and retain explicit unknown/Not Assessed states where evidence is absent. In the existing coverage file, enumerate the fictional denominator items with stable IDs, applicable claim/evidence references, completeness rationale, and a counting rule; recompute the totals and rounding.
+Use the canonical ten-domain template, including Critical-link protection and Crypto-agility architecture. Map existing fictional observations into the appropriate domains and retain Not Assessed where evidence is absent or stale. The current pack does not establish seven complete items or an approved eleven-item denominator. The candidate makes coverage `NOT_ESTABLISHED` and provides eight scope/dependency, ten domain-claim and twelve critical-condition traces with references and limitations. These overlapping registers must not be summed. The original seven-record ledger, critical posture and pending approval remain unchanged.
 
-**Acceptance:** an independent assessor can trace every canonical domain and stage to fictional evidence or a stated unknown, reproduce the coverage numerator/denominator, and explain the retained critical-condition/non-authoritative posture. The existing complete validation and manifest/packaging gates pass. Human review assesses evidence adequacy; no static wording test, new spreadsheet, scoring engine, or operational cryptographic claim is needed.
+**Acceptance:** an independent assessor can trace every canonical domain/stage and declared critical condition to fictional evidence or an explicit limitation. The complete offline gate passes 50 existing tests, 93 hashes, links and deterministic packaging on Python 3.12.14. [Verification](evidence/quantum-example-traceability.json) separates those checks from manual semantic review. Coverage remains `NOT_ESTABLISHED` until approved counting units, claim-specific support floors and current applicable evidence justify a numerator/denominator and rounding. No evidence is invented, condition closed or deployment authorized; no static wording test, spreadsheet or scoring engine is added.
 
-**Dependencies/access:** review by the methodology owner or a qualified assessor; no real mission data is required. The external reviewer can draft the two-file correction privately. Publishing or changing the current methodology requires Bridge Node 7 maintainers. NIST/IETF context in F07 informs applicability, not endorsement of the rubric.
+**Dependencies/access:** the [candidate](proposals/quantum-example-traceability.patch) is prepared and verified. The methodology owner must approve complete scope/counting units, support floors, currency/applicability review and the remaining conflict/unknown/closure decisions before establishing coverage. Publishing or changing methodology requires Bridge Node 7 maintainers. No real mission data is needed for this fictional correction; NIST/IETF context informs applicability, not endorsement.
 
 ## Ownership and publication state
 
-The private review author can complete evidence preparation and proposed changes without upstream permissions. Every upstream task remains open until the responsible maintainer accepts and implements it with the stated checks. An unanswered internal question is recorded as a dependency, not converted into a company deficiency.
+The review author can complete evidence preparation and proposed changes without upstream permissions. Every upstream task remains open until the responsible maintainer accepts and implements it with the stated checks. An unanswered internal question is recorded as a dependency, not converted into a company deficiency.
 
-The report and its candidates are published on the private review repository's `codex/technical-review` branch under the user's explicit authorization. Upstream implementation remains open. CEO access requires a separately authorized collaborator invitation or another user-approved sharing method.
+The report and its candidates are published on the public review repository's `codex/technical-review` branch under the user's explicit authorization to leave it public and continue commits and pushes. Upstream implementation remains open. The public branch link is ready for the user to share with the CEO.

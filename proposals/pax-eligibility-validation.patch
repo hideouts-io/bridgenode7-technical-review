@@ -1,60 +1,131 @@
+diff --git a/scripts/validate_data.py b/scripts/validate_data.py
+index 5bb5f46..535718f 100644
 --- a/scripts/validate_data.py
 +++ b/scripts/validate_data.py
-@@ -288,16 +288,11 @@
-         "programs",
-     ):
-         for record in data[group]:
--            for sid in record.get(
--                "source_ids",
--                [],
--            ):
--                assert (
--                    sid in source_map
--                ), (
--                    f"orphan source {sid} "
--                    f"in {group}"
--                )
-+            for source_field in ("source_ids", "eligibility_source_ids"):
-+                for sid in record.get(source_field, []):
-+                    assert sid in source_map, (
-+                        f"orphan source {sid} in {group}.{source_field}"
-+                    )
+@@ -426,6 +426,52 @@ def validate(
+             )
  
-             if (
-                 record.get("state")
-@@ -330,22 +325,19 @@
-                 if record.get(key):
-                     iso(record[key])
- 
--            if record.get("verified_at"):
--                verified_at = iso(
--                    record["verified_at"]
--                )
--                identifier = str(
--                    record.get("id")
--                    or record.get("name")
--                    or "<unnamed>"
--                )
--                assert (
--                    verified_at <= snapshot
--                ), (
--                    "record verification postdates snapshot: "
--                    f"{identifier} {verified_at.isoformat()} > "
--                    f"{snapshot.isoformat()}"
--                )
-+            for verification_field in ("verified_at", "eligibility_verified_at"):
-+                if record.get(verification_field):
-+                    verified_at = iso(record[verification_field])
-+                    identifier = str(
-+                        record.get("id")
-+                        or record.get("name")
-+                        or "<unnamed>"
+     for program in data["programs"]:
++        program_id: str = str(program["id"])
++        if "eligibility_source_ids" in program:
++            raw_refs: object = program["eligibility_source_ids"]
++            if not isinstance(raw_refs, list):
++                raise AssertionError(
++                    f"{program_id}.eligibility_source_ids must be an array, "
++                    f"got {raw_refs!r}"
++                )
++            eligibility_refs: list[object] = raw_refs
++            for index, source_ref in enumerate(eligibility_refs):
++                if not isinstance(source_ref, str) or not source_ref.strip():
++                    raise AssertionError(
++                        f"{program_id}.eligibility_source_ids[{index}] "
++                        f"must be a nonempty source ID, got {source_ref!r}"
 +                    )
-+                    assert verified_at <= snapshot, (
-+                        "record verification postdates snapshot: "
-+                        f"{identifier}.{verification_field} "
-+                        f"{verified_at.isoformat()} > {snapshot.isoformat()}"
++                if source_ref not in source_map:
++                    raise AssertionError(
++                        f"orphan source {source_ref!r} in "
++                        f"{program_id}.eligibility_source_ids[{index}]"
 +                    )
++
++        if "eligibility_verified_at" in program:
++            eligibility_value: object = program["eligibility_verified_at"]
++            if not isinstance(eligibility_value, str) or not eligibility_value.strip():
++                raise AssertionError(
++                    f"{program_id}.eligibility_verified_at must be a "
++                    f"YYYY-MM-DD date, got {eligibility_value!r}"
++                )
++            try:
++                eligibility_date: date = iso(eligibility_value)
++            except AssertionError as exc:
++                raise AssertionError(
++                    f"{program_id}.eligibility_verified_at: {exc}"
++                ) from exc
++            if eligibility_value != eligibility_date.isoformat():
++                raise AssertionError(
++                    f"{program_id}.eligibility_verified_at must be a "
++                    f"YYYY-MM-DD date, got {eligibility_value!r}"
++                )
++            if eligibility_date > snapshot:
++                raise AssertionError(
++                    "record verification postdates snapshot: "
++                    f"{program_id}.eligibility_verified_at "
++                    f"{eligibility_date.isoformat()} > {snapshot.isoformat()}"
++                )
++
+         assert (
+             "official"
+             in source_states(program)
+diff --git a/tests/test_snapshot_boundary.py b/tests/test_snapshot_boundary.py
+index 568dadc..0f2f2a4 100644
+--- a/tests/test_snapshot_boundary.py
++++ b/tests/test_snapshot_boundary.py
+@@ -86,6 +86,69 @@ class SnapshotBoundaryTests(unittest.TestCase):
+             self.assertEqual(result.returncode, 0, output)
+             self.assertIn("PASS - data integrity", output)
  
-             if record.get(
-                 "review_by"
++    def eligibility_fixture(self, directory: str) -> Path:
++        """Use a synthetic in-boundary eligibility date, not a factual correction."""
++        root = self.fixture(directory)
++        data_path = root / "data/pax-silica.json"
++        data = json.loads(data_path.read_text(encoding="utf-8"))
++        data["programs"][0]["eligibility_verified_at"] = data["snapshot"]["verified_through"]
++        self.write_json(data_path, data)
++        return root
++
++    def test_present_eligibility_sources_are_typed_resolved_ids(self) -> None:
++        values: tuple[object, ...] = (
++            None, "", " ", "S-06", False, 42, {},
++            [None], [False], [42], [[]], [{}], [""], [" "],
++            ["S-MISSING"], [" S-06 "],
++        )
++        for value in values:
++            with self.subTest(value=value), tempfile.TemporaryDirectory() as directory:
++                root = self.eligibility_fixture(directory)
++                data_path = root / "data/pax-silica.json"
++                data = json.loads(data_path.read_text(encoding="utf-8"))
++                data["programs"][0]["eligibility_source_ids"] = value
++                self.write_json(data_path, data)
++                result = self.run_validator(root)
++                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
++                self.assertIn("P-001.eligibility_source_ids", result.stdout + result.stderr)
++
++    def test_present_eligibility_dates_are_canonical_and_within_snapshot(self) -> None:
++        values: tuple[object, ...] = (
++            None, "", " ", False, 42, [], {}, "not-a-date",
++            "2026-02-30", "20260929", "2026-W39-2", "2026-09-30",
++        )
++        for value in values:
++            with self.subTest(value=value), tempfile.TemporaryDirectory() as directory:
++                root = self.eligibility_fixture(directory)
++                data_path = root / "data/pax-silica.json"
++                data = json.loads(data_path.read_text(encoding="utf-8"))
++                data["programs"][0]["eligibility_verified_at"] = value
++                self.write_json(data_path, data)
++                result = self.run_validator(root)
++                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
++                self.assertIn("P-001.eligibility_verified_at", result.stdout + result.stderr)
++
++    def test_optional_eligibility_fields_preserve_independent_omission(self) -> None:
++        for omitted in ((), ("eligibility_source_ids",), ("eligibility_verified_at",),
++                        ("eligibility_source_ids", "eligibility_verified_at")):
++            with self.subTest(omitted=omitted), tempfile.TemporaryDirectory() as directory:
++                root = self.eligibility_fixture(directory)
++                data_path = root / "data/pax-silica.json"
++                data = json.loads(data_path.read_text(encoding="utf-8"))
++                for field in omitted:
++                    del data["programs"][0][field]
++                self.write_json(data_path, data)
++                result = self.run_validator(root)
++                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
++        with tempfile.TemporaryDirectory() as directory:
++            root = self.eligibility_fixture(directory)
++            data_path = root / "data/pax-silica.json"
++            data = json.loads(data_path.read_text(encoding="utf-8"))
++            data["programs"][0]["eligibility_source_ids"] = []
++            self.write_json(data_path, data)
++            result = self.run_validator(root)
++            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

@@ -1,0 +1,274 @@
+diff --git a/REPO_MANIFEST.json b/REPO_MANIFEST.json
+index 3d9e1c3..6d4ec16 100644
+--- a/REPO_MANIFEST.json
++++ b/REPO_MANIFEST.json
+@@ -320,13 +320,13 @@
+     },
+     {
+       "path": "examples/sample-small-satellite-decision-pack/04-migration-readiness-profile.md",
+-      "bytes": 954,
+-      "sha256": "d8efd81e7cd7c0de69d8ae682345a7329fbf6354ec8213e4baa48ff11b8bcaf0"
++      "bytes": 2413,
++      "sha256": "bffee7b9deb47115abee1f7bd97ad393c778cb7453b4a5eb6a67566fed25c16e"
+     },
+     {
+       "path": "examples/sample-small-satellite-decision-pack/05-evidence-confidence-and-coverage.md",
+-      "bytes": 1227,
+-      "sha256": "77c5bee8cdb8a0328d08546cb97d387f977b2d264b8945bdb6879b2ba43b0685"
++      "bytes": 10128,
++      "sha256": "d9374ea8d204dcee30fb38557d1af68649c9e36f4396d3ef5c435e29a8476669"
+     },
+     {
+       "path": "examples/sample-small-satellite-decision-pack/06-critical-risk-overrides.md",
+@@ -350,8 +350,8 @@
+     },
+     {
+       "path": "examples/sample-small-satellite-decision-pack/10-decision-record-and-review.md",
+-      "bytes": 898,
+-      "sha256": "6bd47495555d246a818735b1628668a7593435275427df2443671cbf9a9fd651"
++      "bytes": 1035,
++      "sha256": "46298eca21c6721dcbb13b515a2f7afd29a2031acdc593c9ec0818b7aa800625"
+     },
+     {
+       "path": "examples/sample-small-satellite-decision-pack/README.md",
+diff --git a/SHA256SUMS b/SHA256SUMS
+index 7c15380..28b7ebe 100644
+--- a/SHA256SUMS
++++ b/SHA256SUMS
+@@ -1,4 +1,3 @@
+-00f45ba9c7b322dd08e01cf28326d638d002833b4a79e1864f85ce0b387bd1fb  REPO_MANIFEST.json
+ 02197dd1c3803d9192a763311acaacace18d5451939bb954cb3d0c8b869b6865  tests/test_external_links.py
+ 07d3c551842b51a157bd9e776a80f068405712141b36d7e7e3a05f93d4d8bf10  assessment/vendor-questionnaire.md
+ 09442dab79ee61f1461413cfd83d43558af5d267615d449a8af40f84bfa3057a  decision-pack/README.md
+@@ -36,6 +35,7 @@
+ 3f5379c8021d214443388d392208f17be4efa141c89eeecd9175baded086844c  assessment/readiness-index.md
+ 3f936ada9374a2b2acc8e46b127da8e3dc94cbecf2b5a823fe3600ad3ce40b91  GOVERNANCE.md
+ 44ea875f676e29baba1637bd4a24be7de505ec78b89128af15c0e709675dd9b3  tools/stamp_release.py
++46298eca21c6721dcbb13b515a2f7afd29a2031acdc593c9ec0818b7aa800625  examples/sample-small-satellite-decision-pack/10-decision-record-and-review.md
+ 470a380298dc3782190d9f15c7378328d30c50447e63f52f49ce9d5fd71bb504  docs/quantum-cryptography-foundations.md
+ 48db16f92e402823d375eff6f217ecd2afb6539fce32ffa3dd8aef5412e58819  .github/CODEOWNERS
+ 4bed28f716a9c2c2a9817fce7d716618f46e96fa8bbac865495d7bdf0715bbc2  .github/pull_request_template.md
+@@ -48,14 +48,12 @@
+ 5b6183e95f693f3330737c9f692c4c5282b3406445794ed5aa2c419ea3f60457  release/repository-metadata.json
+ 5b93c10a8c7dfab15e0f6b36812984e084e6f12281b597f266cdbcaf31ea7f43  assessment/executive-brief-template.md
+ 63967526ba13bf49d3f0419c03bef3aec86d42404230aa926d6ee12c850db403  assessment/evidence-confidence-ledger.md
+-6bd47495555d246a818735b1628668a7593435275427df2443671cbf9a9fd651  examples/sample-small-satellite-decision-pack/10-decision-record-and-review.md
+ 70236e141f413d626474837b3a79570d1914e85e37d2db750e52b14abde26f1e  tests/test_public_boundary.py
+ 70bc1d2a949b9d7b8be62e9e2719036822eb335fdf76d93ba600b5ecc0faa2e9  CONTRIBUTING.md
+ 75d07a977be182bcb8fdee6e0d0a1685dc494264584603e822272b8e8541e3da  tests/test_validator_mutations.py
+ 768f13a272d212a402556d2617c3ba98775c12d60a3a760c760bc6397f819532  docs/methodology-integrity.md
+ 76aba87e56095966a930a07f50e014be78dfdb7c5a1e0ccccea2ef8c6066573a  frameworks/pqc-migration-roadmap.md
+ 7742bc0c7bd197da9873c6863967e32ebf8cce98d9596c05dadbc2f704bd060d  assessment/migration-readiness-profile.md
+-77c5bee8cdb8a0328d08546cb97d387f977b2d264b8945bdb6879b2ba43b0685  examples/sample-small-satellite-decision-pack/05-evidence-confidence-and-coverage.md
+ 7b24ac29cff7c43533dc3329dfd3a7741f5de29cde1cf3ebf64fac924c11982d  docs/methodology.md
+ 7c1642564c17be6f070cd8f273b0ace7c333970170522929903d56e7d3756dc4  KNOWN_LIMITATIONS.md
+ 7d7503a058b540003242549fcb4c728258d95d9eb96eeef9db543d4fd825d512  RELEASE_REVIEW.md
+@@ -78,10 +76,12 @@ b90c3b04877dea83aa4316ca5847db0656c3f7cf957f88a4913236351c73a263  assessment/qua
+ bf7f6a6232d6e11fe4f3f0391a2496de867530968090699e9b8b5ea3f94a4fa1  release/release-status.md
+ bf98b9441a29f30c03a2a5beb0644806e22f7c4877fd34ce190422bd7ca82632  .github/ISSUE_TEMPLATE/documentation.yml
+ bfd509d3cfef6ca9e83deaf4a055cdc13e7f3cea5267dbc803a1cf09ee7fdd40  examples/sample-small-satellite-decision-pack/01-scope-and-link-map.md
++bffee7b9deb47115abee1f7bd97ad393c778cb7453b4a5eb6a67566fed25c16e  examples/sample-small-satellite-decision-pack/04-migration-readiness-profile.md
+ c6f05969577a3b03df989e752713fddb627e56e0ed4bf3caf0b0599b04ec82a4  briefings/90-day-action-plan-template.md
+ ccc43bbc0393b7cd05e344d4c01b1261e414c1dca51933c7362cbf4436242321  assessment/space-link-risk-matrix.md
+ cd501aeb636bd288635779523be8d1c578315bae35d7a374d5ed30a8e8f1de4d  examples/sample-small-satellite-decision-pack/02-cryptographic-inventory.md
+-d8efd81e7cd7c0de69d8ae682345a7329fbf6354ec8213e4baa48ff11b8bcaf0  examples/sample-small-satellite-decision-pack/04-migration-readiness-profile.md
++d9374ea8d204dcee30fb38557d1af68649c9e36f4396d3ef5c435e29a8476669  examples/sample-small-satellite-decision-pack/05-evidence-confidence-and-coverage.md
++d99052c2c029cc4add94de9b260421d1fba8ae360d28026dae7881120ef48554  REPO_MANIFEST.json
+ da9f52f5e6173bd7c6b1787adc00da0c81a3c2ebfc93077605cc0d20ee5e268b  assessment/quantum-safe-space-communications-assessment.md
+ e1f912e10857c68d046b8d8ee27287b371bb93abb58ba74bc3e6be37c759c034  scripts/validate.sh
+ eac4c37510b5d9ccb9140f26be9b033fd01068af090de4f31a3365b401d3f23c  tools/scan_public_boundary.py
+diff --git a/examples/sample-small-satellite-decision-pack/04-migration-readiness-profile.md b/examples/sample-small-satellite-decision-pack/04-migration-readiness-profile.md
+index 3a53cd8..6a8b073 100644
+--- a/examples/sample-small-satellite-decision-pack/04-migration-readiness-profile.md
++++ b/examples/sample-small-satellite-decision-pack/04-migration-readiness-profile.md
+@@ -1,16 +1,29 @@
+ # 04. Migration Readiness Profile
+ 
++This fictional profile follows the ten domains and stage rubric in the
++[canonical Migration Readiness Profile](../../assessment/migration-readiness-profile.md).
++The records illustrate a planning assessment; no real system or cryptographic
++implementation was tested.
++
+ | Domain | Demonstrated stage | Evidence | Constraint |
+ |---|---:|---|---|
+-| Scope and ownership | 2 | E-01 | Payload scope incomplete |
+-| Cryptographic visibility | 2 | E-01 | Firmware dependency needs verification |
+-| Exposure characterization | 2 | E-02 | Command consequence requires deeper test |
+-| Migration strategy | 1 | E-05 | Options identified, not approved |
+-| Implementation and interoperability | 1 | E-03 | Lab demonstration incomplete |
++| Governance and accountability | 2 | E-07 | Owners and actions are documented; funding and the payload scope decision remain pending |
++| Cryptographic inventory and visibility | 2 | E-01 | Documented C-01 through C-04 inventory; configuration and firmware dependencies need verification |
++| Exposure characterization | 2 | E-01, E-02 | Exposure rationale is documented; data-retention approval and command-path evidence remain incomplete |
++| Critical-link protection | 1 | E-01 | Critical paths and owners are identified; E-03 is conflicting, and command authentication, update and rollback remain unproven |
++| Migration strategy and sequencing | 1 | E-05 | Options and initial sequencing are identified; architecture and exit criteria are not approved |
++| Crypto-agility architecture | 0 | E-05 identifies options only | No applicable architecture or demonstration of controlled algorithm, key or trust-anchor changes is provided |
++| Implementation and interoperability | 1 | E-07 | Initial testing actions have owners; E-03 is conflicting and does not establish a representative interoperability demonstration |
+ | Key and trust management | 1 | E-01 | Rotation and recovery design pending |
+-| Software, firmware, and secure update | 1 | E-01 | Bootloader path unresolved |
+ | Vendor and supply-chain readiness | 1 | E-06 | One response incomplete |
+-| Governance, funding, and procurement | 2 | E-07 | Funding decision pending |
+-| Monitoring, recovery, and reassessment | 1 | E-04 | Recovery exercise not completed |
++| Monitoring, recovery, and reassessment | 0 | E-04 is historical only | Stale recovery evidence cannot establish current capability; a current assessment and exercise are required |
++
++Implementation and interoperability remains at initial activity, rather than a
++demonstrated pilot: E-03's conflict is unresolved. Software, firmware and secure
++update constraints belong within critical-link protection, implementation and
++interoperability, and key and trust management; they do not replace a canonical
++domain. Scope and ownership are covered by governance and inventory.
+ 
+-The profile is not averaged. The weak domains remain visible.
++Stage 0 means Not Assessed, not Not Applicable. The profile is not averaged.
++Weak domains, unresolved critical conditions and evidence limitations remain
++visible and do not authorize deployment.
+diff --git a/examples/sample-small-satellite-decision-pack/05-evidence-confidence-and-coverage.md b/examples/sample-small-satellite-decision-pack/05-evidence-confidence-and-coverage.md
+index 512f6c3..36e2087 100644
+--- a/examples/sample-small-satellite-decision-pack/05-evidence-confidence-and-coverage.md
++++ b/examples/sample-small-satellite-decision-pack/05-evidence-confidence-and-coverage.md
+@@ -3,17 +3,30 @@
+ ## Summary
+ 
+ ```text
+-Evidence Coverage: 64%
+-Total In-Scope Items: 11
+-Evidence-Complete Items: 7
+-Critical Unknowns: 2
++Evidence Coverage: NOT_ESTABLISHED
++Total In-Scope Items: NOT_ESTABLISHED
++Evidence-Complete Items: NOT_ESTABLISHED
++Critical Unknowns: NOT_ESTABLISHED; unresolved conditions remain visible below
+ Stale Evidence Items: 1
+ Conflicting Evidence Items: 1
+ Withdrawn or Superseded Items: 0
+-Unassessed Critical-Scope Items: 1
++Unassessed Critical-Scope Items: at least 1; payload is explicitly unassessed
+ Approved Exclusions: 0
+ ```
+ 
++The former 7/11 calculation is not supported by the pack. Seven evidence records
++are not seven evidence-complete scope items, and no approved eleven-item
++denominator or claim-specific support floors are supplied. The arithmetic rounds
++to 64 percent, but it does not establish evidence coverage. No replacement
++percentage is justified by the current fictional records.
++
++Stale, conflicting and withdrawn/superseded counts above count distinct ledger
++IDs: E-04, E-03 and none, respectively. They are not counts of affected scope
++items. Payload is one explicitly unassessed scope object; an overall count of
++critical unknowns or unassessed critical scope requires the owner's scope and
++criticality review. The earlier review's two retained unknowns are not an
++enumerated register and do not establish an exhaustive current count.
++
+ ## Ledger
+ 
+ | ID | Title | Level | Status | Supports | Limitation |
+@@ -25,3 +38,98 @@ Approved Exclusions: 0
+ | E-05 | Fictional migration options memo | E2 | Current | Migration strategy | No approved architecture |
+ | E-06 | Fictional vendor questionnaires | E1 | Current | Vendor readiness | One vendor response incomplete |
+ | E-07 | Fictional governance minutes | E2 | Current | Funding and ownership | Funding not authorized |
++
++## Scope and dependency trace register
++
++These entries trace the objects identified in the [scope](01-scope-and-link-map.md),
++[inventory](02-cryptographic-inventory.md),
++[exposure](03-quantum-exposure-severity.md) and
++[override](06-critical-risk-overrides.md) records. They are provisional review
++entries, not an approved coverage denominator or evidence-completeness finding.
++Crypto dependencies and related critical conditions remain attached to their
++scope objects so they cannot disappear from the review.
++
++| Scope object | Related claims or dependencies | Evidence and status | Completeness limitation |
++|---|---|---|---|
++| SC-01 spacecraft avionics and secure boot | CR-03 key recovery; CR-04 safety applicability | E-01 Current | Configuration verification and governed recovery are incomplete; the fictional safety-owner determination is declared, not independently reproduced |
++| LINK-01 primary command uplink | C-01, X-01; CR-01, CR-09, CR-12 | E-01 Current; E-03 Conflicting | End-to-end command authentication is incomplete and the material contradiction is unresolved |
++| LINK-02 telemetry and mission-data downlink | C-02, X-02; CR-11 | E-01, E-02 Current | The fifteen-year horizon is documented, but retention approval and a migration decision remain pending |
++| GS-01 ground station and mission network | C-04; CR-06 | E-01 Current; E-04 Stale | Operator identity is documented; current authenticated-recovery evidence is absent |
++| UPDATE-01 firmware and software update path | C-03, X-03; CR-02, CR-05 | E-01 Current | Bootloader migration, secure-update and rollback evidence are incomplete |
++| VENDOR-01 radio supplier | Algorithm roadmap and interoperability claim | E-06 Current, E1 | A preliminary self-attested roadmap does not establish interoperability or a complete commitment |
++| VENDOR-02 ground-network service | Support/end-of-life dependency; CR-07 | E-06 Current, E1 | Support and end-of-life commitment is incomplete |
++| Payload processing, pending scope decision | X-04; CR-09 | No evidence provided | Explicitly Unknown / Not Assessed; no approved exclusion, applicability determination or scope evidence |
++
++## Readiness-domain claim trace register
++
++Each canonical domain remains visible independently of the scope objects it
++affects. Stage meanings and constraints are recorded in the
++[readiness profile](04-migration-readiness-profile.md); the entries below assess
++traceability limitations rather than assigning another stage or aggregate score.
++
++| Canonical domain claim | Evidence and status | Completeness limitation |
++|---|---|---|
++| Governance and accountability | E-07 Current | Owners and actions are documented; funding and the payload scope decision are pending |
++| Cryptographic inventory and visibility | E-01 Current | C-01 through C-04 are documented; configuration and dependency verification are incomplete |
++| Exposure characterization | E-01, E-02 Current; E-03 Conflicting | Retention assumptions require approval; command-path evidence is unresolved and payload exposure is unassessed |
++| Critical-link protection | E-01 Current; E-03 Conflicting | Identified critical paths do not establish demonstrated command, secure-update or rollback protection |
++| Migration strategy and sequencing | E-05 Current | An options memo and initial roadmap do not establish an approved architecture or exit criteria |
++| Crypto-agility architecture | E-05 Current, options only | No applicable architecture or controlled-change demonstration is provided; the domain remains Not Assessed |
++| Implementation and interoperability | E-07 Current; E-03 Conflicting | Owned testing actions do not establish a representative end-to-end or interoperability result |
++| Key and trust management | E-01 Current | Custody evidence is not provided; rotation and recovery design remain pending |
++| Vendor and supply-chain readiness | E-06 Current, E1 | Self-attestation and incomplete commitments do not establish supported migration or interoperability |
++| Monitoring, recovery, and reassessment | E-04 Stale | Historical recovery procedure cannot support a current capability claim; reassessment is required |
++
++## Critical-condition traceability
++
++The [override register](06-critical-risk-overrides.md) retains the conditions
++below. Its Open, Closed and Not Applicable declarations are not evidence-
++completeness decisions. In particular, a closure or applicability determination
++must meet the [canonical override requirements](../../assessment/critical-risk-overrides.md).
++
++| Condition | Existing declaration | Evidence linkage and remaining limitation |
++|---|---|---|
++| CR-01 | Open | LINK-01: E-01 Current, E-03 Conflicting; command demonstration incomplete |
++| CR-02 | Open | UPDATE-01: E-01 Current; secure-update and rollback evidence incomplete |
++| CR-03 | Open | SC-01: E-01 Current; governed key recovery pending |
++| CR-04 | Not Applicable | Safety functions: E-01 Current; fictional applicability determination declared, supporting review not reproduced |
++| CR-05 | Open | Bootloader/UPDATE-01: E-01 Current; no established migration or compensating path |
++| CR-06 | Open | GS-01: E-01 Current, E-04 Stale; authenticated recovery not demonstrated |
++| CR-07 | Open | VENDOR-02: E-06 Current, E1; support commitment incomplete |
++| CR-08 | Closed | E-07 Current records owners and dates; full closure authority and verification details are not supplied in this public pack |
++| CR-09 | Open | Payload and LINK-01: no payload evidence; E-03 Conflicting; scope and critical evidence gaps remain |
++| CR-10 | Not Applicable | No additional mission-loss condition declared; no evidence ID is supplied for the applicability determination |
++| CR-11 | Open | LINK-02: E-01, E-02 Current; long-lived confidentiality treatment remains pending |
++| CR-12 | Open | LINK-01: E-03 Conflicting; contradiction requires reconciliation or escalation |
++
++## Counting rule and pending decisions
++
++Before calculating coverage, the accountable scope owner must approve the
++complete item register and counting unit, including assets, links, crypto and
++vendor dependencies, critical conditions and readiness-domain claims. The three
++trace registers overlap and must not be summed into a denominator. For example,
++LINK-01, C-01, CR-01, CR-12 and the critical-link domain describe related claims;
++the owner must state which are distinct items and which are material claims of
++the same item. Payload cannot be removed while its exclusion remains unapproved.
++
++The assessor and reviewer must then record the material claims and support floor
++for each approved item, confirm evidence currency and applicability, and identify
++all critical unknowns. No item is counted complete merely because an E-ID exists
++or a planning stage has an owner. The referenced fictional records do not supply
++all source-owner, collection/verification-date, integrity and review details
++required by the [evidence model](../../assessment/evidence-confidence-ledger.md).
++
++Count each approved in-scope item once in the denominator. Count it once in the
++numerator only when every material claim has current, applicable evidence meeting
++its stated support floor. Stale, conflicting, unavailable or unassessed support
++cannot satisfy that test; conflicts require reconciliation or escalation under
++CR-12. A single item may have several gaps, and an E-ID may support several items;
++neither overlap increases the numerator or licenses repeated subtraction from
++the denominator. Keep the distinct critical-unknown, stale, conflicting and
++unassessed categories visible instead of adding them into one gap total.
++
++After approval and evidence review, calculate evidence-complete in-scope items
++divided by total in-scope items, multiplied by 100, and state the rounding rule.
++Until then, coverage remains NOT_ESTABLISHED. This traceability correction adds
++no evidence, closes no critical condition and does not authorize the requested
++pilot or operational deployment.
+diff --git a/examples/sample-small-satellite-decision-pack/10-decision-record-and-review.md b/examples/sample-small-satellite-decision-pack/10-decision-record-and-review.md
+index d23970d..d018fd3 100644
+--- a/examples/sample-small-satellite-decision-pack/10-decision-record-and-review.md
++++ b/examples/sample-small-satellite-decision-pack/10-decision-record-and-review.md
+@@ -10,7 +10,7 @@ Authorize a controlled migration pilot and the P0 evidence actions. Do not autho
+ 
+ ## Rationale
+ 
+-CR-01, CR-02, CR-03, CR-05, CR-06, CR-07, CR-09, CR-11, and CR-12 remain open. Evidence coverage is 64 percent and critical evidence is conflicting.
++CR-01, CR-02, CR-03, CR-05, CR-06, CR-07, CR-09, CR-11, and CR-12 remain open. Evidence coverage is NOT_ESTABLISHED pending the scope-owner counting decisions and evidence review in the [coverage register](05-evidence-confidence-and-coverage.md); critical evidence remains conflicting.
+ 
+ ## Limitations
+ 

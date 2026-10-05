@@ -1,0 +1,221 @@
+{
+  "format": "bn7.review.candidate-verification/1",
+  "task": "T07",
+  "repository": "Bridge-Node-7/quantum-readiness-space-communications",
+  "source_commit": "0f926377de268b20c2b1223eaf830405b8eb3648",
+  "application_version": "0.2.4",
+  "verified_at_utc": "2026-10-05T05:29:18.024001+00:00",
+  "status": "LOCALLY_VERIFIED_TRACEABILITY_CORRECTION_UPSTREAM_OPEN",
+  "environment": {
+    "os": "Darwin",
+    "macos_version": "27.0",
+    "architecture": "arm64",
+    "python": "3.12.14",
+    "python_matches_declared_ci_version": true,
+    "PyYAML": "6.0.3"
+  },
+  "commands": [
+    {
+      "working_directory": "CANDIDATE",
+      "command": "python -m pip install -r requirements-validation.txt",
+      "exit": 0,
+      "purpose": "Install declared PyYAML 6.0.3 in isolated Python 3.12 environment"
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "bash scripts/validate.sh",
+      "phase": "clean baseline",
+      "exit": 0,
+      "tests": 50,
+      "manifest_and_checksum_hashes": 93,
+      "deterministic_package_comparison": "PASS"
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "python tools/generate_manifest.py",
+      "phase": "candidate generated manifest refresh",
+      "exit": 0
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "git --no-pager diff -- REPO_MANIFEST.json SHA256SUMS",
+      "phase": "review required generated diff; only three changed example records and manifest/checksum hashes"
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "git --no-pager diff --check",
+      "exit": 0
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "bash scripts/validate.sh",
+      "phase": "final subsequent nonmutating candidate offline gate",
+      "exit": 0,
+      "tests": 50,
+      "manifest_and_checksum_hashes": 93,
+      "deterministic_package_comparison": "PASS"
+    },
+    {
+      "working_directory": "CANDIDATE",
+      "command": "python tools/build_release.py --output EXTERNAL/candidate-source.zip",
+      "exit": 0,
+      "purpose": "Retain identified local source package after successful deterministic reproduction gate"
+    },
+    {
+      "working_directory": "BASELINE",
+      "command": "git apply --check EXTERNAL/quantum-example-traceability.patch",
+      "exit": 0
+    }
+  ],
+  "manual_semantic_and_reference_review": {
+    "review_basis": "Read canonical ten-domain rubric, evidence counting/status rules, critical-condition taxonomy, and all eleven existing fictional Decision Pack files before drafting; compare new table labels, source evidence/claim identifiers, overlap treatment and decision boundaries with those pinned inputs.",
+    "profile_has_exact_canonical_ten_domains_in_canonical_order": true,
+    "profile_stages": [
+      {
+        "domain": "Governance and accountability",
+        "stage": 2
+      },
+      {
+        "domain": "Cryptographic inventory and visibility",
+        "stage": 2
+      },
+      {
+        "domain": "Exposure characterization",
+        "stage": 2
+      },
+      {
+        "domain": "Critical-link protection",
+        "stage": 1
+      },
+      {
+        "domain": "Migration strategy and sequencing",
+        "stage": 1
+      },
+      {
+        "domain": "Crypto-agility architecture",
+        "stage": 0
+      },
+      {
+        "domain": "Implementation and interoperability",
+        "stage": 1
+      },
+      {
+        "domain": "Key and trust management",
+        "stage": 1
+      },
+      {
+        "domain": "Vendor and supply-chain readiness",
+        "stage": 1
+      },
+      {
+        "domain": "Monitoring, recovery, and reassessment",
+        "stage": 0
+      }
+    ],
+    "new_critical_link_domain_claim": "Stage 1: initial identified scope/ownership only; command/update/rollback protection remains unproven.",
+    "new_crypto_agility_domain_claim": "Stage 0: existing options memo does not establish applicable architecture or controlled-change capability.",
+    "monitoring_recovery_stage": "Stage 0: stale E-04 cannot support a current capability claim.",
+    "software_update_scope_retained": "Mapped to critical-link protection, implementation/interoperability, and key/trust management rather than replacing a canonical domain.",
+    "scope_dependency_trace_entries": 8,
+    "canonical_readiness_claim_trace_entries": 10,
+    "existing_critical_condition_trace_entries": 12,
+    "trace_registers_are_not_coverage_denominator": true,
+    "crypto_dependency_refs": [
+      "C-01",
+      "C-02",
+      "C-03",
+      "C-04"
+    ],
+    "exposure_refs": [
+      "X-01",
+      "X-02",
+      "X-03",
+      "X-04"
+    ],
+    "existing_evidence_ids": [
+      "E-01",
+      "E-02",
+      "E-03",
+      "E-04",
+      "E-05",
+      "E-06",
+      "E-07"
+    ],
+    "original_ledger_unchanged": true,
+    "stale_and_conflicting_counts": "One distinct stale ledger ID E-04 and one conflicting ID E-03; neither is a count of affected scope items.",
+    "critical_unknowns": "Overall count NOT_ESTABLISHED; existing unresolved conditions and original historical review statement remain visible. At least one explicitly unassessed scope object is payload; exclusion is unapproved.",
+    "coverage": "NOT_ESTABLISHED in both coverage summary and decision rationale.",
+    "old_7_of_11": "Rounding to 64 percent is arithmetically correct but seven evidence records do not establish seven complete scope items and no approved eleven-item denominator exists.",
+    "completeness_rule": "Every material claim of each approved item must cite current, applicable evidence meeting its declared floor; existence of an E-ID or planning owner is insufficient.",
+    "overlap_rule": "Scope objects, crypto dependencies, critical conditions and domain claims overlap; owner must establish counting units, each approved item is counted once, gap categories remain separate, and trace rows must not be summed.",
+    "posture_and_authority": "Critical Action Required, open critical conditions, fictional framing, pending pilot decision and explicit prohibition on deployment authorization are preserved.",
+    "relative_references": "PASS under existing full repository link/fragment validator; new links target the unchanged canonical rubric/evidence/override documents and existing example sections.",
+    "automated_gate_limit": "Existing gates verify repository invariants, links, metadata, mutations and packages; the narrative evidence/denominator judgment was a separate manual semantic review, not an automated scientific assessment."
+  },
+  "pending_methodology_owner_decisions": [
+    "Approve complete scope, including the unresolved payload decision and any evidence-backed exclusion authority/rationale/reassessment trigger.",
+    "Approve counting unit and item-to-material-claim mapping across assets, links, dependencies, critical conditions and domain claims; resolve overlap without omitting required coverage.",
+    "Declare support floor per claim and review source owner, collection/verification dates, integrity references, applicability and current status before marking any item complete.",
+    "Enumerate and classify all critical unknowns/unassessed scope, reconcile or escalate E-03 under CR-12, refresh E-04, and review unsupported closure/applicability details.",
+    "Only after those steps approve numerator/denominator and rounding; this candidate supplies no missing evidence or favorable disposition."
+  ],
+  "patch": {
+    "file": "proposals/quantum-example-traceability.patch",
+    "sha256": "a084a3317c25d13b6a3f743c56c37dadfabca9f51ce94a52eb47e04105954c4f",
+    "files": [
+      "examples/sample-small-satellite-decision-pack/04-migration-readiness-profile.md",
+      "examples/sample-small-satellite-decision-pack/05-evidence-confidence-and-coverage.md",
+      "examples/sample-small-satellite-decision-pack/10-decision-record-and-review.md",
+      "REPO_MANIFEST.json",
+      "SHA256SUMS"
+    ],
+    "generated_changes_included": true,
+    "generated_changes_scope": "Three edited example-file size/hash records, their SHA256SUMS entries and manifest hash only; release metadata and controlled-file count unchanged.",
+    "apply_check_against_exact_clean_source": "PASS"
+  },
+  "retained_local_package": {
+    "local_cache_path": "continuation/quantum/candidate-source.zip",
+    "sha256": "ebe29fa1344f32b4cbdece5e36d48c0f32a67d965ba6307e5aa00d2957d06201",
+    "archive_entries": 94,
+    "controlled_file_count": 92,
+    "published_or_shared": false
+  },
+  "original_source_status": "clean, exact baseline HEAD preserved",
+  "raw_logs": [
+    {
+      "local_cache_path": "continuation/quantum/logs/baseline-validate.log",
+      "sha256": "2eeb6fc9014ed5d60db0ad3928ea19104179c09dfdaf048bf0b5ee411b70e4a0"
+    },
+    {
+      "local_cache_path": "continuation/quantum/logs/candidate-validate.log",
+      "sha256": "72a781416f5d00807aab37bd8c21cb61ae0d9cbd883d992b849ed0771931a730"
+    },
+    {
+      "local_cache_path": "continuation/quantum/logs/environment-install.log",
+      "sha256": "5812d91b6c471e8bc1ec886dc212f964dc932e88fbe409c9f8dfe87d890fdd48"
+    },
+    {
+      "local_cache_path": "continuation/quantum/logs/manifest-refresh.log",
+      "sha256": "0f7527ce1cda00776a2633afb31894c9dd41307dbaf6e3c2311f1d35a5bd3e5a"
+    },
+    {
+      "local_cache_path": "continuation/quantum/logs/retained-package.log",
+      "sha256": "1ba80fe4bc3e5577cedbfdc6caa7b0773b6e34995afbe0e33a558f43ed337289"
+    }
+  ],
+  "limitations": [
+    "Fictional planning example only; no cryptographic implementation, real hardware, mission, or vendor was tested.",
+    "Traceability improved; evidence adequacy, scope approval, coverage, qualification and operational authorization were not established.",
+    "No new score engine, framework, dependencies or tests were added.",
+    "Offline validation on local macOS arm64 Python 3.12.14, not a claim of the full hosted Linux/Windows matrix.",
+    "Network gate was not rerun; unrelated prior NSA automated access limitation remains separate.",
+    "No upstream source changes, commits, pushes, issues, pull requests or contact were made.",
+    "No NIST or other standards endorsement of this example/method is claimed."
+  ],
+  "command_notation": "CANDIDATE, BASELINE and EXTERNAL denote the disposable candidate checkout, unchanged pinned source checkout and external output/evidence directory. Python is the isolated Python 3.12.14 environment; default scripts/validate.sh network validation is disabled. Raw outputs/environments/packages remain in ignored local cache.",
+  "upstream_source_license": {
+    "name": "MIT",
+    "url": "https://github.com/Bridge-Node-7/quantum-readiness-space-communications/blob/0f926377de268b20c2b1223eaf830405b8eb3648/LICENSE",
+    "notice": "MIT License\n\nCopyright (c) 2026 Bridge Node 7 contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM,\nOUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+  }
+}

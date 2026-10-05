@@ -4,7 +4,7 @@
   "repository": "https://github.com/Bridge-Node-7/frontier-decision-engine",
   "source_commit": "4a913756d00cdd321da04bf7350507e571f2f2dd",
   "source_application_version": "0.5.16",
-  "status": "PRIVATE_CANDIDATE_VERIFIED_WITH_SEPARATE_HARNESS_CORRECTION; UPSTREAM_OPEN",
+  "status": "LOCALLY_VERIFIED_WITH_SEPARATE_HARNESS_CORRECTION; UPSTREAM_OPEN",
   "environment": {
     "os": "macOS 27.0 (26A428)",
     "architecture": "arm64",
@@ -196,7 +196,7 @@
     "Native Date retains the existing millisecond comparison precision and truncates finer fractions. Sub-millisecond ordering is not newly implemented.",
     "Existing chronology, five-minute future-skew limit, freshness states, integrity logic and legacy 0.2 inspection rules are preserved.",
     "The release browser suite reported its pre-existing sandbox-fallback static routing for seven display modes. The context suite passed over native localhost HTTP after the separate harness correction. No new fallback, retry or product workaround was introduced.",
-    "Private candidate proposals are not upstream implementation or maintainer acceptance. No source repository was published or modified remotely.",
+    "Independent candidate proposals are not upstream implementation or maintainer acceptance. No upstream source repository was modified remotely.",
     "Public synthetic fixtures and local verification only; no private data, authenticated-origin verification, human/device accessibility attestation or hosted release equivalence."
   ],
   "raw_evidence_sha256": {

@@ -1,0 +1,135 @@
+{
+  "task": "T05",
+  "source_sha": "f99dd2174c74f26b648321e02f8d30e2cff10230",
+  "scope": "Evaluation-only unchanged-source CLI contract probes; no proprietary source patch",
+  "python": "Python 3.14.7",
+  "command": "PYTHONPATH=<unchanged-fma-source>/src python -m frontier_assurance.cli <validate|coverage> <synthetic-fixture>",
+  "results": [
+    {
+      "fixture": "omitted",
+      "command": "validate",
+      "exit": 0,
+      "output": "VALID: graph passed structural and semantic checks\n",
+      "log": "continuation/fma-spec/omitted-validate.log",
+      "log_sha256": "78ae3e673b9833ad7ea7c98e973d37b203cb42d325732a40505f266374cfc982"
+    },
+    {
+      "fixture": "omitted",
+      "command": "coverage",
+      "exit": 0,
+      "output": "{\n  \"coverage_ratio\": 1.0,\n  \"covered_count\": 0,\n  \"critical_count\": 0,\n  \"direct_support\": {},\n  \"uncovered\": []\n}\n",
+      "log": "continuation/fma-spec/omitted-coverage.log",
+      "log_sha256": "c76f9e1acf28480259d983584dffec0e927ce637a654e89f606114d80ec444f3"
+    },
+    {
+      "fixture": "null",
+      "command": "validate",
+      "exit": 0,
+      "output": "VALID: graph passed structural and semantic checks\n",
+      "log": "continuation/fma-spec/null-validate.log",
+      "log_sha256": "78ae3e673b9833ad7ea7c98e973d37b203cb42d325732a40505f266374cfc982"
+    },
+    {
+      "fixture": "null",
+      "command": "coverage",
+      "exit": 2,
+      "output": "FAIL: float() argument must be a string or a real number, not 'NoneType'\n",
+      "log": "continuation/fma-spec/null-coverage.log",
+      "log_sha256": "f337c34b91763ba07af0a01bcb731636cd0743c20adb68077ad9e2820631f56d"
+    },
+    {
+      "fixture": "zero",
+      "command": "validate",
+      "exit": 0,
+      "output": "VALID: graph passed structural and semantic checks\n",
+      "log": "continuation/fma-spec/zero-validate.log",
+      "log_sha256": "78ae3e673b9833ad7ea7c98e973d37b203cb42d325732a40505f266374cfc982"
+    },
+    {
+      "fixture": "zero",
+      "command": "coverage",
+      "exit": 0,
+      "output": "{\n  \"coverage_ratio\": 1.0,\n  \"covered_count\": 0,\n  \"critical_count\": 0,\n  \"direct_support\": {},\n  \"uncovered\": []\n}\n",
+      "log": "continuation/fma-spec/zero-coverage.log",
+      "log_sha256": "c76f9e1acf28480259d983584dffec0e927ce637a654e89f606114d80ec444f3"
+    },
+    {
+      "fixture": "five",
+      "command": "validate",
+      "exit": 0,
+      "output": "VALID: graph passed structural and semantic checks\n",
+      "log": "continuation/fma-spec/five-validate.log",
+      "log_sha256": "78ae3e673b9833ad7ea7c98e973d37b203cb42d325732a40505f266374cfc982"
+    },
+    {
+      "fixture": "five",
+      "command": "coverage",
+      "exit": 0,
+      "output": "{\n  \"coverage_ratio\": 0.0,\n  \"covered_count\": 0,\n  \"critical_count\": 1,\n  \"direct_support\": {\n    \"CLAIM-NULL\": []\n  },\n  \"uncovered\": [\n    \"CLAIM-NULL\"\n  ]\n}\n",
+      "log": "continuation/fma-spec/five-coverage.log",
+      "log_sha256": "610059369008a5e1a43bd44e96b45a5130f8c3f41452c6b768928eac92bdb8ec"
+    },
+    {
+      "fixture": "boolean",
+      "command": "validate",
+      "exit": 2,
+      "output": "ERROR: CLAIM-NULL: criticality must be between 0 and 5\n",
+      "log": "continuation/fma-spec/boolean-validate.log",
+      "log_sha256": "88942bf26ae3a32f69f6406d0b9182344834dc146a0236a329e2b76676f9acc8"
+    },
+    {
+      "fixture": "boolean",
+      "command": "coverage",
+      "exit": 2,
+      "output": "ERROR: CLAIM-NULL: criticality must be between 0 and 5\n",
+      "log": "continuation/fma-spec/boolean-coverage.log",
+      "log_sha256": "88942bf26ae3a32f69f6406d0b9182344834dc146a0236a329e2b76676f9acc8"
+    },
+    {
+      "fixture": "below-range",
+      "command": "validate",
+      "exit": 2,
+      "output": "ERROR: CLAIM-NULL: criticality must be between 0 and 5\n",
+      "log": "continuation/fma-spec/below-range-validate.log",
+      "log_sha256": "88942bf26ae3a32f69f6406d0b9182344834dc146a0236a329e2b76676f9acc8"
+    },
+    {
+      "fixture": "below-range",
+      "command": "coverage",
+      "exit": 2,
+      "output": "ERROR: CLAIM-NULL: criticality must be between 0 and 5\n",
+      "log": "continuation/fma-spec/below-range-coverage.log",
+      "log_sha256": "88942bf26ae3a32f69f6406d0b9182344834dc146a0236a329e2b76676f9acc8"
+    },
+    {
+      "fixture": "above-range",
+      "command": "validate",
+      "exit": 2,
+      "output": "ERROR: CLAIM-NULL: criticality must be between 0 and 5\n",
+      "log": "continuation/fma-spec/above-range-validate.log",
+      "log_sha256": "88942bf26ae3a32f69f6406d0b9182344834dc146a0236a329e2b76676f9acc8"
+    },
+    {
+      "fixture": "above-range",
+      "command": "coverage",
+      "exit": 2,
+      "output": "ERROR: CLAIM-NULL: criticality must be between 0 and 5\n",
+      "log": "continuation/fma-spec/above-range-coverage.log",
+      "log_sha256": "88942bf26ae3a32f69f6406d0b9182344834dc146a0236a329e2b76676f9acc8"
+    }
+  ],
+  "repository": "Bridge-Node-7/frontier-mission-assurance",
+  "status": "REPRODUCED_EVALUATION_ONLY_SPECIFICATION_UPSTREAM_OPEN",
+  "rights_reference": "https://github.com/Bridge-Node-7/frontier-mission-assurance/blob/f99dd2174c74f26b648321e02f8d30e2cff10230/CONTRIBUTING.md",
+  "maintainer_acceptance": {
+    "explicit_null": "validate and coverage must reject early with node/field diagnostic and exit 2",
+    "omission_and_numeric_bounds": "omission, 0 and 5 remain accepted",
+    "invalid_types_and_bounds": "Boolean, -1 and 6 remain rejected",
+    "required_gate": "existing make check (255 original-source tests); no candidate source implementation supplied"
+  },
+  "owner_question": "Will the FMA maintainer accept the original synthetic reproduction and implement early present-but-null validation under the existing numeric contract?",
+  "limitations": [
+    "No proprietary source patch, redistribution, upstream issue/contact, release or production use.",
+    "Fourteen unchanged-source CLI calls reproduce existing behavior; no candidate fix or full-gate rerun is claimed."
+  ]
+}

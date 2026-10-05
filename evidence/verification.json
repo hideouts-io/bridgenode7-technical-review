@@ -3,7 +3,8 @@
   "timezone": "America/Los_Angeles",
   "execution_utc_date": "2026-10-05",
   "tools_used": [
-    "Plugin-management discovery/suggestion: GitHub plugin available but not connected",
+    "Original audit: plugin-management discovered/suggested GitHub, which was not connected or used at that checkpoint",
+    "Final handoff: connected GitHub plugin github_get_repo verified public review repository metadata",
     "GitHub CLI 2.101.0 authenticated as hideouts-io; public REST API reads and private repository creation",
     "Native web research of primary documentation and selected original sources",
     "Git public shallow clones; existing repository scripts/test gates; isolated project environments"
@@ -524,15 +525,19 @@
       "base_sha": "36366e96c12765e14d09965c1f82330194dfa8d3",
       "sha256": "e4b4abc59aa2e8914f6af061ce51709e1f6bdb2c565ae4bd8a050bcdd3adb6fc",
       "scope": "Tested one-line root resolution and sealed manifests",
-      "integrated_upstream": false
+      "integrated_upstream": false,
+      "evidence": "evidence/fiw-root-verification.json",
+      "readiness": "LOCALLY_VERIFIED_UPSTREAM_OPEN"
     },
     {
       "file": "proposals/pax-eligibility-validation.patch",
       "repository": "pax-silica",
       "base_sha": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
-      "sha256": "862f081fe3d3b1d712dc1cfa74b95843e1f822453ef99338e98dd8ee658176e1",
-      "scope": "Validator only; actual date correction unresolved; tested nonempty-invalid/date-boundary/source-ID cases",
-      "integrated_upstream": false
+      "sha256": "8c3b8a0723b670e356b6593d8ecc0410ccb78013986e9da5b385b3b46592c3ab",
+      "scope": "Typed present eligibility fields, resolved source IDs and canonical real cutoff dates; actual source data/locator unchanged; optional pairing/minItems and factual chronology need owner",
+      "integrated_upstream": false,
+      "evidence": "evidence/pax-eligibility-validation.json",
+      "readiness": "VALIDATOR_VERIFIED_SYNTHETIC_GATE_ONLY_ACTUAL_DATA_REJECTED_UPSTREAM_OPEN"
     },
     {
       "file": "proposals/aca-closure-links.patch",
@@ -543,22 +548,78 @@
       "evidence": "evidence/aca-closure-links.json",
       "readiness": "LOCALLY_VERIFIED_UPSTREAM_OPEN",
       "integrated_upstream": false
+    },
+    {
+      "file": "proposals/quantum-example-traceability.patch",
+      "repository": "quantum-readiness-space-communications",
+      "base_sha": "0f926377de268b20c2b1223eaf830405b8eb3648",
+      "sha256": "a084a3317c25d13b6a3f743c56c37dadfabca9f51ce94a52eb47e04105954c4f",
+      "scope": "Three existing fictional example documents plus required manifests: canonical domains, explicit evidence traces and NOT_ESTABLISHED coverage pending approved method/evidence",
+      "evidence": "evidence/quantum-example-traceability.json",
+      "readiness": "TRACEABILITY_VERIFIED_OWNER_DECISIONS_AND_UPSTREAM_OPEN",
+      "integrated_upstream": false
     }
   ],
   "raw_log_policy": "Original logs and isolated environments are retained locally under ignored .audit-cache; recorded digests identify those bytes. Published JSON contains portable outcomes and recipes, not raw execution logs. Withheld logs cannot be independently inspected from this repository; hashes alone are provenance commitments, not public availability or proof of their contents.",
   "publication": {
     "remote": "https://github.com/hideouts-io/bridgenode7-technical-review",
-    "visibility": "PRIVATE",
-    "report_remote_state": "PRIVATE_BRANCH_PUBLISHED",
+    "visibility": "PUBLIC",
+    "report_remote_state": "PUBLIC_BRANCH_PUBLISHED",
     "branch": "codex/technical-review",
     "branch_url": "https://github.com/hideouts-io/bridgenode7-technical-review/tree/codex/technical-review",
     "initial_publication_commit": "78c78526b515e8f609e1564e182fc093e5ef9f94",
     "initial_publication_verified": true,
+    "initial_publication_visibility": "PRIVATE",
+    "publication_authorization": "User instructed: leave public, commit and push regularly. Authorization applies to this review repository only.",
+    "visibility_changed_by_reviewer": false,
     "commits_created": true,
     "push_performed": true,
     "collaborators_invited": false,
     "upstream_modified": false
   },
   "command_notation": "Commands use portable external-path placeholders; original local output logs are retained in .audit-cache and identified by digest.",
-  "repository_verification_scope": "Original audit baseline and initial exploratory candidate results/logs. Current candidate scope and acceptance are recorded under candidate_patches and their linked evidence files; original observations are retained as provenance."
+  "repository_verification_scope": "Original audit baseline and initial exploratory candidate results/logs. Current candidate scope and acceptance are recorded under candidate_patches and their linked evidence files; original observations are retained as provenance.",
+  "evaluation_only_specifications": [
+    {
+      "task": "T05",
+      "repository": "frontier-mission-assurance",
+      "base_sha": "f99dd2174c74f26b648321e02f8d30e2cff10230",
+      "evidence": "evidence/fma-criticality-specification.json",
+      "scope": "Seven original synthetic inputs/fourteen unchanged-source CLI calls; maintainer early-validation specification only",
+      "source_patch_supplied": false,
+      "integrated_upstream": false
+    }
+  ],
+  "independent_review": {
+    "scope": "T01-T07 candidate/specification review against pinned sources; patch and recorded raw-log hashes; no repeated full gates",
+    "outcome": "PASS_WITH_EXPLICIT_OWNER_AND_RUNTIME_LIMITATIONS",
+    "material_corrections_applied": [
+      "M2M checked-in invalid fixture count is five plus one additional sentinel.",
+      "FDE original parser rejects second 60, but baseline packets accept two nullable leap-second cases; candidate rejects all four.",
+      "Quantum evidence-ledger IDs do not establish complete scope items or an approved eleven-item denominator."
+    ],
+    "unexecuted": "Hosted CI matrices, real private cases, production qualification and upstream acceptance."
+  },
+  "final_artifact_checks": {
+    "inventory_records": 8,
+    "patch_hash_and_applicability_checks_passed": 7,
+    "combined_fde_patch_applicability": "PASS",
+    "local_document_link_targets_checked": 74,
+    "unique_exact_source_citations_checked": 29,
+    "evidence_json_records_parsed": 8,
+    "original_snapshots_clean": 8,
+    "upstream_main_heads_match_inventory": 8,
+    "audit_cache_excluded": true,
+    "scope": "Artifact integrity, file targets and pinned source line bounds; does not independently establish source semantics, external fragments or withheld raw-log contents."
+  },
+  "continuation_primary_sources": [
+    {
+      "url": "https://simpler.grants.gov/opportunity/2f434e81-c476-49bb-a7e6-9a320c907cd9",
+      "use": "Official detail locator/category context rechecked; does not establish historical private evidence-review date."
+    },
+    {
+      "url": "https://csrc.nist.gov/pubs/cswp/39/upd1/considerations-for-achieving-crypto-agility/final",
+      "use": "Crypto-agility architecture context rechecked; no endorsement of the example readiness rubric."
+    }
+  ]
 }

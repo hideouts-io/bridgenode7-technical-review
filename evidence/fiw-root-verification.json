@@ -1,0 +1,90 @@
+{
+  "task": "T04",
+  "repository": "Bridge-Node-7/frontier-intelligence-workflows",
+  "source_commit": "36366e96c12765e14d09965c1f82330194dfa8d3",
+  "status": "LOCALLY_VERIFIED_UPSTREAM_OPEN",
+  "environment": {
+    "os": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "python": "3.11.16",
+    "dependencies": "existing isolated pinned FIW validation environment"
+  },
+  "patch": {
+    "file": "proposals/fiw-canonical-root.patch",
+    "sha256": "e4b4abc59aa2e8914f6af061ce51709e1f6bdb2c565ae4bd8a050bcdd3adb6fc",
+    "generated_manifests_included": [
+      "MANIFEST.sha256",
+      "REPO_MANIFEST.json"
+    ]
+  },
+  "commands": [
+    "git apply --check --whitespace=error-all <PATCH>",
+    "git apply <PATCH>",
+    "python scripts/run_tests.py --root . --json-output <EXTERNAL>/tests.json",
+    "python scripts/compile_sources.py --root .",
+    "python scripts/validate_repo.py --root . --json-output <EXTERNAL>/validation.json",
+    "python scripts/validate_repo.py --root <SYMLINK_TO_CANDIDATE> --json-output <EXTERNAL>/alias-validation.json",
+    "python scripts/build_release.py --root . --output-dir <EXTERNAL>/release --check --commit 36366e96c12765e14d09965c1f82330194dfa8d3",
+    "Verify each MANIFEST.sha256 entry against candidate bytes",
+    "git --no-pager diff --check"
+  ],
+  "results": {
+    "existing_tests": {
+      "allowed_platform_skips_not_used": [],
+      "errors": 0,
+      "failures": 0,
+      "passed": true,
+      "platform": "posix",
+      "skipped": {},
+      "tests_run": 181,
+      "unexpected_skips": []
+    },
+    "compile_python_sources": 24,
+    "compile_schema_documents": 6,
+    "ordinary_validator": {
+      "passed": 20,
+      "total": 20
+    },
+    "actual_alias_root_validator": {
+      "passed": 20,
+      "total": 20
+    },
+    "manifest_hashes": 133,
+    "manifest_hash_verification": "PASS",
+    "build_release_check": "PASS",
+    "archive_checksum": "d8ff8233289cb13f57c59ac0bce4d5f7efa8995b1c0c67d7c7f595b0c24be704",
+    "repeated_deterministic_build": "PASS",
+    "containment_policy": "Existing file-policy/negative fixture tests and ordinary/alias checks pass; no scanner policy weakened."
+  },
+  "raw_logs": [
+    {
+      "local_cache_path": "continuation/fiw-evidence/alias.log",
+      "sha256": "edd352f869f86a3f25a6fd62cca716fef1958e391a5cce92187144a70aa5c51c"
+    },
+    {
+      "local_cache_path": "continuation/fiw-evidence/compile.log",
+      "sha256": "0b0f35f53a0f4e9476db85c5e55f13939c0e1dd767b3df72865130e35e9bf006"
+    },
+    {
+      "local_cache_path": "continuation/fiw-evidence/release.log",
+      "sha256": "1391eda8b74932e223acb583ae2fa325f9c36b6a384e77d92420443c841b5773"
+    },
+    {
+      "local_cache_path": "continuation/fiw-evidence/tests.log",
+      "sha256": "8b0296084761e52dfe7c1ba9a9d2350cbc0a49b8ce40404b7cdec2700dab6944"
+    },
+    {
+      "local_cache_path": "continuation/fiw-evidence/validation.log",
+      "sha256": "edd352f869f86a3f25a6fd62cca716fef1958e391a5cce92187144a70aa5c51c"
+    }
+  ],
+  "upstream_source_license": {
+    "name": "MIT",
+    "url": "https://github.com/Bridge-Node-7/frontier-intelligence-workflows/blob/36366e96c12765e14d09965c1f82330194dfa8d3/LICENSE",
+    "notice": "MIT License\n\nCopyright (c) 2026 Frontier Intelligence Workflows Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+  },
+  "limitations": [
+    "macOS/Python 3.11 local verification; hosted matrix and optional additional macOS CI not implemented.",
+    "Test archives were generated from the patched disposable source tree and are not published releases.",
+    "Upstream source snapshots and repositories are unchanged; implementation requires maintainer acceptance."
+  ]
+}

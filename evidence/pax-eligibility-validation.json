@@ -1,0 +1,1107 @@
+{
+  "task": "T06",
+  "candidate_status": "VALIDATOR_REFINED_LOCALLY_VERIFIED_OWNER_FACTS_AND_OPTIONAL_POLICY_OPEN",
+  "checked_at_utc": "2026-10-05T05:27:32.523232+00:00",
+  "source": {
+    "repository": "Bridge-Node-7/pax-silica",
+    "base_commit": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
+    "source_version": "0.3.3",
+    "original_snapshot_unchanged": true
+  },
+  "environment": {
+    "python": "3.12.14",
+    "os": "macOS-27.0-arm64-arm-64bit",
+    "machine": "arm64",
+    "environment": "Project-local virtual environment; standard library only",
+    "matches_configured_python_minor": "3.12",
+    "other_matrix_targets": "Python 3.11 and hosted Ubuntu/Windows not rerun locally"
+  },
+  "scope": [
+    "Validate only the program-specific eligibility fields when present; preserve existing primary source/date handling.",
+    "Require eligibility_source_ids to be an array, with each present item a nonempty, unpadded, resolved source ID.",
+    "Require a present eligibility_verified_at to be a canonical real YYYY-MM-DD string at or before the reviewed snapshot.",
+    "Preserve independent field omission and empty-array acceptance until maintainers define a stricter contract.",
+    "Add three actual-validator CLI tests; no dependencies, data/date/snapshot/category/source-locator changes."
+  ],
+  "contract_review": {
+    "program_schema_required_fields": [
+      "id",
+      "name",
+      "status",
+      "status_as_of",
+      "verified_at",
+      "source_ids"
+    ],
+    "eligibility_properties_declared": false,
+    "pairing_rule_declared": false,
+    "minimum_source_items_declared": false,
+    "schema_reference": "https://github.com/Bridge-Node-7/pax-silica/blob/2f62f678d06f8444ddc7788ce03e1f1f46cf4cba/data/schemas/pax-silica.schema.json",
+    "date_boundary_reference": "https://github.com/Bridge-Node-7/pax-silica/blob/2f62f678d06f8444ddc7788ce03e1f1f46cf4cba/README.md#L28",
+    "type_semantics": "Proposed eligibility-specific extension of the existing source-ID and ISO-date conventions, not a claim that the current schema already declares these fields.",
+    "preserved_optional_semantics": "Omission of either/both eligibility fields and empty source arrays continue to pass; no new pairing or minItems policy is imposed."
+  },
+  "owner_questions": [
+    {
+      "question": "What actual evidence-review record establishes P-001 eligibility_verified_at, and what is the intended snapshot boundary?",
+      "why": "Published 2026-09-30 eligibility verification exceeds the 2026-09-29 reviewed cutoff. Neither a factual date correction nor cutoff advancement can be inferred from a test fixture.",
+      "blocks": "Canonical data correction, generated publication and upstream T06 closure."
+    },
+    {
+      "question": "Should eligibility_source_ids require at least one item when present, and should either eligibility field require the other?",
+      "why": "Current schema and documentation declare neither rule. The candidate preserves omission/empty-array semantics instead of inventing a requirement.",
+      "blocks": "Final optional-field contract acceptance; stricter policy would require explicit maintainer decision."
+    },
+    {
+      "question": "May S-06 be updated to the verified opportunity detail locator, with its note adjusted while preserving accurate review provenance?",
+      "why": "Its current URL/note identify a search record reviewed on 2026-08-21. A new locator must not imply a different page was reviewed at that historical date.",
+      "proposed_verified_locator": "https://simpler.grants.gov/opportunity/2f434e81-c476-49bb-a7e6-9a320c907cd9",
+      "fresh_verification_source": "Parent agent verified the official detail page during this continuation; this candidate makes no locator or freshness change."
+    }
+  ],
+  "commands": [
+    {
+      "command": "python scripts/check_repo.py",
+      "exit_code": 1,
+      "context": "Direct interpreter invocation initially failed one test because the PATH lacked the python command required by the existing release-builder test.",
+      "raw_local_log": "logs/baseline-gate.log",
+      "raw_local_log_sha256": "476126124f610900930226ea80e0e394d2f97757df35c6ae43efbb6132d914c5"
+    },
+    {
+      "command": "python scripts/check_repo.py",
+      "exit_code": 0,
+      "context": "Project-local Python 3.12 virtual environment exposed python in PATH; unchanged source passes all 59 tests.",
+      "raw_local_log": "logs/baseline-gate-venv.log",
+      "raw_local_log_sha256": "e2508ef4aa00cbf9c904b4487fa6595571f697c263e9b1902ee87b6ef4466d83"
+    },
+    {
+      "command": "python scripts/validate_data.py --as-of 2026-10-04",
+      "exit_code": 1,
+      "context": "Unchanged factual canonical data is rejected by the new chronology check.",
+      "raw_local_log": "logs/candidate-published-data.log",
+      "raw_local_log_sha256": "a2e0e2cc35d3134639f63a84b6dd55f73550fd6018890d043d6f7b467aac5aef"
+    },
+    {
+      "command": "python scripts/check_repo.py",
+      "exit_code": 1,
+      "context": "Unchanged factual data stops the repository gate at data validation before generation.",
+      "raw_local_log": "logs/candidate-published-gate.log",
+      "raw_local_log_sha256": "5782e1f116f24f86b003de517ace6dad5319fdabfbd45aac55e274f7d677a7fa"
+    },
+    {
+      "command": "python scripts/check_repo.py",
+      "exit_code": 0,
+      "context": "Disposable synthetic in-boundary eligibility date only; actual bytes restored after the run.",
+      "raw_local_log": "logs/candidate-synthetic-gate.log",
+      "raw_local_log_sha256": "a56745c65430fd4fcae0223a905f289fb231521f4b92d5ee0d8a3660fb3a75e7"
+    },
+    {
+      "command": "git --no-pager diff --check",
+      "exit_code": 0,
+      "context": "Candidate source/test whitespace check.",
+      "raw_local_log": "logs/candidate-diff-check.log",
+      "raw_local_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "results": {
+    "baseline_full_tests": 59,
+    "candidate_synthetic_full_tests": 62,
+    "actual_validator_probes_per_phase": 45,
+    "invalid_variants_rejected": 38,
+    "valid_and_optional_controls_accepted": 7,
+    "published_candidate_gate_exit": 1,
+    "synthetic_candidate_gate_exit": 0,
+    "deterministic_generation": "PASS, two generated trees byte-equal under the disposable synthetic control",
+    "evidence_integrity": "PASS, source ratchet 15, public referenced source IDs 11, active signatory identity 25",
+    "public_boundary_and_readability": "PASS",
+    "browser_uat": "Not repeated; no frontend/source asset changes"
+  },
+  "synthetic_control": {
+    "actual_date": "2026-09-30",
+    "snapshot": "2026-09-29",
+    "disposable_synthetic_control_date": "2026-09-29",
+    "published_data_restored_exactly": true,
+    "canonical_data_sha256": "0f33d43ae52d30639ffad2fea1bd6a71d9774bd667cfbe0efd63fd115ec6280d",
+    "gate_exit_code": 0
+  },
+  "probes": {
+    "baseline": [
+      {
+        "fixture": "sources-null",
+        "field": "eligibility_source_ids",
+        "value": null,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-null/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-empty-string",
+        "field": "eligibility_source_ids",
+        "value": "",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-empty-string/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-whitespace",
+        "field": "eligibility_source_ids",
+        "value": " ",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-whitespace/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-scalar-string",
+        "field": "eligibility_source_ids",
+        "value": "S-06",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-scalar-string/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-false",
+        "field": "eligibility_source_ids",
+        "value": false,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-false/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-true",
+        "field": "eligibility_source_ids",
+        "value": true,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-true/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-zero",
+        "field": "eligibility_source_ids",
+        "value": 0,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-zero/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-integer",
+        "field": "eligibility_source_ids",
+        "value": 42,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-integer/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-fraction",
+        "field": "eligibility_source_ids",
+        "value": 42.5,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-fraction/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-object",
+        "field": "eligibility_source_ids",
+        "value": {},
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-object/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-null-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          null
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-null-item/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-false-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          false
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-false-item/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-number-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          42
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-number-item/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-array-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          []
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-array-item/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-object-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          {}
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-object-item/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-empty-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          ""
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-empty-item/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-blank-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          " "
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-blank-item/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-orphan",
+        "field": "eligibility_source_ids",
+        "value": [
+          "S-MISSING"
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-orphan/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-padded-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          " S-06 "
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-padded-item/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "sources-mixed-orphan",
+        "field": "eligibility_source_ids",
+        "value": [
+          "S-06",
+          "S-MISSING"
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/sources-mixed-orphan/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-null",
+        "field": "eligibility_verified_at",
+        "value": null,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-null/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-empty",
+        "field": "eligibility_verified_at",
+        "value": "",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-empty/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-whitespace",
+        "field": "eligibility_verified_at",
+        "value": " ",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-whitespace/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-false",
+        "field": "eligibility_verified_at",
+        "value": false,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-false/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-true",
+        "field": "eligibility_verified_at",
+        "value": true,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-true/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-zero",
+        "field": "eligibility_verified_at",
+        "value": 0,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-zero/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-integer",
+        "field": "eligibility_verified_at",
+        "value": 42,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-integer/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-fraction",
+        "field": "eligibility_verified_at",
+        "value": 42.5,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-fraction/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-array",
+        "field": "eligibility_verified_at",
+        "value": [],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-array/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-object",
+        "field": "eligibility_verified_at",
+        "value": {},
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-object/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-invalid",
+        "field": "eligibility_verified_at",
+        "value": "not-a-date",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-invalid/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-impossible",
+        "field": "eligibility_verified_at",
+        "value": "2026-02-30",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-impossible/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-compact",
+        "field": "eligibility_verified_at",
+        "value": "20260929",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-compact/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-week",
+        "field": "eligibility_verified_at",
+        "value": "2026-W39-2",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-week/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-datetime",
+        "field": "eligibility_verified_at",
+        "value": "2026-09-29T00:00:00Z",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-datetime/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-padded",
+        "field": "eligibility_verified_at",
+        "value": " 2026-09-29 ",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-padded/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "date-post-cutoff",
+        "field": "eligibility_verified_at",
+        "value": "2026-09-30",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/date-post-cutoff/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "valid-at-cutoff",
+        "field": "eligibility_verified_at",
+        "value": "2026-09-29",
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/valid-at-cutoff/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "valid-before-cutoff",
+        "field": "eligibility_verified_at",
+        "value": "2026-08-21",
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/valid-before-cutoff/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "valid-sources",
+        "field": "eligibility_source_ids",
+        "value": [
+          "S-06"
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/valid-sources/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "valid-empty-array-preserved",
+        "field": "eligibility_source_ids",
+        "value": [],
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/valid-empty-array-preserved/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "omitted-sources",
+        "field": "omit",
+        "value": "eligibility_source_ids",
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/omitted-sources/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "omitted-date",
+        "field": "omit",
+        "value": "eligibility_verified_at",
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/omitted-date/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "omitted-both",
+        "field": "omit",
+        "value": "both",
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/omitted-both/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "unchanged-published",
+        "field": "unchanged",
+        "value": null,
+        "synthetic_date_control": false,
+        "expected_valid": false,
+        "exit_code": 0,
+        "raw_local_log": "probes/baseline/unchanged-published/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      }
+    ],
+    "candidate": [
+      {
+        "fixture": "sources-null",
+        "field": "eligibility_source_ids",
+        "value": null,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-null/validator.log",
+        "raw_local_log_sha256": "e8ace6d7dccdb88885915c4c4e3e7cbaa2278d763b96b4ec6697f417e2211741"
+      },
+      {
+        "fixture": "sources-empty-string",
+        "field": "eligibility_source_ids",
+        "value": "",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-empty-string/validator.log",
+        "raw_local_log_sha256": "3d8df81f844ede980da543e1348e062c084daa9a203b6aa840a4ffecc0ae8c80"
+      },
+      {
+        "fixture": "sources-whitespace",
+        "field": "eligibility_source_ids",
+        "value": " ",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-whitespace/validator.log",
+        "raw_local_log_sha256": "916be030a13d07ea2e0261a2866dbe544753ff4d386584a335b87296952a633a"
+      },
+      {
+        "fixture": "sources-scalar-string",
+        "field": "eligibility_source_ids",
+        "value": "S-06",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-scalar-string/validator.log",
+        "raw_local_log_sha256": "95a98313046a024507a4382996d0039174f2b1e813db0acd5c1e0f6ef808d02a"
+      },
+      {
+        "fixture": "sources-false",
+        "field": "eligibility_source_ids",
+        "value": false,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-false/validator.log",
+        "raw_local_log_sha256": "de486efe2f6453d080ea93d5210fad96cd748aa8bbae169027dddab6c5bac0f9"
+      },
+      {
+        "fixture": "sources-true",
+        "field": "eligibility_source_ids",
+        "value": true,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-true/validator.log",
+        "raw_local_log_sha256": "6822ea83ab7c8f7a68c76956236c970120c9d104b95062bdf3fac38c0879f7cc"
+      },
+      {
+        "fixture": "sources-zero",
+        "field": "eligibility_source_ids",
+        "value": 0,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-zero/validator.log",
+        "raw_local_log_sha256": "3fe0560532c923c434ced20d9024b08531bc0b6c2e7ee6ccde742d55a1f2d1d4"
+      },
+      {
+        "fixture": "sources-integer",
+        "field": "eligibility_source_ids",
+        "value": 42,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-integer/validator.log",
+        "raw_local_log_sha256": "9a14a2c5b8e2af2ea1b9de6da2e8faf0cfc36208db76e0c165198811f16eb191"
+      },
+      {
+        "fixture": "sources-fraction",
+        "field": "eligibility_source_ids",
+        "value": 42.5,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-fraction/validator.log",
+        "raw_local_log_sha256": "1ddf0f18797b2241a26e44e5aaeabfadc37b94e40dfb17f1abaabe51ef0ecc15"
+      },
+      {
+        "fixture": "sources-object",
+        "field": "eligibility_source_ids",
+        "value": {},
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-object/validator.log",
+        "raw_local_log_sha256": "37e621a862659484b632dcb8d1441daf251a93a75edbd076228ed77d7dbee05d"
+      },
+      {
+        "fixture": "sources-null-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          null
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-null-item/validator.log",
+        "raw_local_log_sha256": "2b860f24e223e3e4bfd3dd3c4a8989d6dce5d9125764e045ba0c0eb9d3bad26d"
+      },
+      {
+        "fixture": "sources-false-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          false
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-false-item/validator.log",
+        "raw_local_log_sha256": "c5237230800aa10ec5fbe203ecc03a5ab56f599a959f6a9f72d48b6fc25b9c5b"
+      },
+      {
+        "fixture": "sources-number-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          42
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-number-item/validator.log",
+        "raw_local_log_sha256": "64582f45fddbd84188b3ce4f1dd1cc8bbcaf8298646801ad8c672644a8c18696"
+      },
+      {
+        "fixture": "sources-array-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          []
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-array-item/validator.log",
+        "raw_local_log_sha256": "80da87026b028684c321f629b1a27723a215a44f2eca3cbaa6ec37d74742c762"
+      },
+      {
+        "fixture": "sources-object-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          {}
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-object-item/validator.log",
+        "raw_local_log_sha256": "ae4d02aecc24232e23194816a1d1a49a3dbf9721733be39f60b712ea07127cd5"
+      },
+      {
+        "fixture": "sources-empty-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          ""
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-empty-item/validator.log",
+        "raw_local_log_sha256": "0c5091fecb61b3791c8f18ea53d41a2d793b875682eaf611b51346274146cf15"
+      },
+      {
+        "fixture": "sources-blank-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          " "
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-blank-item/validator.log",
+        "raw_local_log_sha256": "d068f6ea432bd589e4c49569539e6cc028bf5b9dace91040c03efb0aef9cbb50"
+      },
+      {
+        "fixture": "sources-orphan",
+        "field": "eligibility_source_ids",
+        "value": [
+          "S-MISSING"
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-orphan/validator.log",
+        "raw_local_log_sha256": "91f9510e785cb27425687114e57ba40850837c05e96e9e3e8995dc5d9d724029"
+      },
+      {
+        "fixture": "sources-padded-item",
+        "field": "eligibility_source_ids",
+        "value": [
+          " S-06 "
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-padded-item/validator.log",
+        "raw_local_log_sha256": "077dba30eaead64c6973da847786473fcdf7197f8ec8427b4f92dbc88f18845b"
+      },
+      {
+        "fixture": "sources-mixed-orphan",
+        "field": "eligibility_source_ids",
+        "value": [
+          "S-06",
+          "S-MISSING"
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/sources-mixed-orphan/validator.log",
+        "raw_local_log_sha256": "19c69e62c4c10cb7fc960a87b7ed36e22d730599db4007fb9ba86e0b20f062d5"
+      },
+      {
+        "fixture": "date-null",
+        "field": "eligibility_verified_at",
+        "value": null,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-null/validator.log",
+        "raw_local_log_sha256": "21427eacaa49cfdcebe8937fbc5402a01fddd66f4d17a17a6109191d4d79a4a4"
+      },
+      {
+        "fixture": "date-empty",
+        "field": "eligibility_verified_at",
+        "value": "",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-empty/validator.log",
+        "raw_local_log_sha256": "37eb60b9e6939b5cf639ed158ec6e3bd1ae053c07c4fff968ea33620bb286edb"
+      },
+      {
+        "fixture": "date-whitespace",
+        "field": "eligibility_verified_at",
+        "value": " ",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-whitespace/validator.log",
+        "raw_local_log_sha256": "d8d36bca87e2378ca92a1c60ca634cb7ec535d483b0cc54ff76499a86a0efdaa"
+      },
+      {
+        "fixture": "date-false",
+        "field": "eligibility_verified_at",
+        "value": false,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-false/validator.log",
+        "raw_local_log_sha256": "20a9577c6f21bc70741a31e90a3051418751ddf525ab7533ab3a1cb518c692e2"
+      },
+      {
+        "fixture": "date-true",
+        "field": "eligibility_verified_at",
+        "value": true,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-true/validator.log",
+        "raw_local_log_sha256": "7bc9fabed5d16879fc85e984468eaed8352937a739fa8bb145f9e86aacd6ce14"
+      },
+      {
+        "fixture": "date-zero",
+        "field": "eligibility_verified_at",
+        "value": 0,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-zero/validator.log",
+        "raw_local_log_sha256": "e188799a61ed1bd07fb9b2e8e7447de53272193af229593f336b527e14f671ce"
+      },
+      {
+        "fixture": "date-integer",
+        "field": "eligibility_verified_at",
+        "value": 42,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-integer/validator.log",
+        "raw_local_log_sha256": "9674bb6452afa35153fb502246b1275191dac2299e0774d82e7ebc62b28bb614"
+      },
+      {
+        "fixture": "date-fraction",
+        "field": "eligibility_verified_at",
+        "value": 42.5,
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-fraction/validator.log",
+        "raw_local_log_sha256": "67cca2c8eda7debdab347d05dd2b7e1814abcdf3df1b04d2580b32ca6ff35863"
+      },
+      {
+        "fixture": "date-array",
+        "field": "eligibility_verified_at",
+        "value": [],
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-array/validator.log",
+        "raw_local_log_sha256": "3c1e6fccc0504e617afd4d5f41a0d9257a3b028d325d7fb00af0aadf5332ae0b"
+      },
+      {
+        "fixture": "date-object",
+        "field": "eligibility_verified_at",
+        "value": {},
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-object/validator.log",
+        "raw_local_log_sha256": "792442289e159c791014a5b0d9cb39157f12fb6840657cce5041ede71d1f3bf7"
+      },
+      {
+        "fixture": "date-invalid",
+        "field": "eligibility_verified_at",
+        "value": "not-a-date",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-invalid/validator.log",
+        "raw_local_log_sha256": "399191a8713097b8cb090139536433aa99377e43b303e9ac50122e5ec20f327f"
+      },
+      {
+        "fixture": "date-impossible",
+        "field": "eligibility_verified_at",
+        "value": "2026-02-30",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-impossible/validator.log",
+        "raw_local_log_sha256": "ff64de11b1d6a77783904f1a69c98f8630a3dc8f0dd855954f0fa6e500561218"
+      },
+      {
+        "fixture": "date-compact",
+        "field": "eligibility_verified_at",
+        "value": "20260929",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-compact/validator.log",
+        "raw_local_log_sha256": "9653edaed6e39df9654408ce6d72fb06b3236b53cd0031aabc1a6c177ca5d2ff"
+      },
+      {
+        "fixture": "date-week",
+        "field": "eligibility_verified_at",
+        "value": "2026-W39-2",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-week/validator.log",
+        "raw_local_log_sha256": "305de23218e911f53ec054b2dbd1670e5016cef42fb96429bea34bfc0bbab5b5"
+      },
+      {
+        "fixture": "date-datetime",
+        "field": "eligibility_verified_at",
+        "value": "2026-09-29T00:00:00Z",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-datetime/validator.log",
+        "raw_local_log_sha256": "a39fb49c77f4d9d04a7de99437b0331a0e2373e95c6feca220755271b30e4b22"
+      },
+      {
+        "fixture": "date-padded",
+        "field": "eligibility_verified_at",
+        "value": " 2026-09-29 ",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-padded/validator.log",
+        "raw_local_log_sha256": "38a111a6628544196076705b88a754236c716c25099978dcf0ab70ae117e485b"
+      },
+      {
+        "fixture": "date-post-cutoff",
+        "field": "eligibility_verified_at",
+        "value": "2026-09-30",
+        "synthetic_date_control": true,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/date-post-cutoff/validator.log",
+        "raw_local_log_sha256": "a2e0e2cc35d3134639f63a84b6dd55f73550fd6018890d043d6f7b467aac5aef"
+      },
+      {
+        "fixture": "valid-at-cutoff",
+        "field": "eligibility_verified_at",
+        "value": "2026-09-29",
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/candidate/valid-at-cutoff/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "valid-before-cutoff",
+        "field": "eligibility_verified_at",
+        "value": "2026-08-21",
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/candidate/valid-before-cutoff/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "valid-sources",
+        "field": "eligibility_source_ids",
+        "value": [
+          "S-06"
+        ],
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/candidate/valid-sources/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "valid-empty-array-preserved",
+        "field": "eligibility_source_ids",
+        "value": [],
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/candidate/valid-empty-array-preserved/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "omitted-sources",
+        "field": "omit",
+        "value": "eligibility_source_ids",
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/candidate/omitted-sources/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "omitted-date",
+        "field": "omit",
+        "value": "eligibility_verified_at",
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/candidate/omitted-date/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "omitted-both",
+        "field": "omit",
+        "value": "both",
+        "synthetic_date_control": true,
+        "expected_valid": true,
+        "exit_code": 0,
+        "raw_local_log": "probes/candidate/omitted-both/validator.log",
+        "raw_local_log_sha256": "2a83b818e35b5aa520dfb4a562712965cb7fccfd75088df0cf740cecc0feb4bd"
+      },
+      {
+        "fixture": "unchanged-published",
+        "field": "unchanged",
+        "value": null,
+        "synthetic_date_control": false,
+        "expected_valid": false,
+        "exit_code": 1,
+        "raw_local_log": "probes/candidate/unchanged-published/validator.log",
+        "raw_local_log_sha256": "a2e0e2cc35d3134639f63a84b6dd55f73550fd6018890d043d6f7b467aac5aef"
+      }
+    ]
+  },
+  "patch": {
+    "file": "proposals/pax-eligibility-validation.patch",
+    "sha256": "8c3b8a0723b670e356b6593d8ecc0410ccb78013986e9da5b385b3b46592c3ab",
+    "files": [
+      "scripts/validate_data.py",
+      "tests/test_snapshot_boundary.py"
+    ],
+    "apply_check_against_base": "PASS",
+    "reverse_apply_check_against_candidate": "PASS",
+    "replaces_previous_partial_validator_proposal": true,
+    "generated_outputs": "None included. Existing gate generates/checks web artifacts and WEB_MANIFEST.sha256 in disposable directories; regenerate from factual corrected data only after owner resolution."
+  },
+  "unchanged_data_sha256": {
+    "data/pax-silica.json": "0f33d43ae52d30639ffad2fea1bd6a71d9774bd667cfbe0efd63fd115ec6280d",
+    "data/sources.json": "c4109ddda578f74bdb8ea9bc6c79d4ef9acc141272a43047184b409b92c01d27"
+  },
+  "upstream_source_license": {
+    "name": "MIT",
+    "url": "https://github.com/Bridge-Node-7/pax-silica/blob/2f62f678d06f8444ddc7788ce03e1f1f46cf4cba/LICENSE",
+    "notice": "MIT License\n\nCopyright (c) 2026 Bridge Node 7\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+  },
+  "limitations": [
+    "Synthetic in-boundary date is not a factual correction or proof of valid publication.",
+    "Published actual data intentionally fails the stricter candidate; T06 remains open.",
+    "Unknown pairing/nonempty-list policy is recorded for owners; no invented required-field rule.",
+    "No upstream issue, pull request, release, deployment, or contact.",
+    "Pax CLI uses its existing uncaught AssertionError style; field diagnostics are actionable but include the existing traceback presentation."
+  ],
+  "raw_log_policy": "Portable fixture mutations/outcomes and raw-log hashes only; full diagnostics remain in ignored .audit-cache/continuation/pax. The tests/commands reproduce behavior. Synthetic dates are validation controls, not factual data corrections."
+}
