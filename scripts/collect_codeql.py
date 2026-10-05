@@ -23,7 +23,8 @@ def verify_database(codeql: Path, database: Path, source: Path, language: str, e
     prefix = Path(require_string(metadata["sourceLocationPrefix"], "database sourceLocationPrefix"))
     if prefix.resolve() != source:
         raise ValueError(f"CodeQL database root {prefix} does not identify {source}")
-    languages = require_list(metadata["languages"], "database languages")
+    languages = [require_string(value, "database language")
+                 for value in require_list(metadata["languages"], "database languages")]
     if language not in languages:
         raise ValueError(f"Expected database language {language}; found {languages}")
     archive_path = Path(require_string(metadata["sourceArchiveZip"], "database sourceArchiveZip"))
@@ -58,10 +59,11 @@ def collect_run(value: object, source: Path) -> dict[str, object]:
         raise ValueError(f"Expected CodeQL SARIF, found {name}")
     if "originalUriBaseIds" in run:
         bases = require_object(run["originalUriBaseIds"], "SARIF originalUriBaseIds")
-        root = require_object(bases["%SRCROOT%"], "SARIF %SRCROOT%")
-        uri = require_string(root["uri"], "SARIF source URI")
-        if uri.rstrip("/") != source.as_uri().rstrip("/"):
-            raise ValueError(f"SARIF source root {uri} does not identify {source}")
+        if "%SRCROOT%" in bases:
+            root = require_object(bases["%SRCROOT%"], "SARIF %SRCROOT%")
+            uri = require_string(root["uri"], "SARIF source URI")
+            if uri.rstrip("/") != source.as_uri().rstrip("/"):
+                raise ValueError(f"SARIF source root {uri} does not identify {source}")
     results = require_list(run["results"], "SARIF results")
     findings: list[dict[str, object]] = []
     for value in results:
@@ -83,7 +85,8 @@ def collect_run(value: object, source: Path) -> dict[str, object]:
             paths.append(path.relative_to(source).as_posix())
         findings.append({"rule_id": require_string(result["ruleId"], "SARIF ruleId"), "files": paths})
     return {
-        "tool": name, "tool_version": driver.get("semanticVersion", driver.get("version")),
+        "tool": name, "tool_version": require_string(
+            driver["semanticVersion"] if "semanticVersion" in driver else driver["version"], "SARIF tool version"),
         "result_count": len(results), "findings": findings,
     }
 

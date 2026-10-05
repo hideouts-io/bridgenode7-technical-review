@@ -230,6 +230,8 @@ jobs:
       run:
         working-directory: candidate
   fde:
+    env:
+      CODEQL_OVERLAY_DATABASE_MODE: overlay-base
     name: FDE / Ubuntu / Node 22 / ${{ matrix.candidate }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -314,6 +316,8 @@ jobs:
         languages: python,javascript-typescript
         source-root: candidate
         db-location: ${{ runner.temp }}/candidate-codeql-databases
+        trap-caching: 'false'
+        dependency-caching: 'false'
     - name: Verify npm lockfile
       run: npm ci --ignore-scripts --no-audit --no-fund
     - name: Install browser test tooling
@@ -378,6 +382,8 @@ jobs:
       contents: read
       security-events: read
   aca:
+    env:
+      CODEQL_OVERLAY_DATABASE_MODE: overlay-base
     name: ACA validation on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
@@ -426,6 +432,8 @@ jobs:
         languages: python
         source-root: candidate
         db-location: ${{ runner.temp }}/candidate-codeql-databases
+        trap-caching: 'false'
+        dependency-caching: 'false'
       id: codeql-init
     - name: Report source validation workflow hash
       working-directory: candidate
