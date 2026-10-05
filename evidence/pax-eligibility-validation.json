@@ -1,6 +1,6 @@
 {
   "task": "T06",
-  "candidate_status": "VALIDATOR_REFINED_LOCALLY_VERIFIED_OWNER_FACTS_AND_OPTIONAL_POLICY_OPEN",
+  "candidate_status": "REQUIRES_CHRONOLOGY_POLICY_REVISION_BEFORE_ADOPTION",
   "checked_at_utc": "2026-10-05T05:27:32.523232+00:00",
   "source": {
     "repository": "Bridge-Node-7/pax-silica",
@@ -19,7 +19,7 @@
   "scope": [
     "Validate only the program-specific eligibility fields when present; preserve existing primary source/date handling.",
     "Require eligibility_source_ids to be an array, with each present item a nonempty, unpadded, resolved source ID.",
-    "Require a present eligibility_verified_at to be a canonical real YYYY-MM-DD string at or before the reviewed snapshot.",
+    "Preserved candidate requires a canonical real YYYY-MM-DD eligibility date at or before the snapshot. This cutoff extension conflicts with owner PR #50 and is not an accepted field contract.",
     "Preserve independent field omission and empty-array acceptance until maintainers define a stricter contract.",
     "Add three actual-validator CLI tests; no dependencies, data/date/snapshot/category/source-locator changes."
   ],
@@ -38,13 +38,14 @@
     "schema_reference": "https://github.com/Bridge-Node-7/pax-silica/blob/2f62f678d06f8444ddc7788ce03e1f1f46cf4cba/data/schemas/pax-silica.schema.json",
     "date_boundary_reference": "https://github.com/Bridge-Node-7/pax-silica/blob/2f62f678d06f8444ddc7788ce03e1f1f46cf4cba/README.md#L28",
     "type_semantics": "Proposed eligibility-specific extension of the existing source-ID and ISO-date conventions, not a claim that the current schema already declares these fields.",
-    "preserved_optional_semantics": "Omission of either/both eligibility fields and empty source arrays continue to pass; no new pairing or minItems policy is imposed."
+    "preserved_optional_semantics": "Omission of either/both eligibility fields and empty source arrays continue to pass; no new pairing or minItems policy is imposed.",
+    "chronology_scope_correction": "Generic source/record verified_at limits from PR #22 do not establish a cutoff for eligibility_verified_at. Later owner PR #50 explicitly retains separate field/full-snapshot review dates."
   },
   "owner_questions": [
     {
-      "question": "What actual evidence-review record establishes P-001 eligibility_verified_at, and what is the intended snapshot boundary?",
-      "why": "Published 2026-09-30 eligibility verification exceeds the 2026-09-29 reviewed cutoff. Neither a factual date correction nor cutoff advancement can be inferred from a test fixture.",
-      "blocks": "Canonical data correction, generated publication and upstream T06 closure."
+      "question": "Does the owner require any additional eligibility-specific chronology rule beyond canonical real-date parsing, consistent with PR #50?",
+      "why": "PR #50 resolves the specific September 30 field review/September 29 snapshot intent. The preserved candidate incorrectly extends the generic cutoff; its guard needs revision before adoption.",
+      "blocks": "Any new eligibility chronology restriction and acceptance of the full preserved patch; no factual date repair is inferred."
     },
     {
       "question": "Should eligibility_source_ids require at least one item when present, and should either eligibility field require the other?",
@@ -113,7 +114,8 @@
     "deterministic_generation": "PASS, two generated trees byte-equal under the disposable synthetic control",
     "evidence_integrity": "PASS, source ratchet 15, public referenced source IDs 11, active signatory identity 25",
     "public_boundary_and_readability": "PASS",
-    "browser_uat": "Not repeated; no frontend/source asset changes"
+    "browser_uat": "Not repeated; no frontend/source asset changes",
+    "probe_classification_limit": "The historical invalid_variants_rejected count includes the disputed post-cutoff case. Rejection proves candidate behavior, not correctness of that chronology policy."
   },
   "synthetic_control": {
     "actual_date": "2026-09-30",
@@ -1085,7 +1087,7 @@
     "apply_check_against_base": "PASS",
     "reverse_apply_check_against_candidate": "PASS",
     "replaces_previous_partial_validator_proposal": true,
-    "generated_outputs": "None included. Existing gate generates/checks web artifacts and WEB_MANIFEST.sha256 in disposable directories; regenerate from factual corrected data only after owner resolution."
+    "generated_outputs": "None included. Historical gate artifacts used a synthetic date. After revising the unsupported cutoff guard, require the existing gate on unchanged actual data; no revised candidate or actual-data pass is claimed."
   },
   "unchanged_data_sha256": {
     "data/pax-silica.json": "0f33d43ae52d30639ffad2fea1bd6a71d9774bd667cfbe0efd63fd115ec6280d",
@@ -1098,10 +1100,51 @@
   },
   "limitations": [
     "Synthetic in-boundary date is not a factual correction or proof of valid publication.",
-    "Published actual data intentionally fails the stricter candidate; T06 remains open.",
+    "Owner PR #50 deliberately keeps the field review newer than the full-snapshot boundary. The preserved candidate rejects that intended record and requires chronology-policy revision; T06 remains open.",
     "Unknown pairing/nonempty-list policy is recorded for owners; no invented required-field rule.",
     "No upstream issue, pull request, release, deployment, or contact.",
     "Pax CLI uses its existing uncaught AssertionError style; field diagnostics are actionable but include the existing traceback presentation."
   ],
-  "raw_log_policy": "Portable fixture mutations/outcomes and raw-log hashes only; full diagnostics remain in ignored .audit-cache/continuation/pax. The tests/commands reproduce behavior. Synthetic dates are validation controls, not factual data corrections."
+  "raw_log_policy": "Portable fixture mutations/outcomes and raw-log hashes only; full diagnostics remain in ignored .audit-cache/continuation/pax. The tests/commands reproduce behavior. Synthetic dates are validation controls, not factual data corrections.",
+  "public_owner_record_review": {
+    "checked_at_utc": "2026-10-05T08:27:47.206600+00:00",
+    "source_commit": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
+    "records": [
+      {
+        "url": "https://github.com/Bridge-Node-7/pax-silica/pull/22",
+        "number": 22,
+        "title": "fix: enforce Pax snapshot temporal integrity",
+        "author": "Bridge-Node-7",
+        "merged_at_utc": "2026-09-09T20:23:34Z",
+        "merge_commit_sha": "b20ae48cae04f5891d1f23dbe022bbb4c7c78dcd",
+        "body_sha256": "4447783e26d4cd514fa90c902c6b1da71eedde78fc4ce51f4363533657ed3aca",
+        "supported_conclusion": "Generic source and canonical-record verified_at dates are bounded by the snapshot; the implementation does not define an eligibility_verified_at cutoff."
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/pax-silica/pull/48",
+        "number": 48,
+        "title": "Refresh Pax Silica reviewed evidence through September",
+        "author": "Bridge-Node-7",
+        "merged_at_utc": "2026-09-30T00:23:45Z",
+        "merge_commit_sha": "15a187e0c56a197ee314f50ed4804ae63bc258a4",
+        "body_sha256": "327e30f58528d345f446ba43c1a50d2e17f5c7361e4f5ba3badf9c26b7fa2140",
+        "supported_conclusion": "The owner advances the full reviewed snapshot to September 29, 2026."
+      },
+      {
+        "url": "https://github.com/Bridge-Node-7/pax-silica/pull/50",
+        "number": 50,
+        "title": "Encode Pax Silica grant eligibility",
+        "author": "Bridge-Node-7",
+        "merged_at_utc": "2026-09-30T08:55:42Z",
+        "merge_commit_sha": "5215e52b1609b5e6b40509c68817b9f359bc81b8",
+        "body_sha256": "d7a4f291a75a97be1f83a6d776d148d8b6ef7da1169482c518cb0772bd6cf597",
+        "supported_conclusion": "The owner records P-001 eligibility review on September 30, 2026 with S-06 and explicitly retains the existing globally reviewed-through date."
+      }
+    ],
+    "resolved_question": "The specific September 30 eligibility review and September 29 overall snapshot difference is owner-intended. The previous factual-date-repair recommendation is withdrawn.",
+    "contract_interpretation": "Current generic verified_at constraints do not prove a violation by eligibility_verified_at. PR50 does not authorize a universal rule for every field or settle optional pairing/minimum-source policy.",
+    "candidate_disposition": "Preserve the existing patch and observed test outcomes, but mark the full patch REQUIRES_CHRONOLOGY_POLICY_REVISION_BEFORE_ADOPTION because its cutoff guard rejects the owner-intended record.",
+    "scope_of_this_phase": "T01-T03 compatibility and handoff, plus bounded public owner-decision research. This phase corrects the T06 interpretation/status; it does not implement a revised T06 proposal or rerun its gates.",
+    "source_review_limit": "Owner attribution and declared review intent are established; no independent historical source capture or applicant qualification is asserted."
+  }
 }

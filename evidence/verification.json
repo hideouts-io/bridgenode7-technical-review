@@ -440,7 +440,7 @@
         ]
       },
       "candidate_gate": "59 tests PASS with synthetic date control only; current data intentionally rejected",
-      "candidate_limits": "No factual source-date correction; empty/null/type semantics still require explicit field-contract review",
+      "candidate_limits": "Historical candidate execution retained. Owner PR50 establishes intentional field/snapshot date separation; rejection of that record is not evidence of incorrect factual data. Full candidate needs chronology-policy revision.",
       "environment_correction": "First gate invocation lacked documented python PATH; activated virtual environment corrected audit setup without source change",
       "logs": [
         {
@@ -534,10 +534,10 @@
       "repository": "pax-silica",
       "base_sha": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
       "sha256": "8c3b8a0723b670e356b6593d8ecc0410ccb78013986e9da5b385b3b46592c3ab",
-      "scope": "Typed present eligibility fields, resolved source IDs and canonical real cutoff dates; actual source data/locator unchanged; optional pairing/minItems and factual chronology need owner",
+      "scope": "Preserved typed eligibility/source-ID proposal; its snapshot-cutoff extension conflicts with owner PR50. Actual data and patch bytes unchanged; revise chronology before adoption and decide optional pairing/minItems explicitly.",
       "integrated_upstream": false,
       "evidence": "evidence/pax-eligibility-validation.json",
-      "readiness": "VALIDATOR_VERIFIED_SYNTHETIC_GATE_ONLY_ACTUAL_DATA_REJECTED_UPSTREAM_OPEN"
+      "readiness": "REQUIRES_CHRONOLOGY_POLICY_REVISION_BEFORE_ADOPTION"
     },
     {
       "file": "proposals/aca-closure-links.patch",
@@ -783,6 +783,135 @@
       "cache_api_checked_at_utc": "2026-10-05T07:45:02.308549+00:00"
     },
     "publication_integrity": {
+      "patch_hashes_and_individual_applicability": 7,
+      "fde_combined_applicability": "PASS",
+      "clean_original_source_snapshots": 8,
+      "evidence_json_records_parsed": 8,
+      "local_markdown_targets": 71,
+      "unique_pinned_source_citations": 29,
+      "required_hosted_jobs": 10,
+      "workflow_and_task_run_provenance": "PASS",
+      "audit_cache_and_bytecode_excluded": true,
+      "bounded_public_secret_pattern_scan": "No configured secret patterns found",
+      "scope": "File/hash/applicability/source-line integrity and bounded secret-pattern review; not exhaustive semantic, external-link or credential scanning."
+    }
+  },
+  "adoption_readiness_review": {
+    "review_base_commit": "52fe8623193ffdef4cb882e31bf94e256df32dc1",
+    "observed_at_utc": "2026-10-05 08:27:03 UTC",
+    "scope": "Current-head T01-T03 compatibility and handoff; bounded FDE/Pax/Quantum public owner-decision research.",
+    "priority_upstream_heads": [
+      {
+        "repository": "Bridge-Node-7/materials-to-mission",
+        "default_branch": "main",
+        "commit": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+        "reference_url": "https://api.github.com/repos/Bridge-Node-7/materials-to-mission/git/refs/heads/main",
+        "matches_proposal_base": true
+      },
+      {
+        "repository": "Bridge-Node-7/frontier-decision-engine",
+        "default_branch": "main",
+        "commit": "4a913756d00cdd321da04bf7350507e571f2f2dd",
+        "reference_url": "https://api.github.com/repos/Bridge-Node-7/frontier-decision-engine/git/refs/heads/main",
+        "matches_proposal_base": true
+      },
+      {
+        "repository": "Bridge-Node-7/ai-cyber-assurance",
+        "default_branch": "main",
+        "commit": "9033bf73bbd3923c5de0a9c6fb9959b4c140de64",
+        "reference_url": "https://api.github.com/repos/Bridge-Node-7/ai-cyber-assurance/git/refs/heads/main",
+        "matches_proposal_base": true
+      }
+    ],
+    "priority_patch_hash_and_applicability_checks": 4,
+    "fde_combined_applicability": "PASS",
+    "original_source_snapshots_clean": 8,
+    "priority_handoff": "Existing runtime/setup/apply/refresh/positive-negative acceptance/drift instructions are sufficient. No T01-T03 proposal or workflow changes justified.",
+    "hosted_run_preserved": {
+      "run_id": 37278630678,
+      "url": "https://github.com/hideouts-io/bridgenode7-technical-review/actions/runs/37278630678",
+      "successful_jobs_reconfirmed": 10,
+      "workflow_hash_matches_verified_run": true,
+      "new_runs_dispatched": 0
+    },
+    "owner_record_coverage": [
+      {
+        "repository": "Bridge-Node-7/frontier-decision-engine",
+        "checked_at_utc": "2026-10-05T08:27:47.196528+00:00",
+        "source_commit": "4a913756d00cdd321da04bf7350507e571f2f2dd",
+        "head_matches_inspected_base": true,
+        "recent_commits_inspected": 10,
+        "all_state_issue_endpoint_records": 87,
+        "ordinary_issues": 0,
+        "pull_endpoint_records": 87,
+        "issue_pages": 1,
+        "pull_pages": 1,
+        "discussions_enabled": false,
+        "comment_review_pr_numbers": [
+          26,
+          60,
+          77
+        ],
+        "raw_issue_list_sha256": "c7cfac30b405cb9af67ff6e53937a3d229bb2916a9d82d4b4484890b4303317a",
+        "raw_pull_list_sha256": "b0a6066d99b641c882262cb7d324fdd506f7bd224091c1f41b3a3e017e598463"
+      },
+      {
+        "repository": "Bridge-Node-7/pax-silica",
+        "checked_at_utc": "2026-10-05T08:27:46.618612+00:00",
+        "source_commit": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
+        "head_matches_inspected_base": true,
+        "recent_commits_inspected": 10,
+        "all_state_issue_endpoint_records": 53,
+        "ordinary_issues": 0,
+        "pull_endpoint_records": 53,
+        "issue_pages": 1,
+        "pull_pages": 1,
+        "discussions_enabled": false,
+        "comment_review_pr_numbers": [
+          22,
+          48,
+          50
+        ],
+        "raw_issue_list_sha256": "0c89d96da9b1a7af55fbcbf3f3f010749c0673f7d721bb7dd6201878ad4c7c0d",
+        "raw_pull_list_sha256": "02982b8c33d7310916c8b031798f05dd42a97675fd24eaf137d99d01c6467d31"
+      },
+      {
+        "repository": "Bridge-Node-7/quantum-readiness-space-communications",
+        "checked_at_utc": "2026-10-05T08:27:46.401198+00:00",
+        "source_commit": "0f926377de268b20c2b1223eaf830405b8eb3648",
+        "head_matches_inspected_base": true,
+        "recent_commits_inspected": 10,
+        "all_state_issue_endpoint_records": 34,
+        "ordinary_issues": 0,
+        "pull_endpoint_records": 33,
+        "issue_pages": 1,
+        "pull_pages": 1,
+        "discussions_enabled": false,
+        "comment_review_pr_numbers": [
+          1,
+          12
+        ],
+        "raw_issue_list_sha256": "858e2fa1983913fb3303453e6f2f51c2175ab26bf3ebb2e8687bbc6452283e2e",
+        "raw_pull_list_sha256": "7e1e3e29d4922d119175ffa94c37e95c1a161066bc7299c0ab2af1d55e67c691"
+      }
+    ],
+    "owner_record_outcomes": {
+      "FDE": "No authoritative leap-second or sub-millisecond decision found within the inspected public scope; existing owner question remains.",
+      "Pax": "PR50 resolves the distinct field/snapshot date intent. Correct F06/T06 and mark the preserved cutoff-bearing patch as requiring revision; see evidence/pax-eligibility-validation.json public_owner_record_review.",
+      "Quantum": "Current method requires approved scope/support/coverage rules, but inspected owner records do not approve the example counting units, eleven-item denominator or seven completed items. Coverage remains NOT_ESTABLISHED."
+    },
+    "access_limit": "Quantum pull endpoint omits PR12 and GET returns HTTP404; its issue-shaped record and two accessible issue comments concern a closed, unmerged historical CI proposal. Discussions are disabled in all three repositories.",
+    "search_limit": "Public current documents, ten recent commits, complete available all-state issue/pull lists and selected relevant comments/reviews only; no claim that owner decisions are absent from every public or private source.",
+    "tools_used": [
+      "Connected GitHub plugin: repository metadata, issue searches, workflow jobs and Pax pull-request reads",
+      "Authenticated gh REST API: exact refs, paginated public lists, comparisons, commits and selected comments/reviews",
+      "Local Git/JSON/hash and source-command review"
+    ],
+    "current_inventory_sha256": "c85201ca012d42059a38cb872a27f98ac44a95d86aa11d2524abf088090d16f4",
+    "unchanged_artifacts": "All seven proposal patches and the verified hosted workflow remain byte-unchanged. No source code or dependency changes; no runtime gates repeated.",
+    "publication_change": "Eight existing files corrected to reflect the Pax owner record and candidate disposition; no duplicate report or task register.",
+    "upstream_tasks": "T01-T07 remain open; no upstream writes, dispatch, contact, releases or deployment.",
+    "artifact_checks": {
       "patch_hashes_and_individual_applicability": 7,
       "fde_combined_applicability": "PASS",
       "clean_original_source_snapshots": 8,
