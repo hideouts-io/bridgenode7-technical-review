@@ -1,0 +1,20 @@
+# Candidate changes for maintainer review
+
+These are private proposals against exact public-source commits. None is applied to Bridge Node 7's repositories, committed, released, or deployed. [TODO.md](../TODO.md) owns the complete implementation scope and acceptance criteria; this file records candidate provenance and actual verification.
+
+| Candidate | Repository/base | Included change | Local result and remaining work |
+| --- | --- | --- | --- |
+| [M2M source validation](m2m-source-validation.patch) | `materials-to-mission` · `2a8d26af86e8adb8b1e34550045782d1a20418a4` · MIT | Reuse existing public source validator before projection; one actual-CLI integration test over the six existing invalid cases. | Targeted 3/3 and complete 301-test gate pass after evidence refresh; sentinel and critical-condition probes rejected before output. Record source-profile provenance in the final interface review. |
+| [FDE nullable-date guard — partial](fde-nullable-date-guard.partial.patch) | `frontier-decision-engine` · `4a913756d00cdd321da04bf7350507e571f2f2dd` · Apache-2.0 | Reject nullable review/expiry values when parsing fails; one actual-digest behavior test. | Targeted 17/17 and complete 227-test/browser gate pass after facts/manifest refresh. **Still accepts a parseable non-RFC3339 date. T02 remains incomplete.** Candidate browser success does not explain the original intermittent transport failure. |
+| [FIW canonical root](fiw-canonical-root.patch) | `frontier-intelligence-workflows` · `36366e96c12765e14d09965c1f82330194dfa8d3` · MIT | One code line canonicalizes the root; two required generated manifests are included. | 181 tests, compile checks, and 20/20 validator controls pass on macOS/Python 3.11.16; original source has 32 test errors. |
+| [Pax eligibility validation](pax-eligibility-validation.patch) | `pax-silica` · `2f62f678d06f8444ddc7788ce03e1f1f46cf4cba` · MIT | Extend existing source-ID/date checks to eligibility fields. No source-data correction is included. | Rejects the published contradiction, an invalid date, and an orphan source; accepts an in-boundary synthetic control. Full 59-test gate passes only with that synthetic date fixture. **The factual date and snapshot correction still require the evidence owner.** |
+
+## Review and verification
+
+In an authorized candidate checkout, first verify the recorded base and use `git apply --check /path/to/candidate.patch`. That check validates applicability; it does not modify files. Review the diff before applying a candidate. All four applicability checks passed against the clean audit snapshots; the executed candidate gates and patch hashes are recorded in [verification evidence](../evidence/verification.json).
+
+Use each repository's existing onboarding and dependency files. FDE and M2M patches omit generated facts/evidence files: maintainers must regenerate them through existing commands and review the resulting diff before the full gate. M2M documents `python scripts/check_repo.py --update-evidence` followed by non-mutating `python scripts/check_repo.py`; FDE uses its existing facts/manifest commands and `npm run check`. FIW includes the narrowly refreshed manifests because its one-line change changes those sealed source hashes.
+
+Pax's validator-only proposal is not ready to produce a passing build of the unchanged published data. Its intentional rejection makes the chronology issue visible. A disposable synthetic test date demonstrates validator behavior but must never be substituted for the real review record. The candidate follows existing truthiness-based optional-date handling; the maintainer must settle empty, null, and wrong-type eligibility-field semantics before calling its field validation complete.
+
+The repository licenses remain applicable to their code fragments; source provenance is explicit above. FMA's proprietary evaluation/review policy is respected by providing only the original-input specification in F05/T05. ACA and the quantum example have correction specifications in the findings/backlog; no unverified source patch is presented for them.

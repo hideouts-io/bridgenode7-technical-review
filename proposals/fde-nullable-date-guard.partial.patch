@@ -1,0 +1,39 @@
+diff --git a/site/src/lib/governed-context.js b/site/src/lib/governed-context.js
+index dd8ae59..10c5250 100644
+--- a/site/src/lib/governed-context.js
++++ b/site/src/lib/governed-context.js
+@@ -149,6 +149,8 @@ function freshnessState(packet, now) {
+   const reviewDue = freshness?.review_due_at === null ? null : parseTimestamp(freshness?.review_due_at);
+   const validUntil = freshness?.valid_until === null ? null : parseTimestamp(freshness?.valid_until);
+   if (!issued || !sourceAsOf) return { state: 'INVALID', error: 'Packet freshness timestamps are invalid.' };
++  if (freshness.review_due_at !== null && !reviewDue) return { state: 'INVALID', error: 'Packet review_due_at must be a valid timestamp or null.' };
++  if (freshness.valid_until !== null && !validUntil) return { state: 'INVALID', error: 'Packet valid_until must be a valid timestamp or null.' };
+   if (sourceAsOf > issued) return { state: 'INVALID', error: 'Packet source_as_of is later than issued_at.' };
+   if (issued.getTime() > now.getTime() + CLOCK_SKEW_MS) return { state: 'INVALID', error: 'Packet issued_at is unacceptably future-dated.' };
+   if (reviewDue && reviewDue < sourceAsOf) return { state: 'INVALID', error: 'Packet review_due_at is earlier than source_as_of.' };
+diff --git a/tests/governed-context.test.js b/tests/governed-context.test.js
+index 7354b57..65ec622 100644
+--- a/tests/governed-context.test.js
++++ b/tests/governed-context.test.js
+@@ -180,6 +180,21 @@ test('missing freshness boundaries are not active-eligible', async () => {
+   assert.equal(result.trust.freshness, 'NOT_ESTABLISHED');
+ });
+ 
++test('malformed non-null freshness boundaries are rejected with recomputed integrity', async () => {
++  for (const field of ['review_due_at', 'valid_until']) {
++    for (const value of ['not-a-date', '', 42, false, {}]) {
++      const packet = await packetFixture();
++      packet.freshness[field] = value;
++      packet.integrity.envelope_sha256 = await decisionContextEnvelopeDigest(packet);
++      const result = await validateDecisionContextPacket(packet, { now: NOW });
++      assert.equal(result.valid, false, `${field}: ${JSON.stringify(value)}`);
++      assert.equal(result.activeEligible, false);
++      assert.equal(result.trust.freshness, 'INVALID');
++      assert.ok(result.errors.some((message) => message.includes(field)));
++    }
++  }
++});
++
+ test('self-asserted authenticated origin is rejected without an external trust verifier', async () => {
+   const packet = await packetFixture();
+   packet.origin.authentication_state = 'AUTHENTICATED';

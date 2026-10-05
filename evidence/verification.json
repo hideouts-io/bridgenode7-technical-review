@@ -1,0 +1,535 @@
+{
+  "review_date": "2026-10-04",
+  "timezone": "America/Los_Angeles",
+  "execution_utc_date": "2026-10-05",
+  "tools_used": [
+    "Plugin-management discovery/suggestion: GitHub plugin available but not connected",
+    "GitHub CLI 2.101.0 authenticated as hideouts-io; public REST API reads and private repository creation",
+    "Native web research of primary documentation and selected original sources",
+    "Git public shallow clones; existing repository scripts/test gates; isolated project environments"
+  ],
+  "scope": {
+    "canonical_account": "Bridge-Node-7",
+    "account_type": "User",
+    "public_repositories": 8,
+    "forks": 0,
+    "archived": 0,
+    "templates": [
+      "frontier-intelligence-workflows"
+    ],
+    "similarly_named_organization": "BridgeNode7; 0 public repositories; blog points to Bridge-Node-7",
+    "terminal_page_2_repository_count": 0,
+    "review_depth": "Complete public inventory; focused source, methodology, workflow and local verification; not exhaustive security, scientific or source-semantic audit"
+  },
+  "link_checks": {
+    "inline_markdown_links_extracted": 556,
+    "missing_local_or_mapped_main_targets": 0,
+    "fragments_checked": false,
+    "first_party_http_get": [
+      {
+        "url": "https://bridgenode7.com/",
+        "status": 200,
+        "final_url": "https://bridgenode7.com/",
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "url": "https://bridgenode7.com/frontier-decision-engine/",
+        "status": 200,
+        "final_url": "https://bridgenode7.com/frontier-decision-engine/",
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "url": "https://bridgenode7.com/materials-to-mission/",
+        "status": 200,
+        "final_url": "https://bridgenode7.com/materials-to-mission/",
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "url": "https://bridgenode7.com/neutral-atom-ftqc/",
+        "status": 200,
+        "final_url": "https://bridgenode7.com/neutral-atom-ftqc/",
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "url": "https://bridgenode7.com/partner/",
+        "status": 200,
+        "final_url": "https://bridgenode7.com/partner/",
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "url": "https://bridgenode7.com/pax-silica/",
+        "status": 200,
+        "final_url": "https://bridgenode7.com/pax-silica/",
+        "content_type": "text/html; charset=utf-8"
+      }
+    ]
+  },
+  "profile_local_gate": {
+    "exit_code": 0,
+    "stdout": "PASS control-surface validation"
+  },
+  "captured_hosted_validation": [
+    {
+      "repository": "Bridge-Node-7",
+      "name": "Validate control surface",
+      "head_sha": "3f959138f3252b16bc69dabf178bdde83a606a3b",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Bridge-Node-7/Bridge-Node-7/actions/runs/37218566751",
+      "created_at_utc": "2026-10-04T16:55:38Z"
+    },
+    {
+      "repository": "ai-cyber-assurance",
+      "name": "Validate repository",
+      "head_sha": "9033bf73bbd3923c5de0a9c6fb9959b4c140de64",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Bridge-Node-7/ai-cyber-assurance/actions/runs/36965772169",
+      "created_at_utc": "2026-10-02T04:43:10Z"
+    },
+    {
+      "repository": "frontier-mission-assurance",
+      "name": "V&V CI",
+      "head_sha": "f99dd2174c74f26b648321e02f8d30e2cff10230",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Bridge-Node-7/frontier-mission-assurance/actions/runs/37187427483",
+      "created_at_utc": "2026-10-04T07:58:42Z"
+    },
+    {
+      "repository": "frontier-intelligence-workflows",
+      "name": "validate",
+      "head_sha": "36366e96c12765e14d09965c1f82330194dfa8d3",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Bridge-Node-7/frontier-intelligence-workflows/actions/runs/37188725161",
+      "created_at_utc": "2026-10-04T08:22:45Z"
+    },
+    {
+      "repository": "frontier-decision-engine",
+      "name": "CI",
+      "head_sha": "4a913756d00cdd321da04bf7350507e571f2f2dd",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Bridge-Node-7/frontier-decision-engine/actions/runs/37156107424",
+      "created_at_utc": "2026-10-03T21:43:29Z"
+    },
+    {
+      "repository": "materials-to-mission",
+      "name": "CI",
+      "head_sha": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Bridge-Node-7/materials-to-mission/actions/runs/37189358992",
+      "created_at_utc": "2026-10-04T08:34:23Z"
+    },
+    {
+      "repository": "pax-silica",
+      "name": "CI",
+      "head_sha": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Bridge-Node-7/pax-silica/actions/runs/37087604932",
+      "created_at_utc": "2026-10-03T01:50:15Z"
+    },
+    {
+      "repository": "quantum-readiness-space-communications",
+      "name": "Release integrity",
+      "head_sha": "0f926377de268b20c2b1223eaf830405b8eb3648",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Bridge-Node-7/quantum-readiness-space-communications/actions/runs/36965767481",
+      "created_at_utc": "2026-10-02T04:43:06Z"
+    }
+  ],
+  "repository_verification": [
+    {
+      "repository": "Bridge-Node-7",
+      "command": "Extract Python control-surface step from .github/workflows/validate.yml and run with python3",
+      "baseline": "PASS",
+      "scope": "Local documented control-surface step only; public rights/inventory separately inspected via GitHub API",
+      "logs": [
+        {
+          "local_cache_path": "profile-control-gate.json",
+          "sha256": "7ff02413bef54bc81932e28bb2aff5ed2d847856d7e23ee8d3a5abf3deb6fd21"
+        }
+      ],
+      "inspected_sha": "3f959138f3252b16bc69dabf178bdde83a606a3b"
+    },
+    {
+      "repository": "ai-cyber-assurance",
+      "commands": [
+        "python -m unittest discover -s tests -p test_*.py",
+        "python scripts/refresh_release_metadata.py --check",
+        "python scripts/validate_repo.py",
+        "python scripts/validate_assurance_case.py 10-examples/synthetic-ai-agent-assurance/assurance-case.json --as-of 2026-10-04"
+      ],
+      "python": "3.14.7",
+      "baseline": "PASS",
+      "tests": 64,
+      "probes": "Missing retest corrective_action_ref and cross-wired action both CLI PASS; cross-wired views render; missing field violates schema",
+      "logs": [
+        {
+          "local_cache_path": "assurance-audit/logs/aca-tests.log",
+          "sha256": "a69c4fe7e86da4ff2ba27e6e51fda620fdf0b268d7356e8ca9370f50ed38e37d"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/aca-case.log",
+          "sha256": "e3dc2fa1e3fce7e10767e650b1e801292e8df0365afb5ac7eea721ecb76644a4"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/aca-missing-retest-action.log",
+          "sha256": "e3dc2fa1e3fce7e10767e650b1e801292e8df0365afb5ac7eea721ecb76644a4"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/aca-mismatched-retest-action.log",
+          "sha256": "e3dc2fa1e3fce7e10767e650b1e801292e8df0365afb5ac7eea721ecb76644a4"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/aca-mismatched-retest-rendered.log",
+          "sha256": "e87c36596b07152b2d550fc53489341b932b26d4b609f2df255fb7ee9c72b9c9"
+        }
+      ],
+      "inspected_sha": "9033bf73bbd3923c5de0a9c6fb9959b4c140de64"
+    },
+    {
+      "repository": "frontier-mission-assurance",
+      "commands": [
+        "make check",
+        "fma validate fma-null-criticality.json",
+        "fma coverage fma-null-criticality.json"
+      ],
+      "python": "3.14.7",
+      "baseline": "PASS",
+      "tests": 255,
+      "probes": {
+        "null_criticality_validate_exit": 0,
+        "null_criticality_coverage_exit": 2,
+        "independent_schema_result": "REJECT null; numeric 0..5 contract"
+      },
+      "limits": "Local newer Python not full hosted matrix; proprietary evaluation-only; no release-byte/network-trace verification",
+      "logs": [
+        {
+          "local_cache_path": "assurance-audit/logs/fma-make-check.log",
+          "sha256": "4982f42e04621be25aeb1bc79c273a25f8a73f84e4b6d9311565e91d2fd26644"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/fma-null-criticality-validate.log",
+          "sha256": "78ae3e673b9833ad7ea7c98e973d37b203cb42d325732a40505f266374cfc982"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/fma-null-criticality-coverage.log",
+          "sha256": "f337c34b91763ba07af0a01bcb731636cd0743c20adb68077ad9e2820631f56d"
+        }
+      ],
+      "inspected_sha": "f99dd2174c74f26b648321e02f8d30e2cff10230"
+    },
+    {
+      "repository": "frontier-intelligence-workflows",
+      "commands": [
+        "python scripts/run_tests.py --root . --json-output EXTERNAL/source-test-summary.json",
+        "python scripts/compile_sources.py --root .",
+        "python scripts/validate_repo.py --root ."
+      ],
+      "python_baselines": [
+        "3.11.16",
+        "3.14.7"
+      ],
+      "baseline": "TEST/COMPILE FAIL; ordinary validator PASS",
+      "tests_executed": 181,
+      "test_errors": 32,
+      "test_failures": 0,
+      "skips": 0,
+      "validator_controls_passed": 20,
+      "candidate": "181 tests PASS; compile checks for 24 Python files and 6 schemas PASS; 20/20 controls PASS on Python 3.11.16",
+      "logs": [
+        {
+          "local_cache_path": "assurance-audit/logs/fiw-tests.log",
+          "sha256": "f35098ea92bf14e9fe77fc8e7a02314bb611e4a439175a5010fdfd79df117027"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/fiw-tests-python311.log",
+          "sha256": "c7662d382772f928b96a0b928adb29892fd1a7c1032476d04bad51b7ed851e5c"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/fiw-compile.log",
+          "sha256": "1ab9ed8477bcdb48dd8a9e3223d81bfd96af3cfcb67252f253e862f4c748c3cb"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/fiw-proposed-fix-refresh.log",
+          "sha256": "98faecf292a0d3b204abdf5a752f32f5c5b482e0dc50b340bcc32e1e6fe47843"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/fiw-proposed-fix-compile.log",
+          "sha256": "0b0f35f53a0f4e9476db85c5e55f13939c0e1dd767b3df72865130e35e9bf006"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/fiw-proposed-fix-validation.log",
+          "sha256": "edd352f869f86a3f25a6fd62cca716fef1958e391a5cce92187144a70aa5c51c"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/fiw-root-reproduction.log",
+          "sha256": "ba1dbf4badbb881893a4a0286ffe045b5f9c94f4fd758ecb3b3d489de5ef78b5"
+        }
+      ],
+      "inspected_sha": "36366e96c12765e14d09965c1f82330194dfa8d3"
+    },
+    {
+      "repository": "frontier-decision-engine",
+      "commands": [
+        "npm run check",
+        "npm run test:release",
+        "node fde-freshness-repro.mjs REPOSITORY OUTPUT_DIRECTORY"
+      ],
+      "environment": {
+        "os": "macOS27.0",
+        "build": "26A428",
+        "arch": "arm64",
+        "node": "26.10.0",
+        "python": "3.14.7",
+        "fde_playwright": "1.63.0",
+        "m2m_browser_playwright": "1.57.0"
+      },
+      "results": {
+        "base_sha": "4a913756d00cdd321da04bf7350507e571f2f2dd",
+        "application_version": "0.5.16",
+        "baseline_node_tests": 226,
+        "baseline_full_gate": "failed_twice_at_context_handoff",
+        "baseline_later_gate_not_reached": [
+          "test:release"
+        ],
+        "baseline_context_isolated": "diagnostic_repeat_pass_after_observed_dynamic_module_fetch_failure",
+        "candidate_node_tests": 227,
+        "candidate_full_gate": "PASS",
+        "candidate_targeted_tests": 17,
+        "candidate_scope": "partial: fixes nullable parse-failure conflation, not full RFC3339 format assertion",
+        "remaining_reproduced_case": "September 16, 2026 accepted",
+        "baseline_release_isolated": "PASS after full-gate attempts failed before reaching it"
+      },
+      "logs": [
+        {
+          "local_cache_path": "decision-materials-audit/fde-check.log",
+          "sha256": "72cc96e8fc7338858cc6a91d1196e39ad4492ae10757998c3ed8db71d02889d1"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/fde-baseline-retry-check.log",
+          "sha256": "18dbfc4cea50e0a2eb7f03b68865d400cdd114da0aaa7084ceb393c3216dbe6e"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/fde-baseline-release.log",
+          "sha256": "66cb270b87a5e5a0fc9a064f1d91b43098c3c4a9afa3c9b5bc74746b6254027c"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/fde-original-repro-expanded.log",
+          "sha256": "b03d7b8a74f5a6be03f7ff4db3cc11c1fbe2f4ac56d439d407ed0c15b78468c8"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/fde-schema-conformance-expanded.log",
+          "sha256": "d7f96dae3ae4b69e81faee0cb591446012698f773328fef0b5d085618b5eb81e"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/fde-candidate-check.log",
+          "sha256": "d117a8bf5f23ddf1fbb72022f86218111b0810752b684156ed9849e03d89ed9c"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/fde-candidate-repro-expanded.log",
+          "sha256": "c09a83e5b821bdb1316d9fcba31f2ad40af971cedc020b980d44416bd0ff6dba"
+        }
+      ],
+      "inspected_sha": "4a913756d00cdd321da04bf7350507e571f2f2dd"
+    },
+    {
+      "repository": "materials-to-mission",
+      "commands": [
+        "python scripts/check_repo.py",
+        "python scripts/check_repo.py --update-evidence",
+        "python scripts/export_fma_projection.py examples/invalid/triggered-critical-advance.json --output-dir NEW_OUTPUT",
+        "python m2m-projection-repro.py REPOSITORY NEW_OUTPUT_DIRECTORY"
+      ],
+      "results": {
+        "base_sha": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+        "application_version": "0.7.6",
+        "baseline_full_gate": "PASS",
+        "baseline_tests": 300,
+        "baseline_skipped": 0,
+        "combined_coverage_percent": 95.3970080552359,
+        "five_minute_evaluation": "PASS",
+        "native_valid_projection": "PASS",
+        "candidate_full_gate": "PASS",
+        "candidate_tests": 301,
+        "candidate_targeted_tests": 3,
+        "candidate_public_boundary_probe": "rejects_before_output",
+        "candidate_critical_advance_probe": "rejects_before_output",
+        "browser_uat": {
+          "status": "PASS",
+          "profiles": 14,
+          "contract_checks_per_viewport": 42,
+          "viewports": 7,
+          "build": "PASS",
+          "human_device_at_attestation": "OPEN_NOT_ASSERTED",
+          "frontend_unchanged_by_candidate": true
+        }
+      },
+      "consumer_probe": {
+        "base_sha": "f99dd2174c74f26b648321e02f8d30e2cff10230",
+        "valid_graph_decision_reference_checks": "PASS",
+        "invalid_source_projection_reference_checks": "PASS",
+        "claim_limit": "target checks structure/references, not M2M source governance or actual approval"
+      },
+      "logs": [
+        {
+          "local_cache_path": "decision-materials-audit/m2m-check.log",
+          "sha256": "55daa6c3edd0b0f7d4ca9034f70e902cbff36e7a3601744053d5dd2b55e208a9"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/m2m-five-minute.log",
+          "sha256": "a80dcca28b0e7fca16834caa0b9bae4a11076594329961ce25f4218b18dc85d4"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/m2m-projection-repro.log",
+          "sha256": "720da814d56a4df0d5f583463c0880fdbb2f6ba423f6712f9b04c2e541d8e238"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/m2m-candidate-check.log",
+          "sha256": "6f583d155c83a583c22106b76342a202ad43640080eb0d8ba3b73192a97b40a1"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/m2m-candidate-repro-expanded.log",
+          "sha256": "4afd89d00b88362dc3cc48b196d31e91d994d04a5ac8b55fbab8d9da1093e3aa"
+        },
+        {
+          "local_cache_path": "decision-materials-audit/m2m-browser-uat.log",
+          "sha256": "e73272982804d0bbeb3c5af41c701864a5e6dffe842bc81bd211325a1187f950"
+        },
+        {
+          "local_cache_path": "assurance-audit/logs/m2m-invalid-fma-decision.log",
+          "sha256": "7d2c78cc549962da5c5e8fcc6899f98c1bf8a55a659bf50e7bdbef973623a1a8"
+        }
+      ],
+      "inspected_sha": "2a8d26af86e8adb8b1e34550045782d1a20418a4"
+    },
+    {
+      "repository": "pax-silica",
+      "commands": [
+        "python scripts/check_repo.py",
+        "python scripts/validate_data.py --root FIXTURE_ROOT --as-of 2026-10-04",
+        "python scripts/browser_uat.py --base-url http://127.0.0.1:8876/ --evidence EXTERNAL/chromium"
+      ],
+      "python": "3.12.14",
+      "browser_playwright": "1.57.0",
+      "baseline": "PASS",
+      "tests": 59,
+      "browser_checks": 21,
+      "candidate_result_pairs_original_candidate": {
+        "published_chronology": [
+          0,
+          1
+        ],
+        "synthetic_valid_date": [
+          0,
+          0
+        ],
+        "invalid_nonempty_date": [
+          0,
+          1
+        ],
+        "orphan_source": [
+          0,
+          1
+        ]
+      },
+      "candidate_gate": "59 tests PASS with synthetic date control only; current data intentionally rejected",
+      "candidate_limits": "No factual source-date correction; empty/null/type semantics still require explicit field-contract review",
+      "environment_correction": "First gate invocation lacked documented python PATH; activated virtual environment corrected audit setup without source change",
+      "logs": [
+        {
+          "local_cache_path": "research-repos-audit/logs/pax-gate-venv-path.log",
+          "sha256": "0178cd2f3d0c67d6b6ebd23e950353d87ee81354bd3ee47a3f657a9f19272042"
+        },
+        {
+          "local_cache_path": "research-repos-audit/logs/pax-browser-uat.log",
+          "sha256": "e312df1d10dcc6c3e2bbf649ab6734148e00f998de2c84e6aee68f236e8eb66f"
+        },
+        {
+          "local_cache_path": "research-repos-audit/logs/pax-candidate-full-gate.log",
+          "sha256": "4c48bf93167c4847bc72d8839ab387041269b6135f58396e5bebc1a16d014c26"
+        },
+        {
+          "local_cache_path": "research-repos-audit/eligibility-validation-results.json",
+          "sha256": "af11c5aeb1e8ea6a6290525e4ea5f5cf544ed20a3ab027b1bf57b7a674dbee1a"
+        }
+      ],
+      "inspected_sha": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba"
+    },
+    {
+      "repository": "quantum-readiness-space-communications",
+      "commands": [
+        "bash scripts/validate.sh",
+        "python tools/check_external_links.py"
+      ],
+      "python": "3.12.14",
+      "offline_baseline": "PASS",
+      "tests": 50,
+      "manifest_hashes_verified": 93,
+      "deterministic_zip": "PASS",
+      "network_gate": "18 normalized targets;17 accepted including one planned-endpoint bypass; NSA automated403 causes gate failure; independent web source readable",
+      "probes": "Recommended sample lacks2 canonical domains;7/11 rounds correctly to64% but item register absent",
+      "logs": [
+        {
+          "local_cache_path": "research-repos-audit/logs/quantum-gate.log",
+          "sha256": "1994aec4986b5ca0391723a11a019b3e7e7b303d037f649cbaf03960e929074c"
+        },
+        {
+          "local_cache_path": "research-repos-audit/logs/quantum-external-links.log",
+          "sha256": "eb502fd0b2ad63f2b63ab841e9fc5367d5b8be8216f8b9619c564ca2c1cd982e"
+        }
+      ],
+      "inspected_sha": "0f926377de268b20c2b1223eaf830405b8eb3648"
+    }
+  ],
+  "candidate_patches": [
+    {
+      "file": "proposals/m2m-source-validation.patch",
+      "repository": "materials-to-mission",
+      "base_sha": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+      "sha256": "c107b41f0cd6daf2e8d8f6cae1ede4cc2c1e31b7c9bd35600ba546dd5f6c2d36",
+      "scope": "Tested source-preflight candidate; generated evidence omitted; profile-provenance review remains",
+      "integrated_upstream": false
+    },
+    {
+      "file": "proposals/fde-nullable-date-guard.partial.patch",
+      "repository": "frontier-decision-engine",
+      "base_sha": "4a913756d00cdd321da04bf7350507e571f2f2dd",
+      "sha256": "880913a3ace4331c737890c878fcc312bfb3d530252d7c99e61293c9f917d4ca",
+      "scope": "Partial guard only; full date-time enforcement unresolved",
+      "integrated_upstream": false
+    },
+    {
+      "file": "proposals/fiw-canonical-root.patch",
+      "repository": "frontier-intelligence-workflows",
+      "base_sha": "36366e96c12765e14d09965c1f82330194dfa8d3",
+      "sha256": "e4b4abc59aa2e8914f6af061ce51709e1f6bdb2c565ae4bd8a050bcdd3adb6fc",
+      "scope": "Tested one-line root resolution and sealed manifests",
+      "integrated_upstream": false
+    },
+    {
+      "file": "proposals/pax-eligibility-validation.patch",
+      "repository": "pax-silica",
+      "base_sha": "2f62f678d06f8444ddc7788ce03e1f1f46cf4cba",
+      "sha256": "862f081fe3d3b1d712dc1cfa74b95843e1f822453ef99338e98dd8ee658176e1",
+      "scope": "Validator only; actual date correction unresolved; tested nonempty-invalid/date-boundary/source-ID cases",
+      "integrated_upstream": false
+    }
+  ],
+  "raw_log_policy": "Original logs and isolated environments retained locally under ignored .audit-cache; above digests identify artifacts. This JSON contains portable summaries,not a copy of all raw logs.",
+  "publication": {
+    "remote": "https://github.com/hideouts-io/bridgenode7-technical-review",
+    "visibility": "PRIVATE",
+    "report_remote_state": "EMPTY_REMOTE_LOCAL_UNCOMMITTED_REPORT",
+    "commits_created": false,
+    "push_performed": false,
+    "collaborators_invited": false,
+    "upstream_modified": false
+  },
+  "command_notation": "Commands use portable external-path placeholders; original local output logs are retained in .audit-cache and identified by digest."
+}

@@ -1,0 +1,60 @@
+--- a/scripts/validate_data.py
++++ b/scripts/validate_data.py
+@@ -288,16 +288,11 @@
+         "programs",
+     ):
+         for record in data[group]:
+-            for sid in record.get(
+-                "source_ids",
+-                [],
+-            ):
+-                assert (
+-                    sid in source_map
+-                ), (
+-                    f"orphan source {sid} "
+-                    f"in {group}"
+-                )
++            for source_field in ("source_ids", "eligibility_source_ids"):
++                for sid in record.get(source_field, []):
++                    assert sid in source_map, (
++                        f"orphan source {sid} in {group}.{source_field}"
++                    )
+ 
+             if (
+                 record.get("state")
+@@ -330,22 +325,19 @@
+                 if record.get(key):
+                     iso(record[key])
+ 
+-            if record.get("verified_at"):
+-                verified_at = iso(
+-                    record["verified_at"]
+-                )
+-                identifier = str(
+-                    record.get("id")
+-                    or record.get("name")
+-                    or "<unnamed>"
+-                )
+-                assert (
+-                    verified_at <= snapshot
+-                ), (
+-                    "record verification postdates snapshot: "
+-                    f"{identifier} {verified_at.isoformat()} > "
+-                    f"{snapshot.isoformat()}"
+-                )
++            for verification_field in ("verified_at", "eligibility_verified_at"):
++                if record.get(verification_field):
++                    verified_at = iso(record[verification_field])
++                    identifier = str(
++                        record.get("id")
++                        or record.get("name")
++                        or "<unnamed>"
++                    )
++                    assert verified_at <= snapshot, (
++                        "record verification postdates snapshot: "
++                        f"{identifier}.{verification_field} "
++                        f"{verified_at.isoformat()} > {snapshot.isoformat()}"
++                    )
+ 
+             if record.get(
+                 "review_by"

@@ -1,0 +1,54 @@
+diff --git a/scripts/export_fma_projection.py b/scripts/export_fma_projection.py
+index 2a2b919..2e6c5e7 100644
+--- a/scripts/export_fma_projection.py
++++ b/scripts/export_fma_projection.py
+@@ -17,6 +17,9 @@ from typing import Any
+ 
+ from jsonschema import Draft202012Validator
+ 
++from materials_to_mission.validation_profiles import DEFAULT_VALIDATION_PROFILE
++from materials_to_mission.validator import validate_case
++
+ ADAPTER_VERSION = "1.0"
+ FMA_GRAPH_ID = "https://bridge-node-7.github.io/frontier-mission-assurance/assurance-graph.schema.json"
+ FMA_DECISION_ID = "https://bridge-node-7.github.io/frontier-mission-assurance/decision-receipt.schema.json"
+@@ -115,6 +118,14 @@ def project_case(case: dict[str, Any], *, source_path: str, source_sha256: str)
+     if case.get("synthetic") is not True or case.get("public_safe") is not True:
+         raise ValueError("FMA public projection requires synthetic=true and public_safe=true")
+ 
++    validation = validate_case(case, public=True, profile=DEFAULT_VALIDATION_PROFILE)
++    if not validation.valid:
++        findings = "; ".join(
++            f"{finding.code} {finding.path}: {finding.message}"
++            for finding in validation.findings
++        )
++        raise ValueError(f"M2M source validation failed for {source_path}: {findings}")
++
+     case_id = str(case.get("case_id", "")).strip()
+     if not case_id:
+         raise ValueError("case_id is required")
+diff --git a/tests/test_fma_interoperability.py b/tests/test_fma_interoperability.py
+index 6bfbcce..ebf7b41 100644
+--- a/tests/test_fma_interoperability.py
++++ b/tests/test_fma_interoperability.py
+@@ -84,3 +84,20 @@ def test_public_projection_refuses_non_synthetic_case():
+         )
+         assert result.returncode == 2
+         assert "requires synthetic=true and public_safe=true" in result.stdout
++
++
++def test_projection_refuses_invalid_source_cases_before_writing_artifacts():
++    with tempfile.TemporaryDirectory() as td:
++        root = Path(td)
++        for source in sorted((ROOT / "examples" / "invalid").glob("*.json")):
++            output_dir = root / source.stem
++            result = subprocess.run(
++                [sys.executable, str(SCRIPT), str(source), "--output-dir", str(output_dir)],
++                cwd=ROOT,
++                capture_output=True,
++                text=True,
++                check=False,
++            )
++            assert result.returncode == 2, result.stdout + result.stderr
++            assert "M2M source validation failed" in result.stdout
++            assert not output_dir.exists()
