@@ -1131,5 +1131,60 @@
       "No upstream repository writes or candidate commits were made. A passing external candidate gate does not establish upstream acceptance, production readiness, source authenticity or factual evidence credibility.",
       "Raw logs, candidate source and generated output remain in ignored local audit cache. Published digests identify those retained bytes but do not make the raw evidence publicly inspectable."
     ]
+  },
+  "patch_risk_assessment": {
+    "format": "bn7.review.patch-risk-summary/1",
+    "summarized_on": "2026-10-06",
+    "review_checkpoint": "5a38d1e60898fa3a0f71f61c71ae0f751562513d",
+    "source_commit": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+    "combined_diff_sha256": "8b8fdbef2811ae67bbb44464918eb10aa3499d5411c61f1b81f8215498a10d6f",
+    "component_identities": "combined_documentation_verification.patch_application_order in this file",
+    "recommendation": "merge",
+    "workflow_label": "human_review_required",
+    "advisory_scope": "Retained assessment of the exact combined runtime/documentation artifact at the recorded source base. Human maintainer acceptance and upstream verification remain required. This is not a new assessment at the newer upstream head.",
+    "ratings": {
+      "impact_if_wrong": "high",
+      "regression_likelihood": "low",
+      "regression_protection": "partial",
+      "recoverability": "managed",
+      "confidence": "moderate",
+      "status_quo_risk": "high"
+    },
+    "rating_scope": "Patch-adoption judgment within the public synthetic evaluation path; not a vulnerability severity score or evidence of operational harm.",
+    "auto_merge_exclusions": [
+      "public_contract"
+    ],
+    "existing_gate_evidence": "combined_documentation_verification records the exact local 302-test gate; hosted_candidate_verification covers the runtime-only proposal. Combined hosted checks were not run.",
+    "focused_consumer_probe": {
+      "consumer_version": "fma 0.11.2",
+      "valid_export_exit_code": 0,
+      "graph_validation_exit_code": 0,
+      "receipt_validation_exit_code": 0,
+      "receipt_disposition": "HOLD",
+      "existing_warning": "E-005: evidence is not linked to a supported claim/assumption",
+      "validation_profile": "m0-strict-0.4.0",
+      "toolkit_version": "0.7.6",
+      "reused_output_rejection_exit_code": 2,
+      "rejection_code": "CRITICAL_CONDITION",
+      "prior_output_files_byte_identical_after_rejection": 3,
+      "consumer_requirement": "Require exporter exit 0 and match the manifest source digest to the intended source before consuming files. A rejection leaves prior artifacts untouched; this observation does not establish a new regression or atomic output guarantees.",
+      "execution_boundary": "Recorded network-denied disposable-candidate probe with no supplied credentials; no subject code was rerun for this summary."
+    },
+    "upstream_acceptance": "OPEN",
+    "raw_evidence": [
+      {
+        "local_cache_path": "t01-patch-risk/report.md",
+        "sha256": "035df05a1b10f55a64a8b31f34043b331f0e631e4f74858da6b476f8aa20eb03"
+      },
+      {
+        "local_cache_path": "t01-patch-risk/assessment.json",
+        "sha256": "f680f1b6ac8a2a6fdec1b77ecafb92d1032621ea4820409f7e85e90cf46b4170"
+      },
+      {
+        "local_cache_path": "t01-patch-risk/raw-probe.json",
+        "sha256": "cf1ec003bd7a9f75081f8b9d67e1485352003eded1415e1efab754a834984e0c"
+      }
+    ],
+    "raw_evidence_policy": "Raw files remain private in ignored local cache. Digests identify retained bytes; they do not publish the raw files or prove source authenticity."
   }
 }

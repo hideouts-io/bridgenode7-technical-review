@@ -1710,5 +1710,172 @@
     "status": "COMBINED_LOCALLY_VERIFIED_UPSTREAM_OPEN",
     "hosted_combined_verification": "NOT_RUN",
     "attribution": "Subsequent local runtime-plus-documentation check; original runtime hosted evidence and navigation standalone-documentation evidence are unchanged."
+  },
+  "adoption_handoff": {
+    "format": "bn7.review.adoption-handoff/1",
+    "review_date": "2026-10-06",
+    "timezone": "America/Los_Angeles",
+    "observed_at_utc": "2026-10-06 10:34:23 UTC",
+    "review_start_commit": "5a38d1e60898fa3a0f71f61c71ae0f751562513d",
+    "scope": "Read-only public source freshness and patch applicability for T01–T03; CEO/maintainer instructions and adoption-week reconciliation. No repeated company-wide audit, subject-code execution, new patch or new risk assessment.",
+    "methods": [
+      "GitHub connector repository/ref/compare/commit reads",
+      "Detached disposable M2M/FDE snapshots and retained clean ACA snapshot for Git application checks",
+      "Git object byte comparisons for affected paths",
+      "Retained T01 assessment and probe verification"
+    ],
+    "priority_order": [
+      "T01",
+      "T03",
+      "T02"
+    ],
+    "repositories": [
+      {
+        "repository": "Bridge-Node-7/materials-to-mission",
+        "proposal_base": "2a8d26af86e8adb8b1e34550045782d1a20418a4",
+        "observed_main": "cc10b326dd6185d160ea76939f4089c3f7e1ca91",
+        "ref_url": "https://api.github.com/repos/Bridge-Node-7/materials-to-mission/git/ref/heads/main",
+        "patches_in_application_order": [
+          {
+            "file": "proposals/m2m-source-validation.patch",
+            "sha256": "ff69375080888612f33d7c308bf0878d1e5ee728fb6b84833ffdbdab5fb5aa0b"
+          },
+          {
+            "file": "proposals/m2m-default-profile-doc.patch",
+            "sha256": "87cac925cf1889275b17c8207ce36cf67d6a26759ec1a4a2c725b1cb46179997"
+          }
+        ],
+        "applicability_check": {
+          "command": "git apply --check REVIEW/proposals/m2m-source-validation.patch REVIEW/proposals/m2m-default-profile-doc.patch",
+          "source_state": "Clean detached checkout at observed_main",
+          "exit_code": 0,
+          "result": "PASS",
+          "patches_applied": false
+        },
+        "source_drift": {
+          "ahead_by": 1,
+          "behind_by": 0,
+          "compare_url": "https://github.com/Bridge-Node-7/materials-to-mission/compare/2a8d26af86e8adb8b1e34550045782d1a20418a4...cc10b326dd6185d160ea76939f4089c3f7e1ca91",
+          "commit_url": "https://github.com/Bridge-Node-7/materials-to-mission/commit/cc10b326dd6185d160ea76939f4089c3f7e1ca91",
+          "changed_paths": [
+            ".github/workflows/pages.yml",
+            "REPO_FILE_MANIFEST.sha256",
+            "scripts/build_web.py",
+            "tests/test_repository_truth.py"
+          ],
+          "reviewed_diff_scope": "Complete single-commit diff, including workflow and build/test changes",
+          "checked_unchanged_paths": [
+            "docs/VALIDATION.md",
+            "pyproject.toml",
+            "requirements-dev.txt",
+            "scripts/export_fma_projection.py",
+            "src/materials_to_mission/validation_profiles.py",
+            "src/materials_to_mission/validator.py",
+            "tests/test_fma_interoperability.py"
+          ],
+          "effect": "Pages URL/metadata generation and a repository-truth test changed. The manifest changed in unrelated entries, but both proposal patches still apply together. Exporter, validator, profile implementation, interoperability test and corrected guide target are unchanged. Re-run current complete/privacy gates; the historical 302-test total is not a current-head result."
+        },
+        "runtime_validation_at_observed_main": "NOT_RUN; historical results remain attached to their original base and candidate configuration",
+        "adoption_state": "OPEN; no upstream implementation or maintainer acceptance established by this bounded source check"
+      },
+      {
+        "repository": "Bridge-Node-7/frontier-decision-engine",
+        "proposal_base": "4a913756d00cdd321da04bf7350507e571f2f2dd",
+        "observed_main": "7213151ec3915e513854a8e9d555020b6faff594",
+        "ref_url": "https://api.github.com/repos/Bridge-Node-7/frontier-decision-engine/git/ref/heads/main",
+        "patches_in_application_order": [
+          {
+            "file": "proposals/fde-rfc3339-timestamp-contract.patch",
+            "sha256": "eee5bd19bea70cf34d0224209f39de1f3f4fd90b7ec49de2702ce9373a987bf6"
+          },
+          {
+            "file": "proposals/fde-context-threaded-harness.patch",
+            "sha256": "72da129d8dac44c13a141adb38e2c02079d05dcda002fe71ed9c82d889115fe4"
+          }
+        ],
+        "applicability_check": {
+          "command": "git apply --check REVIEW/proposals/fde-rfc3339-timestamp-contract.patch REVIEW/proposals/fde-context-threaded-harness.patch",
+          "source_state": "Clean detached checkout at observed_main",
+          "exit_code": 0,
+          "result": "PASS",
+          "patches_applied": false
+        },
+        "source_drift": {
+          "ahead_by": 1,
+          "behind_by": 0,
+          "compare_url": "https://github.com/Bridge-Node-7/frontier-decision-engine/compare/4a913756d00cdd321da04bf7350507e571f2f2dd...7213151ec3915e513854a8e9d555020b6faff594",
+          "commit_url": "https://github.com/Bridge-Node-7/frontier-decision-engine/commit/7213151ec3915e513854a8e9d555020b6faff594",
+          "changed_paths": [
+            ".github/workflows/ci.yml",
+            ".github/workflows/pages.yml",
+            "scripts/build_pages.py"
+          ],
+          "reviewed_diff_scope": "Complete single-commit diff, including workflow and build/test changes",
+          "checked_unchanged_paths": [
+            "package.json",
+            "project-facts.json",
+            "requirements-dev.txt",
+            "scripts/browser_context_e2e.py",
+            "site/manifest.sha256",
+            "site/src/lib/governed-context.js",
+            "tests/governed-context.test.js"
+          ],
+          "effect": "Pages packaging and workflows changed; all proposal target files and declared dependency files are unchanged. CI adds current-output byte comparison and alternate-public-URL artifact checks after npm run check. Include that stage and configured CodeQL when validating adoption."
+        },
+        "runtime_validation_at_observed_main": "NOT_RUN; historical results remain attached to their original base and candidate configuration",
+        "adoption_state": "OPEN; no upstream implementation or maintainer acceptance established by this bounded source check"
+      },
+      {
+        "repository": "Bridge-Node-7/ai-cyber-assurance",
+        "proposal_base": "9033bf73bbd3923c5de0a9c6fb9959b4c140de64",
+        "observed_main": "9033bf73bbd3923c5de0a9c6fb9959b4c140de64",
+        "ref_url": "https://api.github.com/repos/Bridge-Node-7/ai-cyber-assurance/git/ref/heads/main",
+        "patches_in_application_order": [
+          {
+            "file": "proposals/aca-closure-links.patch",
+            "sha256": "3d4f1c8d9f3aa113171ae67a62fadfcd68b424180cfcc183eb4cfe08a1c2ef9a"
+          }
+        ],
+        "applicability_check": {
+          "command": "git apply --check REVIEW/proposals/aca-closure-links.patch",
+          "source_state": "Clean retained main checkout at observed_main",
+          "exit_code": 0,
+          "result": "PASS",
+          "patches_applied": false
+        },
+        "source_drift": {
+          "matches_proposal_base": true,
+          "changed_paths": []
+        },
+        "runtime_validation_at_observed_main": "Recorded-base local/hosted candidate results retained; not rerun during this handoff",
+        "adoption_state": "OPEN; no upstream implementation or maintainer acceptance established by this bounded source check"
+      }
+    ],
+    "t01_assessment_reference": "evidence/m2m-source-validation.json:patch_risk_assessment",
+    "t02_policy_still_open": "Contract owner must specify supported leap-second behavior and sub-millisecond comparison precision. The separate test-server correction neither changes nor settles timestamp semantics.",
+    "acceptance_register": "TODO.md",
+    "acceptance_rule": "Confirmed owner, explicit acceptance, implemented upstream commit and applicable check links; T02 also requires its contract decision. Role proposals and passing external checks alone do not close tasks.",
+    "runtime_gates_executed_in_this_handoff": 0,
+    "upstream_write_actions": 0,
+    "raw_evidence": [
+      {
+        "local_cache_path": "adoption-handoff-20261006/github.json",
+        "sha256": "f5ed1d5ca86833b61848d68127ef461c6a22b86869d93eab44fedccb2b992acd"
+      },
+      {
+        "local_cache_path": "adoption-handoff-20261006/applicability.json",
+        "sha256": "3c3d814b616e0c42ba98ac3ab179a38609a8c7ba7390e16c970e4d6cdc128a16"
+      },
+      {
+        "local_cache_path": "adoption-handoff-20261006/source-path-comparison.json",
+        "sha256": "2b181bb861fb636dd378e366fb5887333728d4c4c9c9769615f9f2a4f9c0a921"
+      }
+    ],
+    "limitations": [
+      "Only T01–T03 public main branches were refreshed. No new acceptance is inferred from an unrelated commit or a successful workflow.",
+      "Successful git apply --check establishes textual applicability, not behavior, branch-protection parity, current-head CI success or maintainer approval.",
+      "The FDE owner date-time decision and all upstream implementation/acceptance remain open. Source and policy may change before adoption.",
+      "Historical records and proposal bytes are preserved. Raw cache files stay private and ignored; their digests do not make them publicly inspectable."
+    ]
   }
 }

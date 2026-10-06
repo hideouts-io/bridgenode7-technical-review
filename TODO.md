@@ -6,9 +6,9 @@ Estimated maintainer implementation effort is **15–28 hours**, excluding optio
 
 | Order | Task | Priority | Proposed responsible role | Effort | Current preparation |
 | --- | --- | --- | --- | --- | --- |
-| 1 | [T01: Validate M2M source before FMA projection](#t01) | P1 | M2M maintainer | 2–4 h | Runtime candidate locally/hosted verified; runtime plus documentation companion locally verified together |
-| 2 | [T02: Enforce FDE freshness date contract](#t02) | P1 | FDE maintainer; context-contract owner | 4–8 h | Supported-format candidate verified with separate context-server correction; leap-second policy remains |
-| 3 | [T03: Bind ACA retests to the corrective action being closed](#t03) | P1 | ACA structured-case maintainer | 2–4 h | Complete candidate locally and hosted verified, including required CodeQL |
+| 1 | [T01: Validate M2M source before FMA projection](#t01) | P1 | M2M maintainer | 2–4 h | Recorded-base candidate verified; pair applies to newer head, current-head gates pending |
+| 2 | [T03: Bind ACA retests to the corrective action being closed](#t03) | P1 | ACA structured-case maintainer | 2–4 h | Current head matches verified proposal base; maintainer acceptance pending |
+| 3 | [T02: Enforce FDE freshness date contract](#t02) | P1 | FDE maintainer; context-contract owner | 4–8 h | Pair applies to newer head; current CI and timestamp-policy acceptance pending |
 | 4 | [T04: Normalize FIW roots consistently](#t04) | P2 | FIW maintainer | 1–2 h | Reverified candidate, alias handling and deterministic package |
 | 5 | [T05: Reject explicit null FMA criticality early](#t05) | P2 | FMA maintainer | 1–2 h | Evaluation-only bug specification |
 | 6 | [T06: Correct and validate Pax eligibility provenance](#t06) | P2 | Source-data maintainer; evidence reviewer | 2–3 h | Revised candidate locally and hosted verified on unchanged actual data; upstream acceptance remains |
@@ -18,6 +18,8 @@ Estimated maintainer implementation effort is **15–28 hours**, excluding optio
 
 **Validate the authoritative M2M case before writing an FMA projection.** [Evidence and references: F01](FINDINGS.md#f01).
 
+**First maintainer action:** review both unchanged T01 proposals using the [application instructions](proposals/README.md#apply-the-priority-proposals). At the October 6 head `cc10b326dd6185d160ea76939f4089c3f7e1ca91`, the exporter, validator, profile definitions and affected interoperability tests match the recorded base; both patches pass application checks. The newer Pages build/test changes still require the maintainer's current-head gates. [Source comparison](evidence/verification.json), key `adoption_handoff`, does not reattribute the earlier 302-test result to this newer commit.
+
 **Affected scope:** `materials-to-mission/scripts/export_fma_projection.py`, existing interoperability integration tests, and generated validation evidence. **Benefit:** users receive the same source-policy rejection through the export route as through the producer's validation route. **Priority rationale:** portable artifacts should not conceal known source-policy failure behind target-schema PASS.
 
 Reuse the existing `validate_case` function with explicit public validation and the current default profile after the synthetic/public-safe declaration check. Raise an actionable error containing existing finding codes, paths, and messages before any output is written. Preserve the valid deterministic transformation, loss-aware extensions, pinned FMA contracts, and human-authority limitations. The candidate records the actual `ValidationResult.validation_profile` and toolkit `__version__` in the extensible graph metadata and manifest source fields, without changing schema or adapter versions.
@@ -26,11 +28,15 @@ Reuse the existing `validate_case` function with explicit public validation and 
 
 **Documentation companion:** have the M2M maintainer apply the [default-profile correction](proposals/m2m-default-profile-doc.patch) to `docs/VALIDATION.md` and its manifest entry. Acceptance: the guide agrees with `m2m validate --help`, the toolkit default and `docs/VALIDATION_PROFILES.md` on `m0-strict-0.4.0`, while explicit historical `0.2.0` compatibility remains unchanged. The standalone documentation candidate passes the 300-test gate. The unchanged runtime and documentation proposals together pass the local 302-test gate, 183 manifest entries, deterministic packaging and separate privacy check on macOS arm64/Python 3.11.16, without tracked-file drift or a generated-evidence refresh. [Combined evidence](evidence/m2m-source-validation.json) preserves separate standalone and runtime-only hosted results; combined hosted verification remains unexecuted. Follow the [two-patch application instructions](proposals/README.md#apply-the-priority-proposals), refresh generated evidence if adaptation makes it stale, and complete applicable upstream acceptance checks. T01 remains open upstream.
 
+**Risk assessment and consumption:** the [retained assessment summary](evidence/m2m-source-validation.json), key `patch_risk_assessment`, recommends `merge` with `human_review_required` for the exact recorded-base combined artifact. It is advisory and has not been repeated at the newer head. The focused FMA 0.11.2 probe accepts its graph and receipt. Rejection before writing leaves a reused directory's older files untouched: require exporter success and a matching manifest source digest before consuming outputs. This existing behavior is a recovery consideration, not a new T01 regression or a transactional-output guarantee.
+
 **Dependencies/access:** no new service or dependency. The semantic-profile identity is taken from the existing validation result, not inferred. The external reviewer has prepared the [candidate](proposals/m2m-source-validation.patch); interface acceptance, applying it upstream, required gates, and publishing require Bridge Node 7 maintainers.
 
 ## T02
 
 **Enforce contract-valid freshness timestamps in FDE's context acceptance.** [Evidence and references: F02](FINDINGS.md#f02).
+
+**First maintainer action:** review the timestamp and test-server patches separately, then use the [combined application instructions](proposals/README.md#apply-the-priority-proposals). Both unchanged patches apply to October 6 head `7213151ec3915e513854a8e9d555020b6faff594`; all their target files match the recorded base. The new CI adds a Pages-portability check after `npm run check`, so the earlier combined pass is not evidence for that expanded gate. The maintainer can review the harness and supported-format behavior while the contract owner resolves the question below.
 
 **Affected scope:** `frontier-decision-engine/site/src/lib/governed-context.js`, existing governed-context tests, and generated facts/manifest. **Benefit:** malformed expiry or review metadata cannot produce a CURRENT, active-eligible packet. **Priority rationale:** this directly affects context admitted into decision preparation.
 
@@ -42,9 +48,13 @@ Reject non-null deadlines when the parser cannot parse them. The candidate enfor
 
 **Owner decision:** will the context-contract owner document the runtime-supported subset, including rejection of announced leap seconds and millisecond comparisons, or require explicit leap-second/sub-millisecond handling? Supply the agreed producer/consumer contract and expected boundary examples before changing those semantics or claiming complete RFC3339 acceptance. [RFC3339 sections 5.6–5.7](https://www.rfc-editor.org/rfc/rfc3339.html#section-5.6) permit fractional seconds and valid announced leap seconds; they do not select FDE's comparison policy. Supported-runtime checks and the separate harness review can proceed without this answer.
 
+The owner's examples must state the expected acceptance and freshness comparison for an announced leap second in each of the four timestamp fields, for `.0001Z` and `.0009Z` within the same millisecond, and for equivalent instants written with different offsets. Preserve allowed nullable-field omission/null and explicit malformed-input rejection. Record a deliberate deferral if the owner cannot select the policy; do not close T02 while that dependency remains.
+
 ## T03
 
 **Require consistent finding → corrective action → retest closure links.** [Evidence and references: F03](FINDINGS.md#f03).
+
+**First maintainer action:** review [the closure-link patch](proposals/aca-closure-links.patch) at `9033bf73bbd3923c5de0a9c6fb9959b4c140de64`, which still matches the October 6 upstream head and passes the application check. Use the [Python 3.12 acceptance instructions](proposals/README.md#apply-the-priority-proposals), then record the adopted commit and its required Ubuntu/Windows and Python CodeQL check links. Existing independent hosted evidence supports review but does not substitute for the maintainer's acceptance.
 
 **Affected scope:** `ai-cyber-assurance/scripts/validate_assurance_case.py` and the existing real-validator fixture checks. **Benefit:** generated closed-finding views reflect a connected declared corrective-action path. **Priority rationale:** the documented machine-checkable closure relationship currently accepts contradictory records.
 
@@ -111,5 +121,7 @@ Use the canonical ten-domain template, including Critical-link protection and Cr
 The review author can complete evidence preparation and proposed changes without upstream permissions. Every upstream task remains open until the responsible maintainer accepts and implements it with the stated checks. An unanswered internal question is recorded as a dependency, not converted into a company deficiency.
 
 For T01–T03, record the confirmed maintainer assignment, acceptance reference, implemented upstream commit, and applicable check-run links for that commit under the existing task before marking it complete. T02 additionally needs the context-contract owner's recorded leap-second and precision policy. Keep these upstream acceptance records distinct from the independent candidate verification already recorded here.
+
+No confirmed assignee, adoption decision, or implemented upstream commit is recorded for T01–T03 as of this handoff. Acceptance for implementation is an intermediate state; completion requires the implementation and its checks. A rejection or deferral should record the owner's reason and concrete next dependency, with a review date only if agreed. Recovery instructions are in [proposals/README.md](proposals/README.md#acceptance-and-recovery); keep those instructions linked rather than duplicating them here.
 
 The report and its candidates are published on the public review repository's `codex/technical-review` branch under the user's explicit authorization to leave it public and continue commits and pushes. Upstream implementation remains open. The public branch link is ready for the user to share with the CEO.

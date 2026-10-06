@@ -1,6 +1,6 @@
 # Bridge Node 7 technical review
 
-**Independent external assessment · Public review · Updated October 5, 2026**
+**Independent external assessment · Public review · Updated October 6, 2026**
 
 The public GitHub estate already has substantial documentation, explicit evidence/authority limits, and successful recent hosted validation. This review recommends seven focused corrections to validation, source-policy enforcement, reproducibility, provenance, and an existing worked example. The strongest improvements reuse the code and methods already present.
 
@@ -8,11 +8,13 @@ All **eight public repositories** under the canonical [Bridge-Node-7 account](ht
 
 ## Recommended decisions
 
+**Next company action:** confirm accountable M2M and ACA maintainers to review T01 and T03 first, and name the FDE maintainer and context-contract owner to resolve T02's timestamp policy. The roles below are proposed; no assignment or upstream acceptance has been confirmed. The technical owner should record acceptance, rejection, or a specific deferral under the existing [TODO](TODO.md#ownership-and-publication-state).
+
 | Order | Finding | Practical effect | Next action |
 | --- | --- | --- | --- |
-| 1 | [F01: M2M export bypasses source acceptance](FINDINGS.md#f01) | Source-policy failures can still become portable outputs. Target-schema PASS does not supply the missing source check. | Review the source-preflight/profile-provenance candidate and its separate default-profile documentation correction. |
-| 2 | [F02: FDE accepts malformed freshness dates](FINDINGS.md#f02) | Invalid expiry metadata can be labelled CURRENT and active-eligible. | Review supported-format validation and the separate test-server correction; decide the leap-second policy. |
-| 3 | [F03: ACA accepts disconnected closure links](FINDINGS.md#f03) | Closed-finding communication can be generated from inconsistent declared retest/action relationships. | Review the complete required-link and closure-consistency candidate. |
+| 1 | [F01: M2M export bypasses source acceptance](FINDINGS.md#f01) | Source-policy failures can still become portable outputs. Target-schema PASS does not supply the missing source check. | M2M maintainer: review the runtime and default-profile documentation proposals together, then verify them at the accepted upstream commit. |
+| 2 | [F03: ACA accepts disconnected closure links](FINDINGS.md#f03) | Closed-finding communication can be generated from inconsistent declared retest/action relationships. | ACA maintainer: review the required-link and closure-consistency candidate, then run the existing upstream acceptance checks. |
+| 3 | [F02: FDE accepts malformed freshness dates](FINDINGS.md#f02) | Invalid expiry metadata can be labelled CURRENT and active-eligible. | FDE maintainer: review timestamp validation and the separate test-server correction. Contract owner: decide leap-second handling and comparison precision. |
 | 4 | [F04: FIW verification fails on macOS aliases](FINDINGS.md#f04) | The documented local gate produces 32 errors from inconsistent path identity. | Review the tested one-line root correction and sealed-manifest updates. |
 | 5 | [F05: FMA validates null criticality, then fails coverage](FINDINGS.md#f05) | Initial validation and downstream command behavior disagree. | Give the maintainer the minimal input and early-validation specification. |
 | 6 | [F06: Pax eligibility fields bypass validation](FINDINGS.md#f06) | Field-specific checks are missing; the later eligibility review is intentional. | Review the revised candidate, verified locally and on Ubuntu/Windows with the owner-declared dates unchanged. |
@@ -20,13 +22,15 @@ All **eight public repositories** under the canonical [Bridge-Node-7 account](ht
 
 These are tested local software/data observations and a documented example inconsistency. They do not demonstrate an operational compromise, an unauthorized human decision, or missing internal company capability. Priorities rank the proposed work within this review rather than assigning vulnerability severity.
 
+**Current applicability, October 6:** M2M and FDE each advanced by one Pages-portability commit. Both unchanged proposal pairs pass textual application checks at the newer heads; their affected validation code remains unchanged. ACA remains at its reviewed base. Runtime gates were not rerun at the newer heads, and FDE's added Pages-portability CI stage must be included in maintainer acceptance. [Freshness evidence](evidence/verification.json) records the exact revisions and limits under `adoption_handoff`; prior test results remain bound to their original candidates.
+
 ## Start with the evidence
 
 | Material | Purpose |
 | --- | --- |
 | [FINDINGS.md](FINDINGS.md) | Exact source links, triggers, observed results, research applicability, strengths, and limits. |
 | [TODO.md](TODO.md) | Seven prioritized actions with responsible roles, access dependencies, effort, and measurable acceptance checks. |
-| [WEEK_PLAN.md](WEEK_PLAN.md) | A seven-day, 28-hour external investigation/preparation plan with achievable deliverables. |
+| [WEEK_PLAN.md](WEEK_PLAN.md) | A proposed maintainer adoption week, with ownership, acceptance gates, and the original external-review estimate kept separate. |
 | [inventory.csv](inventory.csv) | All repositories, purpose/audience, dependencies, inspected SHAs, docs/examples, tests, workflows, licenses, releases, relationships, and coverage limits. |
 | [proposals/README.md](proposals/README.md) | Eight focused patches and an evaluation-only specification across seven tasks, exact source bases, tested scope, and remaining work. |
 | [evidence/verification.json](evidence/verification.json) | Recorded local checks, captured hosted-run links, patch hashes, and raw-log provenance. |
