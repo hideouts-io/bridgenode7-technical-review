@@ -4,7 +4,7 @@ All tasks are **open upstream**. Prepared patches are independent review candida
 
 Estimated maintainer implementation effort is **15–28 hours**, excluding optional macOS CI work, owner-response delays, release approvals, and production deployment. The first three tasks account for **8–16 hours**. These estimates assume an engineer familiar with the repository and an available declared toolchain. The separate external-review workload is in [WEEK_PLAN.md](WEEK_PLAN.md).
 
-| Order | Task | Priority | Responsible role | Effort | Current preparation |
+| Order | Task | Priority | Proposed responsible role | Effort | Current preparation |
 | --- | --- | --- | --- | --- | --- |
 | 1 | [T01: Validate M2M source before FMA projection](#t01) | P1 | M2M maintainer | 2–4 h | Runtime candidate locally/hosted verified; runtime plus documentation companion locally verified together |
 | 2 | [T02: Enforce FDE freshness date contract](#t02) | P1 | FDE maintainer; context-contract owner | 4–8 h | Supported-format candidate verified with separate context-server correction; leap-second policy remains |
@@ -109,5 +109,7 @@ Use the canonical ten-domain template, including Critical-link protection and Cr
 ## Ownership and publication state
 
 The review author can complete evidence preparation and proposed changes without upstream permissions. Every upstream task remains open until the responsible maintainer accepts and implements it with the stated checks. An unanswered internal question is recorded as a dependency, not converted into a company deficiency.
+
+For T01–T03, record the confirmed maintainer assignment, acceptance reference, implemented upstream commit, and applicable check-run links for that commit under the existing task before marking it complete. T02 additionally needs the context-contract owner's recorded leap-second and precision policy. Keep these upstream acceptance records distinct from the independent candidate verification already recorded here.
 
 The report and its candidates are published on the public review repository's `codex/technical-review` branch under the user's explicit authorization to leave it public and continue commits and pushes. Upstream implementation remains open. The public branch link is ready for the user to share with the CEO.
