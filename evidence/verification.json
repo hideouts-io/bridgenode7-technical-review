@@ -1701,5 +1701,14 @@
       "new_companion_full_gate_tests": 300,
       "review_document_simple_heading_fragments": 28
     }
+  },
+  "m2m_combined_local_verification": {
+    "task": "T01",
+    "verified_at_utc": "2026-10-06T00:17:22.780158+00:00",
+    "evidence": "evidence/m2m-source-validation.json",
+    "evidence_key": "combined_documentation_verification",
+    "status": "COMBINED_LOCALLY_VERIFIED_UPSTREAM_OPEN",
+    "hosted_combined_verification": "NOT_RUN",
+    "attribution": "Subsequent local runtime-plus-documentation check; original runtime hosted evidence and navigation standalone-documentation evidence are unchanged."
   }
 }
